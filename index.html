@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Permanent Summer — Algarve</title>
+<meta name="description" content="Two holiday apartments in Altura, Eastern Algarve. Oceanside & Beachside — your perfect summer escape.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Space+Mono:wght@400;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
+
+<style>
+/* ─── TOKENS ─────────────────────────────────────────────────── */
+:root {
+  --navy:   #114061;
+  --gold:   #D2B559;
+  --amber:  #C49125;
+  --cream:  #FCFCF7;
+  --dark:   #0d1f2d;
+  --darker: #0a1520;
+  --text:   #111111;
+  --muted:  #6b7280;
+  --border: #e5e7eb;
+  --font:   "Inter", system-ui, sans-serif;
+  --mono:   "Space Mono", monospace;
+  --disp:   "Dela Gothic One", system-ui;
+  --max:    1100px;
+  --pad:    clamp(16px, 4vw, 40px);
+}
+
+/* ─── RESET ──────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { background: var(--dark); color: var(--cream); font-family: var(--font); }
+a { color: inherit; text-decoration: none; }
+img { display: block; max-width: 100%; }
+
+/* ─── LANGUAGE ───────────────────────────────────────────────── */
+.ps-scope [data-i18n-block]                      { display: none !important; }
+.ps-scope[data-lang="pt"] [data-i18n-block="pt"] { display: block !important; }
+.ps-scope[data-lang="en"] [data-i18n-block="en"] { display: block !important; }
+.ps-scope[data-lang="fr"] [data-i18n-block="fr"] { display: block !important; }
+
+/* ─── LANG PILL ──────────────────────────────────────────────── */
+.ps-lang-wrap { position: fixed; top: 14px; right: 14px; z-index: 10000; }
+.ps-lang-bar  { display: flex; gap: 4px; background: var(--navy); padding: 5px; border-radius: 999px; box-shadow: 0 8px 24px rgba(0,0,0,.45); }
+.ps-lang-btn  {
+  appearance: none; border: 0;
+  background: rgba(255,255,255,.1); color: var(--cream);
+  font: 700 .72rem var(--mono); text-transform: uppercase; letter-spacing: .06em;
+  border-radius: 999px; padding: 6px 10px; cursor: pointer;
+  transition: background .18s, color .18s;
+}
+.ps-lang-btn[aria-current="true"] { background: var(--gold); color: #111; }
+
+/* ─── HEADER ─────────────────────────────────────────────────── */
+#ps-header {
+  position: sticky; top: 0; z-index: 900;
+  background: rgba(13,31,45,.94);
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(255,255,255,.07);
+  padding: 0 var(--pad);
+}
+#ps-header > [data-i18n-block]                      { display: none !important; }
+#ps-header[data-lang="pt"] > [data-i18n-block="pt"] { display: flex !important; }
+#ps-header[data-lang="en"] > [data-i18n-block="en"] { display: flex !important; }
+#ps-header[data-lang="fr"] > [data-i18n-block="fr"] { display: flex !important; }
+#ps-header > [data-i18n-block] {
+  max-width: var(--max); margin: 0 auto; position: relative;
+  align-items: center; justify-content: center;
+  flex-wrap: wrap; gap: 28px; padding: 14px 0;
+}
+.nav-logo { position: absolute; left: 0; display: flex; align-items: center; }
+.nav-logo img { height: 30px; width: auto; }
+#ps-header .link, #ps-header .dd-trigger {
+  font: 400 .8rem var(--font); letter-spacing: .18em; text-transform: uppercase;
+  color: var(--cream); background: none; border: 0;
+  padding: 6px 10px; cursor: pointer; white-space: nowrap;
+  transition: color .2s;
+}
+#ps-header .link:hover, #ps-header .dd-trigger:hover { color: var(--gold); }
+.has-dropdown { position: relative; }
+.dropdown {
+  display: none; position: absolute; top: calc(100% + 8px); left: 50%;
+  transform: translateX(-50%); min-width: 200px;
+  background: #fff; border-radius: 10px; border: 1px solid var(--border);
+  box-shadow: 0 12px 32px rgba(0,0,0,.18); padding: 6px 0; z-index: 200;
+}
+@media (hover: hover) { .has-dropdown:hover > .dropdown { display: block; } }
+.has-dropdown:focus-within > .dropdown { display: block; }
+.dd-item {
+  display: block; padding: 10px 16px; white-space: nowrap;
+  font: 400 .8rem var(--font); letter-spacing: .12em; text-transform: uppercase;
+  color: var(--navy) !important; transition: color .2s;
+}
+.dd-item:hover { color: var(--amber) !important; }
+
+/* ─── HERO ───────────────────────────────────────────────────── */
+.hero {
+  position: relative; min-height: 92vh;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  text-align: center; overflow: hidden; padding: 60px var(--pad) 40px;
+}
+.hero-bg {
+  position: absolute; inset: 0; z-index: 0;
+  background:
+    linear-gradient(180deg, rgba(13,31,45,.45) 0%, rgba(13,31,45,.82) 100%),
+    url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1600&q=80') center/cover no-repeat;
+}
+.hero-content { position: relative; z-index: 1; }
+.hero-logo { height: 90px; width: auto; margin: 0 auto 32px; object-fit: contain; }
+.hero-tagline {
+  font: 400 .95rem var(--font); color: var(--gold);
+  letter-spacing: .4em; text-transform: uppercase; line-height: 1.2;
+}
+.hero-scroll {
+  position: absolute; bottom: 28px; left: 50%; transform: translateX(-50%);
+  z-index: 1; display: flex; flex-direction: column; align-items: center; gap: 4px;
+  opacity: .45; font: 400 .7rem var(--mono); letter-spacing: .15em; text-transform: uppercase;
+  animation: bounce 2s infinite;
+}
+@keyframes bounce {
+  0%,100% { transform: translateX(-50%) translateY(0); }
+  50%     { transform: translateX(-50%) translateY(6px); }
+}
+
+/* ─── SECTION UTILS ──────────────────────────────────────────── */
+.ps-section { max-width: var(--max); margin: 0 auto; padding: 80px var(--pad); scroll-margin-top: 70px; }
+.ps-h1 { font-family: var(--disp); letter-spacing: .02em; font-size: clamp(22px,4vw,34px); line-height: 1; margin: 0 0 28px; text-align: center; }
+.ps-body { font-family: var(--mono); line-height: 1.7; font-size: .88rem; }
+.ps-body p { margin: .6rem 0; }
+.hyphens p { margin: .22rem 0; }
+.sec-divider { border: none; height: 1px; background: rgba(255,255,255,.07); }
+
+/* ─── LOCATION ───────────────────────────────────────────────── */
+#location { background: var(--dark); }
+#location .ps-h1 { color: var(--cream); }
+#location .ps-body { color: rgba(252,252,247,.78); }
+
+/* ─── MAP ────────────────────────────────────────────────────── */
+#map-section { background: var(--dark); }
+.map-wrap { max-width: var(--max); margin: 0 auto; padding: 0 var(--pad) 60px; }
+.map-wrap .ps-h1 { color: var(--cream); margin-bottom: 24px; text-align: center; }
+.so-map-card {
+  border: 1px solid rgba(255,255,255,.1); border-radius: 12px; overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0,0,0,.45); position: relative;
+}
+#so-map { height: 560px; width: 100%; }
+.so-search {
+  position: absolute; right: 12px; top: 12px;
+  background: #fff; border: 1px solid var(--border); border-radius: 10px;
+  box-shadow: 0 4px 16px rgba(0,0,0,.12);
+  display: flex; gap: 8px; align-items: center; padding: 8px 10px; z-index: 500;
+}
+.so-search input { border: 0; outline: 0; font: 400 .9rem var(--font); min-width: 200px; color: var(--text); }
+.so-search button { border: 0; border-radius: 8px; padding: 6px 10px; cursor: pointer; font: 600 .78rem var(--font); }
+.so-search .go  { background: var(--navy); color: #fff; }
+.so-search .go:hover { opacity: .9; }
+.so-search .clr { background: var(--border); color: var(--text); }
+.so-legend {
+  position: absolute; left: 12px; bottom: 12px;
+  background: #fff; border: 1px solid var(--border); border-radius: 10px;
+  padding: 8px 12px; z-index: 400; min-width: 210px;
+  font: 400 .7rem var(--font); text-transform: uppercase; letter-spacing: .1em; color: var(--navy);
+  box-shadow: 0 4px 16px rgba(0,0,0,.1);
+}
+.so-legend .row { display: flex; align-items: center; gap: 8px; margin: 4px 0; }
+.swatch { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
+.legend-label { flex: 1; }
+.legend-toggle { width: 16px; height: 16px; cursor: pointer; }
+.popup-title { text-transform: uppercase; letter-spacing: .1em; color: var(--navy); font: 700 .82rem var(--font); }
+.popup-meta { font-size: .78rem; opacity: .75; margin-top: 2px; }
+
+/* ─── VIDEO ──────────────────────────────────────────────────── */
+#video-section { background: var(--darker); padding: 60px var(--pad); }
+.video-wrap { max-width: var(--max); margin: 0 auto; }
+.video-inner {
+  position: relative; width: 100%; padding-top: 56.25%;
+  border-radius: 12px; overflow: hidden;
+  border: 1px solid rgba(255,255,255,.1);
+  box-shadow: 0 12px 40px rgba(0,0,0,.55);
+}
+.video-inner iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+
+/* ─── APARTMENT LAYOUT ───────────────────────────────────────── */
+.apt-section { scroll-margin-top: 70px; }
+.apt-section.apt-ocean { background: #0a1923; }
+.apt-section.apt-beach { background: #0d2234; }
+.apt-inner {
+  max-width: var(--max); margin: 0 auto; padding: 80px var(--pad);
+  display: grid; gap: 48px; align-items: start;
+  grid-template-columns: 1fr 1fr;
+}
+
+/* ─── CAROUSEL ───────────────────────────────────────────────── */
+.carousel {
+  position: relative; border-radius: 12px; overflow: hidden;
+  background: #000; aspect-ratio: 4/3;
+  box-shadow: 0 8px 32px rgba(0,0,0,.55);
+}
+.carousel-track {
+  display: flex; height: 100%; width: 100%;
+  transition: transform .5s cubic-bezier(.4,0,.2,1);
+  will-change: transform;
+}
+.carousel-slide { min-width: 100%; height: 100%; }
+.carousel-slide img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.carousel-btn {
+  position: absolute; top: 50%; transform: translateY(-50%); z-index: 10;
+  background: rgba(13,31,45,.65); border: 1px solid rgba(255,255,255,.2);
+  color: var(--cream); width: 38px; height: 38px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; font-size: 20px; line-height: 1;
+  transition: background .2s;
+}
+.carousel-btn:hover { background: var(--navy); }
+.carousel-btn.prev { left: 10px; }
+.carousel-btn.next { right: 10px; }
+.carousel-dots { position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); display: flex; gap: 6px; }
+.carousel-dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: rgba(255,255,255,.4); border: none; cursor: pointer;
+  transition: background .2s; padding: 0;
+}
+.carousel-dot.active { background: var(--gold); }
+.carousel-placeholder {
+  width: 100%; height: 100%;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 12px; color: rgba(255,255,255,.28);
+  font: 400 .78rem var(--mono); letter-spacing: .1em; text-transform: uppercase;
+}
+
+/* ─── APT TEXT ───────────────────────────────────────────────── */
+.apt-text .ps-h1 { text-align: left; }
+.ocean-layout .apt-text .ps-h1  { color: var(--gold); }
+.ocean-layout .apt-text .ps-body { color: var(--gold); }
+.beach-layout .apt-text .ps-h1  { color: var(--cream); }
+.beach-layout .apt-text .ps-body { color: rgba(252,252,247,.85); }
+
+/* ─── RESERVE BUTTON ─────────────────────────────────────────── */
+.reserve-wrap { display: flex; justify-content: center; padding: 0 var(--pad) 60px; }
+.reserve-btn {
+  display: inline-block; font: 600 .8rem var(--font);
+  letter-spacing: .35em; text-transform: uppercase;
+  color: var(--cream); border: 1px solid rgba(252,252,247,.4);
+  padding: 18px 44px; transition: border-color .2s, color .2s;
+}
+.reserve-btn:hover { border-color: var(--gold); color: var(--gold); }
+
+/* ─── REVIEWS ────────────────────────────────────────────────── */
+#reviews { background: var(--cream); padding: 80px var(--pad); scroll-margin-top: 70px; }
+.reviews-inner { max-width: var(--max); margin: 0 auto; }
+.reviews-inner .ps-h1 { color: var(--navy); margin-bottom: 36px; }
+.reviews-wrap { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; }
+.rev-card {
+  font-family: var(--font); border: 1px solid var(--border); border-radius: 14px;
+  padding: 16px; background: #fff; flex: 1 1 300px; max-width: 350px;
+  border-left: 4px solid var(--navy);
+}
+.rev-card[data-platform="airbnb"] { border-left-color: var(--amber); }
+.rev-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.rev-id  { display: flex; align-items: center; gap: 10px; }
+.avatar  { width: 34px; height: 34px; border-radius: 50%; background: var(--navy); color: #fff; display: inline-flex; align-items: center; justify-content: center; font: 700 .9rem var(--mono); }
+.name-line { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; font-size: 14px; color: var(--text); }
+.flag  { font-size: 16px; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip  { font-size: 11px; padding: 3px 9px; border-radius: 999px; border: 1px solid transparent; }
+.chip--platform.booking { background: var(--navy); color: #fff; }
+.chip--platform.airbnb  { background: var(--amber); color: #fff; }
+.chip--type { background: #F9C332; color: var(--navy); font-weight: 700; }
+.rev-text { color: var(--text); line-height: 1.55; margin-top: 8px; font-size: .9rem; }
+.rev-text p { margin: .35rem 0; }
+.rev-date { color: var(--muted); font-size: 12px; margin-top: 6px; }
+
+/* ─── CALENDAR ───────────────────────────────────────────────── */
+#calendar { background: var(--darker); padding: 80px var(--pad); scroll-margin-top: 70px; }
+.calendar-inner { max-width: var(--max); margin: 0 auto; }
+.calendar-inner .ps-h1 { color: var(--cream); margin-bottom: 28px; }
+.pingotel-container { border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,.1); background: #fff; min-height: 480px; }
+
+/* ─── CONTACT ────────────────────────────────────────────────── */
+#contact { background: var(--navy); padding: 80px var(--pad); scroll-margin-top: 70px; }
+.contact-inner { max-width: var(--max); margin: 0 auto; text-align: center; }
+.contact-inner .ps-h1 { color: var(--cream); margin-bottom: 40px; }
+.address-block { font: 400 .82rem var(--mono); color: rgba(252,252,247,.7); line-height: 1.8; margin-bottom: 12px; }
+.address-block strong { color: var(--gold); display: block; margin-top: 24px; font-size: .88rem; }
+.contact-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; margin-top: 32px; }
+.contact-link {
+  display: inline-flex; align-items: center; gap: 8px;
+  font: 600 .78rem var(--font); letter-spacing: .2em; text-transform: uppercase;
+  color: var(--cream); border: 1px solid rgba(252,252,247,.3); padding: 14px 28px; border-radius: 4px;
+  transition: border-color .2s, color .2s;
+}
+.contact-link:hover { border-color: var(--gold); color: var(--gold); }
+.contact-link svg { width: 18px; height: 18px; }
+
+/* ─── FOOTER ─────────────────────────────────────────────────── */
+footer { background: #060e15; text-align: center; padding: 24px var(--pad); font: 400 .72rem var(--mono); color: rgba(252,252,247,.25); letter-spacing: .12em; }
+
+/* ─── MOBILE ─────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .apt-inner { grid-template-columns: 1fr !important; }
+  .ocean-layout .apt-carousel { order: -1; }
+  .apt-text .ps-h1 { text-align: center; }
+  #ps-header > [data-i18n-block] { flex-wrap: nowrap !important; justify-content: space-between !important; gap: 6px !important; }
+  #ps-header .link, #ps-header .dd-trigger { font-size: .67rem !important; letter-spacing: .04em !important; padding: 6px 4px !important; }
+  .has-dropdown > .dropdown { left: 0; transform: none; }
+  .so-legend { display: none; }
+  #so-map { height: 380px; }
+  .so-search input { min-width: 120px; }
+}
+</style>
+</head>
+<body>
+
+<!-- LANG PILL -->
+<div class="ps-lang-wrap" aria-label="Language switch">
+  <div class="ps-lang-bar">
+    <button class="ps-lang-btn" data-setlang="pt" aria-current="true">PT</button>
+    <button class="ps-lang-btn" data-setlang="en">EN</button>
+    <button class="ps-lang-btn" data-setlang="fr">FR</button>
+  </div>
+</div>
+
+<!-- ══ NAV ═══════════════════════════════════════════════════════ -->
+<nav id="ps-header" data-lang="pt" aria-label="Main navigation">
+  <div data-i18n-block="pt" style="position:relative;">
+    <a class="nav-logo" href="#top"><img src="assets/images/logo.jpeg" alt="Permanent Summer" onerror="this.style.display='none'"></a>
+    <a class="link" href="#location">Localização</a>
+    <span class="has-dropdown"><button class="dd-trigger" aria-haspopup="true" aria-expanded="false">Apartamentos ▾</button><div class="dropdown" role="menu"><a class="dd-item" href="#oceanside">Oceanside</a><a class="dd-item" href="#beachside">Beachside</a></div></span>
+    <a class="link" href="#reviews">Opiniões</a>
+    <a class="link" href="#calendar">Calendário</a>
+    <a class="link" href="#contact">Contacto</a>
+  </div>
+  <div data-i18n-block="en" style="position:relative;">
+    <a class="nav-logo" href="#top"><img src="assets/images/logo.jpeg" alt="Permanent Summer" onerror="this.style.display='none'"></a>
+    <a class="link" href="#location">Location</a>
+    <span class="has-dropdown"><button class="dd-trigger" aria-haspopup="true" aria-expanded="false">Apartments ▾</button><div class="dropdown" role="menu"><a class="dd-item" href="#oceanside">Oceanside</a><a class="dd-item" href="#beachside">Beachside</a></div></span>
+    <a class="link" href="#reviews">Reviews</a>
+    <a class="link" href="#calendar">Calendar</a>
+    <a class="link" href="#contact">Contact</a>
+  </div>
+  <div data-i18n-block="fr" style="position:relative;">
+    <a class="nav-logo" href="#top"><img src="assets/images/logo.jpeg" alt="Permanent Summer" onerror="this.style.display='none'"></a>
+    <a class="link" href="#location">Localisation</a>
+    <span class="has-dropdown"><button class="dd-trigger" aria-haspopup="true" aria-expanded="false">Appartements ▾</button><div class="dropdown" role="menu"><a class="dd-item" href="#oceanside">Oceanside</a><a class="dd-item" href="#beachside">Beachside</a></div></span>
+    <a class="link" href="#reviews">Avis</a>
+    <a class="link" href="#calendar">Calendrier</a>
+    <a class="link" href="#contact">Contact</a>
+  </div>
+</nav>
+
+<!-- ══ HERO ══════════════════════════════════════════════════════ -->
+<section class="hero" id="top">
+  <div class="hero-bg" aria-hidden="true"></div>
+  <div class="hero-content">
+    <img class="hero-logo" src="assets/images/logo.jpeg" alt="Permanent Summer" onerror="this.style.display='none'">
+    <div class="ps-scope" id="hero-tagline" data-lang="pt">
+      <div data-i18n-block="pt"><p class="hero-tagline">O seu refúgio ideal no Algarve</p></div>
+      <div data-i18n-block="en"><p class="hero-tagline">Your Perfect Getaway in the Algarve</p></div>
+      <div data-i18n-block="fr"><p class="hero-tagline">Votre séjour idéal en Algarve</p></div>
+    </div>
+  </div>
+  <div class="hero-scroll" aria-hidden="true">
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 8l5 5 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </div>
+</section>
+
+<!-- ══ LOCATION ═══════════════════════════════════════════════════ -->
+<section id="location" class="ps-scope" data-lang="pt">
+  <div class="ps-section">
+    <div data-i18n-block="pt">
+      <h2 class="ps-h1">Altura — Algarve</h2>
+      <div class="ps-body">
+        <p>Localizado a poucos metros das areias douradas da Praia de Altura, o Permanent Summer é o refúgio perfeito no coração do Sotavento Algarvio.</p>
+        <p>Numa das zonas mais autênticas do Algarve, o apartamento fica perto de mercados locais, restaurantes tradicionais, cafés à beira-mar e vilas históricas como Castro Marim, Cacela Velha, Vila Real de Santo António e a fronteira com Espanha — tudo a poucos minutos de carro.</p>
+        <p>Quer venha relaxar na praia, explorar trilhos, praticar desportos aquáticos ou descobrir a cultura e gastronomia algarvias, o Permanent Summer é a base ideal para umas férias inesquecíveis.</p>
+      </div>
+    </div>
+    <div data-i18n-block="en">
+      <h2 class="ps-h1">Altura — Algarve</h2>
+      <div class="ps-body">
+        <p>Located just a few meters from the golden sands of Altura Beach, Permanent Summer is the perfect escape in the heart of the Eastern Algarve.</p>
+        <p>Close to local markets, traditional restaurants, beachside cafés, and historic towns like Castro Marim, Cacela Velha, Vila Real de Santo António — and even the Spanish border — all a short drive away.</p>
+        <p>Beach days, nature trails, water sports, or slow food adventures — Permanent Summer is your ideal home base.</p>
+      </div>
+    </div>
+    <div data-i18n-block="fr">
+      <h2 class="ps-h1">Altura — Algarve</h2>
+      <div class="ps-body">
+        <p>À seulement quelques mètres des plages dorées d'Altura, Permanent Summer est l'échappée parfaite au cœur de l'Algarve oriental.</p>
+        <p>Proche des marchés locaux, restaurants traditionnels, cafés en bord de mer et villes historiques comme Castro Marim, Cacela Velha, Vila Real de Santo António, ainsi que la frontière espagnole — à quelques minutes en voiture.</p>
+        <p>Plage, sentiers nature, sports nautiques ou cuisine locale : Permanent Summer est votre camp de base idéal.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ MAP ════════════════════════════════════════════════════════ -->
+<div id="map-section">
+  <div class="map-wrap">
+    <h2 class="ps-h1">Localização / Location</h2>
+    <div class="so-map-card">
+      <div id="so-map"></div>
+      <form class="so-search" id="so-search">
+        <input id="so-q" type="text" placeholder="Search nearby (pharmacy, ATM…)" aria-label="Search services">
+        <button type="submit" class="go">Search</button>
+        <button type="button" class="clr" id="so-clear">Clear</button>
+      </form>
+      <div class="so-legend">
+        <div class="row"><span class="swatch" style="background:#C49125"></span><span class="legend-label">Apartments</span><input type="checkbox" class="legend-toggle" checked disabled></div>
+        <div class="row"><span class="swatch" style="background:#114061"></span><label class="legend-label" for="chk-food">Restaurants &amp; Bars</label><input id="chk-food" type="checkbox" class="legend-toggle" checked></div>
+        <div class="row"><span class="swatch" style="background:#D2B559"></span><label class="legend-label" for="chk-sup">Supermarkets</label><input id="chk-sup" type="checkbox" class="legend-toggle" checked></div>
+        <div class="row"><span class="swatch" style="background:#F9C332"></span><label class="legend-label" for="chk-views">Viewpoints &amp; Activities</label><input id="chk-views" type="checkbox" class="legend-toggle" checked></div>
+        <div class="row"><span class="swatch" style="background:#2E7D32"></span><label class="legend-label" for="chk-search">Search Results</label><input id="chk-search" type="checkbox" class="legend-toggle" checked></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr class="sec-divider">
+
+<!-- ══ VIDEO ══════════════════════════════════════════════════════ -->
+<div id="video-section">
+  <div class="video-wrap">
+    <div class="video-inner">
+      <iframe
+        src="https://www.youtube.com/embed/CwSCYQrg_f8?rel=0&modestbranding=1"
+        title="Permanent Summer — Algarve"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen>
+      </iframe>
+    </div>
+  </div>
+</div>
+
+<hr class="sec-divider">
+
+<!-- ══ OCEANSIDE ══════════════════════════════════════════════════ -->
+<div class="apt-section apt-ocean" id="oceanside">
+  <div class="apt-inner ocean-layout ps-scope" data-lang="pt">
+
+    <!-- Text LEFT, Carousel RIGHT -->
+    <div class="apt-text">
+      <div data-i18n-block="pt">
+        <h2 class="ps-h1">Ocean Side</h2>
+        <div class="ps-body hyphens">
+          <p>Luminoso e acolhedor — a 800 m das areias douradas de Altura. Até 4 hóspedes (quarto casal + sofá-cama). Varanda com vista mar.</p>
+          <p>- A 800 m da Praia da Alagoa</p><p>- Ar condicionado</p><p>- TV e Wi-Fi</p>
+          <p>- Frigorífico e congelador</p><p>- Micro-ondas</p><p>- Máquina de café expresso</p>
+          <p>- Máquina de lavar roupa e de lavar loiça</p><p>- Varanda com vista de mar</p>
+          <p>- Acesso por elevador</p><p>- Estacionamento público gratuito nas proximidades</p>
+          <p>- Toalhas e produtos de higiene</p>
+        </div>
+      </div>
+      <div data-i18n-block="en">
+        <h2 class="ps-h1">Ocean Side</h2>
+        <div class="ps-body hyphens">
+          <p>Bright and welcoming — 800 m from Altura's golden sands. Sleeps up to 4 (double bedroom + sofa bed). Private balcony with sea view.</p>
+          <p>- 800 m from Praia da Alagoa</p><p>- Air conditioning</p><p>- TV &amp; Wi-Fi internet</p>
+          <p>- Refrigerator &amp; freezer</p><p>- Microwave</p><p>- Espresso machine</p>
+          <p>- Washing machine &amp; dishwasher</p><p>- Balcony with sea view</p>
+          <p>- Elevator access</p><p>- Free public parking nearby</p><p>- Fresh towels and toiletries</p>
+        </div>
+      </div>
+      <div data-i18n-block="fr">
+        <h2 class="ps-h1">Ocean Side</h2>
+        <div class="ps-body hyphens">
+          <p>Clair et accueillant — à 800 m des plages dorées d'Altura. Jusqu'à 4 pers. (chambre double + canapé-lit). Balcon privé vue mer.</p>
+          <p>- À 800 m de Praia da Alagoa</p><p>- Climatisation</p><p>- TV &amp; Wi-Fi</p>
+          <p>- Réfrigérateur &amp; congélateur</p><p>- Micro-ondes</p><p>- Machine à expresso</p>
+          <p>- Lave-linge &amp; lave-vaisselle</p><p>- Balcon avec vue mer</p>
+          <p>- Accès par ascenseur</p><p>- Parking public gratuit à proximité</p>
+          <p>- Serviettes et articles de toilette</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Carousel RIGHT — photos coming soon -->
+    <div class="apt-carousel">
+      <div class="carousel" id="carousel-ocean">
+        <div class="carousel-placeholder">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+          <span>Photos coming soon</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div class="reserve-wrap ps-scope" data-lang="pt">
+    <div data-i18n-block="pt"><a href="https://app.pingotel.com/book/oms7lfyd" target="_blank" rel="noopener" class="reserve-btn">RESERVAR AGORA</a></div>
+    <div data-i18n-block="en"><a href="https://app.pingotel.com/book/oms7lfyd" target="_blank" rel="noopener" class="reserve-btn">RESERVE NOW</a></div>
+    <div data-i18n-block="fr"><a href="https://app.pingotel.com/book/oms7lfyd" target="_blank" rel="noopener" class="reserve-btn">RÉSERVER MAINTENANT</a></div>
+  </div>
+</div>
+
+<hr class="sec-divider">
+
+<!-- ══ BEACHSIDE ══════════════════════════════════════════════════ -->
+<div class="apt-section apt-beach" id="beachside">
+  <div class="apt-inner beach-layout ps-scope" data-lang="pt">
+
+    <!-- Carousel LEFT -->
+    <div class="apt-carousel">
+      <div class="carousel" id="carousel-beach">
+        <div class="carousel-track" id="beach-track">
+          <div class="carousel-slide"><img src="assets/images/beachside/IMG_3681.jpg" alt="Beachside" loading="lazy"></div>
+          <div class="carousel-slide"><img src="assets/images/beachside/IMG_3683.jpg" alt="Beachside bedroom" loading="lazy"></div>
+          <div class="carousel-slide"><img src="assets/images/beachside/IMG_3717.jpg" alt="Beachside interior" loading="lazy"></div>
+          <div class="carousel-slide"><img src="assets/images/beachside/IMG_3709.jpg" alt="Beachside living" loading="lazy"></div>
+          <div class="carousel-slide"><img src="assets/images/beachside/IMG_3714.jpg" alt="Beachside balcony" loading="lazy"></div>
+          <div class="carousel-slide"><img src="assets/images/beachside/IMG_3702.jpg" alt="Beachside room" loading="lazy"></div>
+          <div class="carousel-slide"><img src="assets/images/beachside/IMG_3696.jpg" alt="Beachside sea view" loading="lazy"></div>
+          <div class="carousel-slide"><img src="assets/images/beachside/IMG_3698.jpg" alt="Beachside detail" loading="lazy"></div>
+          <div class="carousel-slide"><img src="assets/images/beachside/IMG_3720.jpg" alt="Beachside space" loading="lazy"></div>
+        </div>
+        <button class="carousel-btn prev" aria-label="Previous">&#8249;</button>
+        <button class="carousel-btn next" aria-label="Next">&#8250;</button>
+        <div class="carousel-dots" id="beach-dots"></div>
+      </div>
+    </div>
+
+    <!-- Text RIGHT -->
+    <div class="apt-text">
+      <div data-i18n-block="pt">
+        <h2 class="ps-h1">Beachside</h2>
+        <div class="ps-body hyphens">
+          <p>Localização central — 300 m do mar e a passos de tudo em Altura. Até 4 hóspedes (quarto + sofá-cama). Varanda com vista mar.</p>
+          <p>- A 300 m da Praia da Alagoa</p><p>- Ar condicionado</p><p>- TV e Wi-Fi</p>
+          <p>- Frigorífico e congelador</p><p>- Micro-ondas</p><p>- Máquina de café expresso</p>
+          <p>- Máquina de lavar roupa e de lavar loiça</p><p>- Varanda com vista de mar</p>
+          <p>- Estacionamento público gratuito nas proximidades</p>
+          <p>- Toalhas e produtos de higiene</p><p>- 3.º andar – sem elevador</p>
+        </div>
+      </div>
+      <div data-i18n-block="en">
+        <h2 class="ps-h1">Beachside</h2>
+        <div class="ps-body hyphens">
+          <p>Centrally located — 300 m from the sea, steps from everything. Up to 4 guests (bedroom + sofa bed). Private balcony with sea view.</p>
+          <p>- 300 m from Praia da Alagoa</p><p>- Air conditioning</p><p>- TV &amp; Wi-Fi internet</p>
+          <p>- Refrigerator &amp; freezer</p><p>- Microwave</p><p>- Espresso machine</p>
+          <p>- Washing machine &amp; dishwasher</p><p>- Balcony with sea view</p>
+          <p>- Free public parking nearby</p><p>- Fresh towels and toiletries</p>
+          <p>- 3rd floor – no elevator</p>
+        </div>
+      </div>
+      <div data-i18n-block="fr">
+        <h2 class="ps-h1">Beachside</h2>
+        <div class="ps-body hyphens">
+          <p>Emplacement central — à 300 m de la mer, tout à pied. Jusqu'à 4 pers. (chambre + canapé-lit). Balcon privé vue mer.</p>
+          <p>- À 300 m de Praia da Alagoa</p><p>- Climatisation</p><p>- TV &amp; Wi-Fi</p>
+          <p>- Réfrigérateur &amp; congélateur</p><p>- Micro-ondes</p><p>- Machine à expresso</p>
+          <p>- Lave-linge &amp; lave-vaisselle</p><p>- Balcon avec vue mer</p>
+          <p>- Parking public gratuit à proximité</p><p>- Serviettes et articles de toilette fournis</p>
+          <p>- 3ᵉ étage – sans ascenseur</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div class="reserve-wrap ps-scope" data-lang="pt">
+    <div data-i18n-block="pt"><a href="https://app.pingotel.com/book/oms7lfyd" target="_blank" rel="noopener" class="reserve-btn">RESERVAR AGORA</a></div>
+    <div data-i18n-block="en"><a href="https://app.pingotel.com/book/oms7lfyd" target="_blank" rel="noopener" class="reserve-btn">RESERVE NOW</a></div>
+    <div data-i18n-block="fr"><a href="https://app.pingotel.com/book/oms7lfyd" target="_blank" rel="noopener" class="reserve-btn">RÉSERVER MAINTENANT</a></div>
+  </div>
+</div>
+
+<!-- ══ REVIEWS ════════════════════════════════════════════════════ -->
+<div id="reviews">
+  <div class="reviews-inner ps-scope" data-lang="pt">
+    <div data-i18n-block="pt">
+      <h2 class="ps-h1">Opiniões dos Hóspedes</h2>
+      <div class="reviews-wrap">
+        <article class="rev-card" data-platform="booking"><div class="rev-top"><div class="rev-id"><span class="avatar">G</span><div class="name-line"><strong>Guadalupe</strong><span class="flag">🇪🇸</span></div></div><div class="chips"><span class="chip chip--type">Casal</span><span class="chip chip--platform booking">Booking.com</span></div></div><div class="rev-text"><p>Local muito tranquilo e bem equipado. Perto de tudo. Comunicação excelente com os anfitriões, sempre atentos.</p><p><em>Estava tudo perfeito.</em></p></div><div class="rev-date">Avaliado: 28 de junho de 2025</div></article>
+        <article class="rev-card" data-platform="booking"><div class="rev-top"><div class="rev-id"><span class="avatar">M</span><div class="name-line"><strong>Maria</strong><span class="flag">🇵🇹</span></div></div><div class="chips"><span class="chip chip--type">Família</span><span class="chip chip--platform booking">Booking.com</span></div></div><div class="rev-text"><p>Fiquei muito satisfeita com a estadia. Anfitriões simpáticos e rápidos a repor o que faltava. Comunicação fácil — recomendo!</p><p><em>Varanda muito acolhedora. Ótima hospitalidade e condições.</em></p></div><div class="rev-date">Avaliado: 26 de maio de 2025</div></article>
+        <article class="rev-card" data-platform="booking"><div class="rev-top"><div class="rev-id"><span class="avatar">E</span><div class="name-line"><strong>Elizabeth</strong><span class="flag">🇵🇹</span></div></div><div class="chips"><span class="chip chip--type">Grupo</span><span class="chip chip--platform booking">Booking.com</span></div></div><div class="rev-text"><p>Casa muito organizada, ideal para alguns dias de férias na praia.</p></div><div class="rev-date">Avaliado: 11 de julho de 2025</div></article>
+        <article class="rev-card" data-platform="booking"><div class="rev-top"><div class="rev-id"><span class="avatar">J</span><div class="name-line"><strong>Juan</strong><span class="flag">🇪🇸</span></div></div><div class="chips"><span class="chip chip--type">Solo</span><span class="chip chip--platform booking">Booking.com</span></div></div><div class="rev-text"><p>Apartamento espaçoso, muito limpo, zona tranquila e estacionamento fácil.</p></div><div class="rev-date">Avaliado: 12 de junho de 2025</div></article>
+        <article class="rev-card" data-platform="airbnb"><div class="rev-top"><div class="rev-id"><span class="avatar">C</span><div class="name-line"><strong>Carlotta</strong><span class="flag">🇩🇪</span></div></div><div class="chips"><span class="chip chip--type">Família</span><span class="chip chip--platform airbnb">Airbnb</span></div></div><div class="rev-text"><p>Apartamento bonito perto da praia — impecável, tranquilo e relaxante. Perto de tudo o que precisámos. Voltaremos em família.</p></div><div class="rev-date">Avaliado: agosto de 2025</div></article>
+        <article class="rev-card" data-platform="airbnb"><div class="rev-top"><div class="rev-id"><span class="avatar">L</span><div class="name-line"><strong>Lénia</strong><span class="flag">🇵🇹</span></div></div><div class="chips"><span class="chip chip--type">Casal</span><span class="chip chip--platform airbnb">Airbnb</span></div></div><div class="rev-text"><p>Experiência cinco estrelas — adorámos a estadia e o ambiente. Voltaremos, sem dúvida.</p></div><div class="rev-date">Avaliado: julho de 2025</div></article>
+      </div>
+    </div>
+    <div data-i18n-block="en">
+      <h2 class="ps-h1">Guest Reviews</h2>
+      <div class="reviews-wrap">
+        <article class="rev-card" data-platform="booking"><div class="rev-top"><div class="rev-id"><span class="avatar">G</span><div class="name-line"><strong>Guadalupe</strong><span class="flag">🇪🇸</span></div></div><div class="chips"><span class="chip chip--type">Couple</span><span class="chip chip--platform booking">Booking.com</span></div></div><div class="rev-text"><p>A very quiet and well-equipped place. Close to everything. Excellent communication with the hosts, always attentive.</p><p><em>Everything was perfect.</em></p></div><div class="rev-date">Reviewed: 28 June 2025</div></article>
+        <article class="rev-card" data-platform="booking"><div class="rev-top"><div class="rev-id"><span class="avatar">M</span><div class="name-line"><strong>Maria</strong><span class="flag">🇵🇹</span></div></div><div class="chips"><span class="chip chip--type">Family</span><span class="chip chip--platform booking">Booking.com</span></div></div><div class="rev-text"><p>Very pleased with my stay. Kind, responsive hosts who quickly replaced a few missing items. Easy, quick communication — highly recommend!</p><p><em>Very cosy balcony. Excellent hospitality and accommodations.</em></p></div><div class="rev-date">Reviewed: 26 May 2025</div></article>
+        <article class="rev-card" data-platform="booking"><div class="rev-top"><div class="rev-id"><span class="avatar">E</span><div class="name-line"><strong>Elizabeth</strong><span class="flag">🇵🇹</span></div></div><div class="chips"><span class="chip chip--type">Group</span><span class="chip chip--platform booking">Booking.com</span></div></div><div class="rev-text"><p>Very organized house, ideal for a few days of beach vacation.</p></div><div class="rev-date">Reviewed: 11 July 2025</div></article>
+        <article class="rev-card" data-platform="booking"><div class="rev-top"><div class="rev-id"><span class="avatar">J</span><div class="name-line"><strong>Juan</strong><span class="flag">🇪🇸</span></div></div><div class="chips"><span class="chip chip--type">Solo</span><span class="chip chip--platform booking">Booking.com</span></div></div><div class="rev-text"><p>The apartment is spacious, very clean, in a quiet area, and easy for parking.</p></div><div class="rev-date">Reviewed: 12 June 2025</div></article>
+        <article class="rev-card" data-platform="airbnb"><div class="rev-top"><div class="rev-id"><span class="avatar">C</span><div class="name-line"><strong>Carlotta</strong><span class="flag">🇩🇪</span></div></div><div class="chips"><span class="chip chip--type">Family</span><span class="chip chip--platform airbnb">Airbnb</span></div></div><div class="rev-text"><p>Beautiful apartment close to the beach — spotless, quiet, and relaxing. Close to everything we needed. We'd happily come back as a family.</p></div><div class="rev-date">Reviewed: August 2025</div></article>
+        <article class="rev-card" data-platform="airbnb"><div class="rev-top"><div class="rev-id"><span class="avatar">L</span><div class="name-line"><strong>Lénia</strong><span class="flag">🇵🇹</span></div></div><div class="chips"><span class="chip chip--type">Couple</span><span class="chip chip--platform airbnb">Airbnb</span></div></div><div class="rev-text"><p>Five-star experience — loved the stay and the vibe. We'd definitely return.</p></div><div class="rev-date">Reviewed: July 2025</div></article>
+      </div>
+    </div>
+    <div data-i18n-block="fr">
+      <h2 class="ps-h1">Avis des clients</h2>
+      <div class="reviews-wrap">
+        <article class="rev-card" data-platform="booking"><div class="rev-top"><div class="rev-id"><span class="avatar">G</span><div class="name-line"><strong>Guadalupe</strong><span class="flag">🇪🇸</span></div></div><div class="chips"><span class="chip chip--type">Couple</span><span class="chip chip--platform booking">Booking.com</span></div></div><div class="rev-text"><p>Endroit très calme et bien équipé. Proche de tout. Excellente communication avec les hôtes, toujours attentifs.</p><p><em>Tout était parfait.</em></p></div><div class="rev-date">Évalué : 28 juin 2025</div></article>
+        <article class="rev-card" data-platform="booking"><div class="rev-top"><div class="rev-id"><span class="avatar">M</span><div class="name-line"><strong>Maria</strong><span class="flag">🇵🇹</span></div></div><div class="chips"><span class="chip chip--type">Famille</span><span class="chip chip--platform booking">Booking.com</span></div></div><div class="rev-text"><p>Très satisfaite du séjour. Hôtes aimables et réactifs, qui ont rapidement remplacé quelques éléments manquants. Communication simple et rapide — je recommande !</p><p><em>Balcon très cosy. Grande hospitalité et excellentes conditions.</em></p></div><div class="rev-date">Évalué : 26 mai 2025</div></article>
+        <article class="rev-card" data-platform="booking"><div class="rev-top"><div class="rev-id"><span class="avatar">E</span><div class="name-line"><strong>Elizabeth</strong><span class="flag">🇵🇹</span></div></div><div class="chips"><span class="chip chip--type">Groupe</span><span class="chip chip--platform booking">Booking.com</span></div></div><div class="rev-text"><p>Logement très bien organisé, idéal pour quelques jours à la plage.</p></div><div class="rev-date">Évalué : 11 juillet 2025</div></article>
+        <article class="rev-card" data-platform="booking"><div class="rev-top"><div class="rev-id"><span class="avatar">J</span><div class="name-line"><strong>Juan</strong><span class="flag">🇪🇸</span></div></div><div class="chips"><span class="chip chip--type">Solo</span><span class="chip chip--platform booking">Booking.com</span></div></div><div class="rev-text"><p>Appartement spacieux, très propre, quartier calme et stationnement facile.</p></div><div class="rev-date">Évalué : 12 juin 2025</div></article>
+        <article class="rev-card" data-platform="airbnb"><div class="rev-top"><div class="rev-id"><span class="avatar">C</span><div class="name-line"><strong>Carlotta</strong><span class="flag">🇩🇪</span></div></div><div class="chips"><span class="chip chip--type">Famille</span><span class="chip chip--platform airbnb">Airbnb</span></div></div><div class="rev-text"><p>Bel appartement proche de la plage — impeccable, calme et reposant. Nous reviendrons en famille.</p></div><div class="rev-date">Évalué : août 2025</div></article>
+        <article class="rev-card" data-platform="airbnb"><div class="rev-top"><div class="rev-id"><span class="avatar">L</span><div class="name-line"><strong>Lénia</strong><span class="flag">🇵🇹</span></div></div><div class="chips"><span class="chip chip--type">Couple</span><span class="chip chip--platform airbnb">Airbnb</span></div></div><div class="rev-text"><p>Expérience cinq étoiles — nous avons adoré le séjour et l'ambiance. Nous reviendrons sans hésiter.</p></div><div class="rev-date">Évalué : juillet 2025</div></article>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ CALENDAR ═══════════════════════════════════════════════════ -->
+<div id="calendar">
+  <div class="calendar-inner ps-scope" data-lang="pt">
+    <div data-i18n-block="pt"><h2 class="ps-h1">Calendário de Disponibilidade</h2></div>
+    <div data-i18n-block="en"><h2 class="ps-h1">Availability Calendar</h2></div>
+    <div data-i18n-block="fr"><h2 class="ps-h1">Calendrier de Disponibilité</h2></div>
+    <div class="pingotel-container">
+      <div class="pingotel-embed" data-form="oms7lfyd"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ CONTACT ════════════════════════════════════════════════════ -->
+<div id="contact">
+  <div class="contact-inner ps-scope" data-lang="pt">
+    <div data-i18n-block="pt"><h2 class="ps-h1">Contacto</h2></div>
+    <div data-i18n-block="en"><h2 class="ps-h1">Contact</h2></div>
+    <div data-i18n-block="fr"><h2 class="ps-h1">Contact</h2></div>
+    <div class="address-block">
+      <strong>Ocean Side — 162327/AL</strong>
+      Praceta José Saramago 305 - A, 3rd Left<br>8950-437 Altura, Portugal
+      <strong>Beachside — 170254/AL</strong>
+      Rua da Alagoa 107, Edifício Al-Paranaguá<br>3rd Floor D, 8950-437 Altura, Portugal
+    </div>
+    <div class="contact-links">
+      <a class="contact-link" href="https://youtu.be/CwSCYQrg_f8" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M21.8 8s-.2-1.4-.8-2c-.8-.8-1.6-.8-2-.9C16.8 5 12 5 12 5s-4.8 0-7 .1c-.4.1-1.2.1-2 .9-.6.6-.8 2-.8 2S2 9.6 2 11.2v1.5c0 1.6.2 3.2.2 3.2s.2 1.4.8 2c.8.8 1.8.8 2.3.8C6.8 19 12 19 12 19s4.8 0 7-.1c.4-.1 1.2-.1 2-.9.6-.6.8-2 .8-2s.2-1.6.2-3.2v-1.5C22 9.6 21.8 8 21.8 8zM10 15V9l5.5 3-5.5 3z"/></svg>
+        YouTube
+      </a>
+      <a class="contact-link" href="mailto:christopher@permanentsummer.co">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 7L2 7"/></svg>
+        Email
+      </a>
+      <a class="contact-link" href="https://whatsapp.com/dl/" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12c0 1.85.5 3.58 1.37 5.07L2 22l5.09-1.33A9.94 9.94 0 0012 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm5.01 14.16c-.21.58-1.22 1.12-1.67 1.19-.45.07-.99.1-1.59-.1-.37-.12-.84-.28-1.44-.55-2.52-1.09-4.17-3.62-4.3-3.79-.13-.17-1.05-1.39-1.05-2.65s.67-1.88.9-2.14c.24-.26.52-.32.69-.32h.5c.16 0 .38-.06.59.45.21.52.73 1.77.79 1.9.06.13.1.28.02.45-.08.17-.12.27-.24.42-.12.14-.25.32-.36.43-.12.12-.24.25-.1.49.14.24.62 1.02 1.33 1.65.91.81 1.68 1.06 1.92 1.17.24.12.38.1.52-.06.14-.16.59-.69.75-.93.16-.24.32-.2.54-.12.22.08 1.4.66 1.64.78.24.12.4.17.46.27.06.1.06.58-.15 1.16z"/></svg>
+        WhatsApp
+      </a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>© 2025 Permanent Summer · Altura, Algarve · All rights reserved</p>
+</footer>
+
+<!-- ══ SCRIPTS ════════════════════════════════════════════════════ -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+<script async src="https://app.pingotel.com/embed-scripts/book.js"></script>
+
+<script>
+/* ─── CAROUSEL ───────────────────────────────────────────────── */
+function initCarousel(trackId, dotsId, autoMs) {
+  const track = document.getElementById(trackId);
+  const dotsWrap = document.getElementById(dotsId);
+  if (!track) return;
+  const slides = track.querySelectorAll('.carousel-slide');
+  const total = slides.length;
+  if (!total) return;
+  let current = 0, timer = null;
+  const carousel = track.closest('.carousel');
+  // Build dots
+  if (dotsWrap) {
+    for (let i = 0; i < total; i++) {
+      const d = document.createElement('button');
+      d.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+      d.setAttribute('aria-label', 'Slide ' + (i + 1));
+      d.addEventListener('click', () => goTo(i));
+      dotsWrap.appendChild(d);
+    }
+  }
+  function goTo(n) {
+    current = ((n % total) + total) % total;
+    track.style.transform = 'translateX(-' + (current * 100) + '%)';
+    if (dotsWrap) dotsWrap.querySelectorAll('.carousel-dot').forEach((d, i) => d.classList.toggle('active', i === current));
+    resetAuto();
+  }
+  function resetAuto() {
+    clearInterval(timer);
+    if (autoMs) timer = setInterval(() => goTo(current + 1), autoMs);
+  }
+  if (carousel) {
+    carousel.querySelectorAll('.carousel-btn').forEach(btn => {
+      btn.addEventListener('click', e => { e.stopPropagation(); goTo(current + (btn.classList.contains('next') ? 1 : -1)); });
+    });
+    let sx = 0;
+    carousel.addEventListener('touchstart', e => { sx = e.touches[0].clientX; }, { passive: true });
+    carousel.addEventListener('touchend', e => { const dx = e.changedTouches[0].clientX - sx; if (Math.abs(dx) > 40) goTo(current + (dx < 0 ? 1 : -1)); });
+  }
+  resetAuto();
+}
+initCarousel('beach-track', 'beach-dots', 4500);
+
+/* ─── MAP ────────────────────────────────────────────────────── */
+(function () {
+  const OS = [37.174878, -7.504644];
+  const BS = [37.173125, -7.498954];
+  const map = L.map('so-map', { zoomControl: true }).setView([(OS[0]+BS[0])/2, (OS[1]+BS[1])/2], 15);
+  map.attributionControl.setPrefix(false);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '© OpenStreetMap contributors' }).addTo(map);
+
+  const pin = c => L.icon({ iconUrl: 'data:image/svg+xml;utf8,' + encodeURIComponent(`<svg width="28" height="40" viewBox="0 0 28 40" xmlns="http://www.w3.org/2000/svg"><path d="M14 0C6.82 0 1 5.82 1 13c0 9.61 11.42 22.62 12.03 23.33.54.63 1.4.63 1.94 0C15.58 35.62 27 22.61 27 13 27 5.82 21.18 0 14 0z" fill="${c}"/><circle cx="14" cy="13" r="5.2" fill="#fff"/></svg>`), iconSize:[28,40], iconAnchor:[14,40], popupAnchor:[0,-36] });
+  const lay = { apts: L.layerGroup().addTo(map), food: L.layerGroup().addTo(map), sup: L.layerGroup().addTo(map), views: L.layerGroup().addTo(map), search: L.layerGroup().addTo(map) };
+  [['Oceanside Apartment', OS], ['Beachside Apartment', BS]].forEach(([n, ll]) => {
+    const m = L.marker(ll, { icon: pin('#C49125'), zIndexOffset: 1000 }).bindPopup(`<div class="popup-title" style="color:#C49125">${n}</div>`, { closeButton: false });
+    m.on('mouseover', () => { m.setIcon(pin('#D2B559')); m.openPopup(); });
+    m.on('mouseout', () => m.setIcon(pin('#C49125')));
+    lay.apts.addLayer(m);
+  });
+
+  const ovp = q => fetch('https://overpass-api.de/api/interpreter?data=' + encodeURIComponent(q)).then(r => { if (!r.ok) throw 0; return r.json(); });
+  const nm = (t, c) => { let n = (t && (t.name || t['name:en'])) || (t && t.description) || ''; if (!n) { n = (c||'POI').replace(/_/g,' '); n = n[0].toUpperCase() + n.slice(1); } return n; };
+  const pStyle = (c, big) => ({ radius: big?6:5, color: c, weight: 2, fillColor: c, fillOpacity: .9 });
+  const hov = (m, c) => { m.on('mouseover', () => { m.setStyle({ color:'#D2B559', fillColor:'#D2B559' }); m.openPopup(); }); m.on('mouseout', () => m.setStyle({ color:c, fillColor:c })); };
+
+  async function loadPOIs() {
+    const b = map.getBounds(), bb = `${b.getSouth()},${b.getWest()},${b.getNorth()},${b.getEast()}`, lim = map.getZoom()>=14?1400:900;
+    try {
+      const brd = "Pingo Doce|Intermarché|Intermarche|ALDI|Lidl|Continente";
+      const [fD, sD, vD] = await Promise.all([
+        ovp(`[out:json][timeout:30][bbox:${bb}];node["amenity"~"^(restaurant|cafe|bar|fast_food|pub)$"];out tags center ${lim};`),
+        ovp(`[out:json][timeout:30][bbox:${bb}];(node["shop"="supermarket"]["brand"~"${brd}",i];way["shop"="supermarket"]["brand"~"${brd}",i];);out tags center ${lim};`),
+        ovp(`[out:json][timeout:30][bbox:${bb}];(node["tourism"="viewpoint"];node["tourism"="attraction"];node["leisure"~"^(water_park|sports_centre|park|playground)$"];);out tags center ${lim};`)
+      ]);
+      lay.food.clearLayers(); lay.sup.clearLayers(); lay.views.clearLayers();
+      const rend = (data, layer, c, big) => (data.elements||[]).forEach(el => {
+        const lat = el.lat||(el.center&&el.center.lat), lon = el.lon||(el.center&&el.center.lon);
+        if (!lat) return;
+        const t = el.tags||{}, cat = t.amenity||t.shop||t.tourism||t.leisure||'poi';
+        const m = L.circleMarker([lat,lon], pStyle(c,big)).addTo(layer);
+        m.bindPopup(`<div class="popup-title">${nm(t,cat)}</div><div class="popup-meta">${cat}</div>`, { closeButton:false });
+        hov(m, c);
+      });
+      rend(fD, lay.food, '#114061'); rend(sD, lay.sup, '#D2B559'); rend(vD, lay.views, '#F9C332', true);
+      syncT();
+    } catch(e) { console.warn('POI error', e); }
+  }
+
+  async function search(term) {
+    term = (term||'').trim(); lay.search.clearLayers(); if (!term) return;
+    const esc = term.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'), pat = `.*${esc}.*`;
+    const b = map.getBounds(), bb = `${b.getSouth()},${b.getWest()},${b.getNorth()},${b.getEast()}`;
+    try {
+      let d = await ovp(`[out:json][timeout:30][bbox:${bb}];(node["name"~"${pat}",i];node["amenity"~"${pat}",i];node["shop"~"${pat}",i];way["name"~"${pat}",i];);out tags center;`);
+      if (!(d.elements||[]).length) { const c = map.getCenter(); d = await ovp(`[out:json][timeout:30];(node(around:20000,${c.lat},${c.lng})["name"~"${pat}",i];node(around:20000,${c.lat},${c.lng})["amenity"~"${pat}",i];);out tags center;`); }
+      svT(); setT(false,false,false,true); syncT();
+      const pts = [];
+      (d.elements||[]).forEach(el => {
+        const lat = el.lat||(el.center&&el.center.lat), lon = el.lon||(el.center&&el.center.lon); if (!lat) return;
+        const t = el.tags||{}, cat = t.amenity||t.shop||'service';
+        const m = L.circleMarker([lat,lon], pStyle('#2E7D32')).addTo(lay.search);
+        m.bindPopup(`<div class="popup-title">${nm(t,cat)}</div><div class="popup-meta">${cat}</div>`, { closeButton:false });
+        hov(m,'#2E7D32'); pts.push([lat,lon]);
+      });
+      if (pts.length) map.fitBounds(L.featureGroup(pts.map(ll=>L.marker(ll))).getBounds().pad(.2));
+    } catch(e) { console.warn('Search error', e); }
+  }
+
+  const chk = { food: document.getElementById('chk-food'), sup: document.getElementById('chk-sup'), views: document.getElementById('chk-views'), search: document.getElementById('chk-search') };
+  function syncT() { Object.entries(chk).forEach(([k,el]) => el && (el.checked ? map.addLayer(lay[k]) : map.removeLayer(lay[k]))); }
+  let prev = { food:true, sup:true, views:true, search:true };
+  function svT() { prev = { food:chk.food.checked, sup:chk.sup.checked, views:chk.views.checked, search:chk.search.checked }; }
+  function setT(f,s,v,sr) { chk.food.checked=f; chk.sup.checked=s; chk.views.checked=v; chk.search.checked=sr; }
+  Object.values(chk).forEach(el => el && el.addEventListener('change', syncT));
+  const inp = document.getElementById('so-q');
+  document.getElementById('so-search').addEventListener('submit', e => { e.preventDefault(); search(inp.value); });
+  document.getElementById('so-clear').addEventListener('click', () => { inp.value=''; lay.search.clearLayers(); setT(prev.food,prev.sup,prev.views,prev.search); syncT(); });
+  let dt; map.on('moveend', () => { clearTimeout(dt); dt=setTimeout(loadPOIs,450); });
+  map.on('zoomend', () => { clearTimeout(dt); dt=setTimeout(loadPOIs,450); });
+  loadPOIs();
+})();
+
+/* ─── LANGUAGE ───────────────────────────────────────────────── */
+(function () {
+  const LS = 'ps-lang';
+  function apply(lang) {
+    document.querySelectorAll('.ps-scope').forEach(el => el.setAttribute('data-lang', lang));
+    const h = document.getElementById('ps-header');
+    if (h) {
+      h.setAttribute('data-lang', lang);
+      h.querySelectorAll(':scope > [data-i18n-block]').forEach(b =>
+        b.style.setProperty('display', b.getAttribute('data-i18n-block')===lang?'flex':'none', 'important')
+      );
+    }
+    document.querySelectorAll('.ps-lang-btn').forEach(b => b.setAttribute('aria-current', b.dataset.setlang===lang?'true':'false'));
+    localStorage.setItem(LS, lang);
+  }
+  apply(localStorage.getItem(LS) || 'pt');
+  document.addEventListener('click', e => { const b = e.target.closest('.ps-lang-btn'); if (b) apply(b.dataset.setlang||'pt'); });
+  // Touch dropdowns
+  const h = document.getElementById('ps-header');
+  if (h && window.matchMedia('(hover:none)').matches) {
+    h.querySelectorAll('.has-dropdown').forEach(wrap => {
+      const btn = wrap.querySelector('.dd-trigger'), dd = wrap.querySelector('.dropdown');
+      if (!btn||!dd) return;
+      btn.addEventListener('click', e => {
+        e.preventDefault();
+        const open = dd.style.display==='block';
+        h.querySelectorAll('.dropdown').forEach(d => d.style.display='none');
+        if (!open) { dd.style.display='block'; btn.setAttribute('aria-expanded','true'); }
+      });
+    });
+    document.addEventListener('click', e => { if (!e.target.closest('#ps-header .has-dropdown')) h.querySelectorAll('.dropdown').forEach(d => d.style.display='none'); });
+  }
+})();
+</script>
+</body>
+</html>
