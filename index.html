@@ -50,27 +50,15 @@ img { display: block; max-width: 100%; }
   background: transparent; transition: background .3s, padding .3s, box-shadow .3s;
 }
 #ps-header.scrolled { background: var(--paper); padding: 13px var(--gut); box-shadow: 0 1px 0 var(--line); }
-.wordmark { font: 600 1.3rem var(--disp); color: var(--paper); letter-spacing: .01em; transition: color .3s; white-space: nowrap; }
+.wordmark { font: 600 1.15rem var(--disp); color: var(--paper); letter-spacing: .01em; transition: color .3s; white-space: nowrap; }
 #ps-header.scrolled .wordmark { color: var(--ink); }
 
-.nav-links { display: flex; align-items: center; gap: 32px; }
-.nav-links > [data-i18n-block] { display: none; align-items: center; gap: 32px; }
-.nav-links > [data-i18n-block="pt"] { display: flex; }
-.nav-link {
-  font: 500 .74rem var(--body); text-transform: uppercase; letter-spacing: .12em;
-  color: var(--paper); opacity: .92; transition: color .3s, opacity .2s;
-}
-#ps-header.scrolled .nav-link { color: var(--ink); }
-.nav-link:hover { opacity: 1; }
-.has-dropdown { position: relative; }
-.dropdown {
-  display: none; position: absolute; top: calc(100% + 16px); left: 50%; transform: translateX(-50%);
-  min-width: 170px; background: var(--paper); border: 1px solid var(--line); padding: 6px 0; z-index: 200;
-}
-@media (hover: hover) { .has-dropdown:hover > .dropdown { display: block; } }
-.has-dropdown:focus-within > .dropdown { display: block; }
-.dd-item { display: block; padding: 11px 18px; font: 400 .82rem var(--body); color: var(--ink) !important; transition: background .2s; }
-.dd-item:hover { background: var(--stone); }
+.nav-left { display: flex; align-items: center; gap: 18px; }
+.nav-icon { display: flex; color: var(--paper); opacity: .92; transition: color .3s, opacity .2s; }
+#ps-header.scrolled .nav-icon { color: var(--ink); }
+.nav-icon:hover { opacity: 1; }
+.nav-divider { width: 1px; height: 20px; background: rgba(255,255,255,.35); transition: background .3s; }
+#ps-header.scrolled .nav-divider { background: var(--line); }
 
 .nav-right { display: flex; align-items: center; gap: 20px; }
 .ps-lang-bar { display: flex; gap: 8px; }
@@ -86,7 +74,11 @@ img { display: block; max-width: 100%; }
   background: var(--khaki); color: var(--ink); padding: 11px 20px; transition: background .2s;
 }
 .nav-cta:hover { background: var(--khaki-d); }
-.nav-toggle { display: none; }
+.nav-toggle {
+  display: flex; align-items: center; background: none; border: 0; cursor: pointer;
+  color: var(--paper); transition: color .3s;
+}
+#ps-header.scrolled .nav-toggle { color: var(--ink); }
 
 .hero { position: relative; height: 96svh; min-height: 620px; overflow: hidden; }
 .hero-bg {
@@ -99,15 +91,17 @@ img { display: block; max-width: 100%; }
   display: flex; flex-direction: column; align-items: center; justify-content: center;
   padding: 0 var(--gut); max-width: 900px; margin: 0 auto;
 }
-.hero-title { font: 600 clamp(2.3rem, 5.6vw, 4.1rem) var(--disp); color: var(--paper); line-height: 1.1; }
-.hero-rule { width: 64px; height: 1px; background: rgba(255,255,255,.65); margin: 24px auto; }
-.hero-sub { color: rgba(255,255,255,.9); font-size: 1.02rem; max-width: 44ch; margin: 0 auto; }
+.hero-eyebrow { font: 500 .82rem var(--body); text-transform: uppercase; letter-spacing: .22em; color: rgba(255,255,255,.85); margin-bottom: 16px; }
+.hero-title { font: 600 clamp(3.2rem, 10vw, 6.4rem) var(--disp); color: var(--paper); line-height: .96; }
+.hero-sub { color: rgba(255,255,255,.9); font-size: 1.05rem; max-width: 44ch; margin: 18px auto 0; }
 .hero-btn { margin-top: 30px; display: inline-block; font: 500 .78rem var(--body); text-transform: uppercase; letter-spacing: .12em; color: var(--paper); border: 1px solid rgba(255,255,255,.7); padding: 14px 30px; transition: background .2s, color .2s; }
 .hero-btn:hover { background: var(--paper); color: var(--ink); }
 
-.search-bar-wrap { position: absolute; left: 0; right: 0; bottom: -32px; z-index: 5; display: flex; justify-content: center; padding: 0 var(--gut); }
+.search-bar-wrap { position: relative; z-index: 5; display: flex; flex-direction: column; align-items: center; gap: 16px; margin-top: 40px; padding: 0 var(--gut); width: 100%; }
+.hero-trust { font: 500 .84rem var(--body); color: rgba(255,255,255,.85); }
+.hero-trust strong { color: var(--paper); }
 .search-bar {
-  background: var(--paper); display: flex; align-items: stretch; box-shadow: 0 18px 40px rgba(20,33,31,.18);
+  background: var(--paper); display: flex; align-items: stretch; box-shadow: 0 18px 40px rgba(20,33,31,.28);
   max-width: 760px; width: 100%; flex-wrap: wrap;
 }
 .search-field { flex: 1; min-width: 140px; padding: 16px 22px; border-right: 1px solid var(--line); }
@@ -242,6 +236,18 @@ footer { background: #0D1615; color: rgba(235,238,230,.55); padding: 64px var(--
 .footer-social a { width: 34px; height: 34px; border: 1px solid rgba(235,238,230,.25); border-radius: 50%; display: flex; align-items: center; justify-content: center; }
 .footer-bottom { max-width: var(--max); margin: 48px auto 0; padding-top: 22px; border-top: 1px solid rgba(235,238,230,.12); font-size: .78rem; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
 
+/* nav panel (opened by the hamburger at every width) */
+.mobile-panel { display: none; position: fixed; inset: 0; z-index: 950; background: var(--paper); padding: 100px var(--gut) 40px; flex-direction: column; gap: 20px; overflow-y: auto; }
+.mobile-panel.open { display: flex; }
+.mobile-panel a { font: 600 1.5rem var(--disp); color: var(--ink); }
+.mobile-panel .panel-cta {
+  display: inline-block; margin-top: 8px; font: 600 .78rem var(--body); text-transform: uppercase; letter-spacing: .1em;
+  background: var(--khaki); color: var(--ink); padding: 14px 24px; width: fit-content;
+}
+.mobile-panel .ps-lang-bar { display: flex; gap: 14px; margin-top: 18px; }
+.mobile-panel .ps-lang-btn { color: var(--ink); opacity: .55; font-size: .95rem; }
+.mobile-close { position: absolute; top: 26px; right: var(--gut); background: none; border: 0; font-size: 1.8rem; color: var(--ink); cursor: pointer; }
+
 @media (max-width: 960px) {
   .intro-grid, .host-grid, .contact-grid, .dest-track { grid-template-columns: 1fr !important; gap: 34px !important; }
   .apt-detail-grid { grid-template-columns: 1fr !important; gap: 34px !important; }
@@ -250,66 +256,48 @@ footer { background: #0D1615; color: rgba(235,238,230,.55); padding: 64px var(--
   .review-wall { columns: 1; }
   .ig-grid { grid-template-columns: repeat(2, 1fr); }
   .footer-grid { grid-template-columns: 1fr 1fr; }
-  .nav-links, .ps-lang-bar, .nav-cta { display: none; }
-  .nav-toggle { display: flex; align-items: center; gap: 8px; background: none; border: 0; cursor: pointer; color: var(--paper); }
-  #ps-header.scrolled .nav-toggle { color: var(--ink); }
   .search-bar { flex-direction: column; }
   .search-field { border-right: 0; border-bottom: 1px solid var(--line); }
-  .mobile-panel { display: none; position: fixed; inset: 0; z-index: 950; background: var(--paper); padding: 90px var(--gut) 40px; flex-direction: column; gap: 22px; }
-  .mobile-panel.open { display: flex; }
-  .mobile-panel a { font: 600 1.3rem var(--disp); color: var(--ink); }
-  .mobile-panel .ps-lang-bar { display: flex; margin-top: 10px; }
-  .mobile-panel .ps-lang-btn { color: var(--ink); opacity: .55; font-size: .95rem; }
-  .mobile-close { position: absolute; top: 26px; right: var(--gut); background: none; border: 0; font-size: 1.6rem; color: var(--ink); cursor: pointer; }
+}
+
+@media (max-width: 640px) {
+  .nav-cta, .nav-right .ps-lang-bar { display: none; }
 }
 </style>
 </head>
 <body>
 
 <header id="ps-header">
-  <a class="wordmark" href="#top">Permanent Summer</a>
-
-  <nav class="nav-links ps-scope" data-lang="pt" aria-label="Main navigation">
-    <div data-i18n-block="pt">
-      <a class="nav-link" href="#region">A Região</a>
-      <span class="has-dropdown"><a class="nav-link" href="#apartments">Apartamentos</a><div class="dropdown"><a class="dd-item" href="#oceanside">Ocean Side</a><a class="dd-item" href="#beachside">Beachside</a></div></span>
-      <a class="nav-link" href="#reviews">Opiniões</a>
-      <a class="nav-link" href="#contact">Contacto</a>
-    </div>
-    <div data-i18n-block="en">
-      <a class="nav-link" href="#region">The Region</a>
-      <span class="has-dropdown"><a class="nav-link" href="#apartments">Apartments</a><div class="dropdown"><a class="dd-item" href="#oceanside">Ocean Side</a><a class="dd-item" href="#beachside">Beachside</a></div></span>
-      <a class="nav-link" href="#reviews">Reviews</a>
-      <a class="nav-link" href="#contact">Contact</a>
-    </div>
-    <div data-i18n-block="fr">
-      <a class="nav-link" href="#region">La Région</a>
-      <span class="has-dropdown"><a class="nav-link" href="#apartments">Appartements</a><div class="dropdown"><a class="dd-item" href="#oceanside">Ocean Side</a><a class="dd-item" href="#beachside">Beachside</a></div></span>
-      <a class="nav-link" href="#reviews">Avis</a>
-      <a class="nav-link" href="#contact">Contact</a>
-    </div>
-  </nav>
-
+  <div class="nav-left">
+    <button class="nav-toggle" id="mobile-open" aria-label="Open menu">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M2 5h16M2 10h16M2 15h16" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+    </button>
+    <a class="wordmark" href="#top">Permanent Summer</a>
+  </div>
   <div class="nav-right">
+    <a class="nav-icon" href="https://whatsapp.com/dl/" target="_blank" rel="noopener" aria-label="WhatsApp">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12c0 1.85.5 3.58 1.37 5.07L2 22l5.09-1.33A9.94 9.94 0 0012 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm5.01 14.16c-.21.58-1.22 1.12-1.67 1.19-.45.07-.99.1-1.59-.1-.37-.12-.84-.28-1.44-.55-2.52-1.09-4.17-3.62-4.3-3.79-.13-.17-1.05-1.39-1.05-2.65s.67-1.88.9-2.14c.24-.26.52-.32.69-.32h.5c.16 0 .38-.06.59.45.21.52.73 1.77.79 1.9.06.13.1.28.02.45-.08.17-.12.27-.24.42-.12.14-.25.32-.36.43-.12.12-.24.25-.1.49.14.24.62 1.02 1.33 1.65.91.81 1.68 1.06 1.92 1.17.24.12.38.1.52-.06.14-.16.59-.69.75-.93.16-.24.32-.2.54-.12.22.08 1.4.66 1.64.78.24.12.4.17.46.27.06.1.06.58-.15 1.16z"/></svg>
+    </a>
+    <span class="nav-divider"></span>
+    <a class="nav-cta" href="#calendar">Book Direct</a>
     <div class="ps-lang-bar" aria-label="Language">
       <button class="ps-lang-btn" data-setlang="pt" aria-current="true">PT</button>
       <button class="ps-lang-btn" data-setlang="en">EN</button>
       <button class="ps-lang-btn" data-setlang="fr">FR</button>
     </div>
-    <a class="nav-cta" href="#calendar">Book Direct</a>
-    <button class="nav-toggle" id="mobile-open" aria-label="Open menu">
-      <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M2 5h16M2 10h16M2 15h16" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
-    </button>
   </div>
 </header>
 
 <div class="mobile-panel" id="mobile-panel">
   <button class="mobile-close" id="mobile-close" aria-label="Close menu">&times;</button>
   <a href="#region">The Region</a>
+  <a href="#apartments">Apartments</a>
   <a href="#oceanside">Ocean Side</a>
   <a href="#beachside">Beachside</a>
   <a href="#reviews">Reviews</a>
+  <a href="#instagram">Instagram</a>
   <a href="#contact">Contact</a>
+  <a href="#calendar" class="panel-cta">Book Direct</a>
   <div class="ps-lang-bar">
     <button class="ps-lang-btn" data-setlang="pt" aria-current="true">PT</button>
     <button class="ps-lang-btn" data-setlang="en">EN</button>
@@ -321,51 +309,49 @@ footer { background: #0D1615; color: rgba(235,238,230,.55); padding: 64px var(--
   <div class="hero-bg" aria-hidden="true"></div>
   <div class="hero-inner ps-scope" data-lang="pt">
     <div data-i18n-block="pt">
-      <h1 class="hero-title">O seu refúgio no Algarve</h1>
-      <div class="hero-rule"></div>
-      <p class="hero-sub">Dois apartamentos junto ao mar em Altura, com o anfitrião a poucos minutos de distância.</p>
-      <a class="hero-btn" href="#apartments">Ver apartamentos</a>
+      <p class="hero-eyebrow">As suas férias de sonho</p>
+      <h1 class="hero-title">Altura</h1>
+      <p class="hero-sub">Dois apartamentos junto ao mar no Algarve, geridos diretamente por nós.</p>
+      <div class="search-bar-wrap">
+        <form class="search-bar" id="search-bar-pt">
+          <div class="search-field"><label>Apartamento</label><select><option>Ambos</option><option>Ocean Side</option><option>Beachside</option></select></div>
+          <div class="search-field"><label>Check-in</label><input type="date"></div>
+          <div class="search-field"><label>Check-out</label><input type="date"></div>
+          <div class="search-field"><label>Hóspedes</label><select><option>1</option><option selected>2</option><option>3</option><option>4</option></select></div>
+          <button type="submit" class="search-go">Ver disponibilidade</button>
+        </form>
+        <p class="hero-trust">Avaliações <strong>excelentes</strong> · Booking.com &amp; Airbnb</p>
+      </div>
     </div>
     <div data-i18n-block="en">
-      <h1 class="hero-title">Your Algarve escape</h1>
-      <div class="hero-rule"></div>
-      <p class="hero-sub">Two seaside apartments in Altura, with a host who's minutes away, not a call centre.</p>
-      <a class="hero-btn" href="#apartments">See the apartments</a>
+      <p class="hero-eyebrow">Your dream getaway</p>
+      <h1 class="hero-title">Altura</h1>
+      <p class="hero-sub">Two seaside apartments in the Algarve, run directly by us.</p>
+      <div class="search-bar-wrap">
+        <form class="search-bar" id="search-bar-en">
+          <div class="search-field"><label>Apartment</label><select><option>Either</option><option>Ocean Side</option><option>Beachside</option></select></div>
+          <div class="search-field"><label>Check-in</label><input type="date"></div>
+          <div class="search-field"><label>Check-out</label><input type="date"></div>
+          <div class="search-field"><label>Guests</label><select><option>1</option><option selected>2</option><option>3</option><option>4</option></select></div>
+          <button type="submit" class="search-go">Check availability</button>
+        </form>
+        <p class="hero-trust"><strong>Excellent</strong> reviews · Booking.com &amp; Airbnb</p>
+      </div>
     </div>
     <div data-i18n-block="fr">
-      <h1 class="hero-title">Votre échappée en Algarve</h1>
-      <div class="hero-rule"></div>
-      <p class="hero-sub">Deux appartements en bord de mer à Altura, avec un hôte à quelques minutes, pas un centre d'appels.</p>
-      <a class="hero-btn" href="#apartments">Voir les appartements</a>
-    </div>
-  </div>
-  <div class="search-bar-wrap ps-scope" data-lang="pt">
-    <div data-i18n-block="pt">
-      <form class="search-bar" id="search-bar-pt">
-        <div class="search-field"><label>Apartamento</label><select><option>Ambos</option><option>Ocean Side</option><option>Beachside</option></select></div>
-        <div class="search-field"><label>Check-in</label><input type="date"></div>
-        <div class="search-field"><label>Check-out</label><input type="date"></div>
-        <div class="search-field"><label>Hóspedes</label><select><option>1</option><option selected>2</option><option>3</option><option>4</option></select></div>
-        <button type="submit" class="search-go">Ver disponibilidade</button>
-      </form>
-    </div>
-    <div data-i18n-block="en">
-      <form class="search-bar" id="search-bar-en">
-        <div class="search-field"><label>Apartment</label><select><option>Either</option><option>Ocean Side</option><option>Beachside</option></select></div>
-        <div class="search-field"><label>Check-in</label><input type="date"></div>
-        <div class="search-field"><label>Check-out</label><input type="date"></div>
-        <div class="search-field"><label>Guests</label><select><option>1</option><option selected>2</option><option>3</option><option>4</option></select></div>
-        <button type="submit" class="search-go">Check availability</button>
-      </form>
-    </div>
-    <div data-i18n-block="fr">
-      <form class="search-bar" id="search-bar-fr">
-        <div class="search-field"><label>Appartement</label><select><option>Les deux</option><option>Ocean Side</option><option>Beachside</option></select></div>
-        <div class="search-field"><label>Arrivée</label><input type="date"></div>
-        <div class="search-field"><label>Départ</label><input type="date"></div>
-        <div class="search-field"><label>Voyageurs</label><select><option>1</option><option selected>2</option><option>3</option><option>4</option></select></div>
-        <button type="submit" class="search-go">Disponibilités</button>
-      </form>
+      <p class="hero-eyebrow">Vos vacances de rêve</p>
+      <h1 class="hero-title">Altura</h1>
+      <p class="hero-sub">Deux appartements en bord de mer en Algarve, gérés directement par nous.</p>
+      <div class="search-bar-wrap">
+        <form class="search-bar" id="search-bar-fr">
+          <div class="search-field"><label>Appartement</label><select><option>Les deux</option><option>Ocean Side</option><option>Beachside</option></select></div>
+          <div class="search-field"><label>Arrivée</label><input type="date"></div>
+          <div class="search-field"><label>Départ</label><input type="date"></div>
+          <div class="search-field"><label>Voyageurs</label><select><option>1</option><option selected>2</option><option>3</option><option>4</option></select></div>
+          <button type="submit" class="search-go">Disponibilités</button>
+        </form>
+        <p class="hero-trust">Avis <strong>excellents</strong> · Booking.com &amp; Airbnb</p>
+      </div>
     </div>
   </div>
 </section>
@@ -512,7 +498,7 @@ footer { background: #0D1615; color: rgba(235,238,230,.55); padding: 64px var(--
           <li>Micro-ondas</li><li>Máquina de café expresso</li><li>Máquina de lavar roupa e loiça</li><li>Varanda com vista de mar</li>
           <li>Acesso por elevador</li><li>Estacionamento gratuito próximo</li>
         </ul>
-        <div class="apt-actions"><a class="btn-solid" href="https://app.pingotel.com/book/oms7lfyd" target="_blank" rel="noopener">Reservar agora</a></div>
+        <div class="apt-actions"><a class="btn-solid" href="#calendar">Reservar agora</a></div>
       </div>
       <div data-i18n-block="en">
         <h3 class="apt-title">Ocean Side</h3>
@@ -523,7 +509,7 @@ footer { background: #0D1615; color: rgba(235,238,230,.55); padding: 64px var(--
           <li>Microwave</li><li>Espresso machine</li><li>Washing machine &amp; dishwasher</li><li>Balcony with sea view</li>
           <li>Elevator access</li><li>Free parking nearby</li>
         </ul>
-        <div class="apt-actions"><a class="btn-solid" href="https://app.pingotel.com/book/oms7lfyd" target="_blank" rel="noopener">Reserve now</a></div>
+        <div class="apt-actions"><a class="btn-solid" href="#calendar">Reserve now</a></div>
       </div>
       <div data-i18n-block="fr">
         <h3 class="apt-title">Ocean Side</h3>
@@ -534,7 +520,7 @@ footer { background: #0D1615; color: rgba(235,238,230,.55); padding: 64px var(--
           <li>Micro-ondes</li><li>Machine à expresso</li><li>Lave-linge &amp; lave-vaisselle</li><li>Balcon avec vue mer</li>
           <li>Accès par ascenseur</li><li>Parking gratuit à proximité</li>
         </ul>
-        <div class="apt-actions"><a class="btn-solid" href="https://app.pingotel.com/book/oms7lfyd" target="_blank" rel="noopener">Réserver maintenant</a></div>
+        <div class="apt-actions"><a class="btn-solid" href="#calendar">Réserver maintenant</a></div>
       </div>
     </div>
   </div>
@@ -568,7 +554,7 @@ footer { background: #0D1615; color: rgba(235,238,230,.55); padding: 64px var(--
           <li>Micro-ondas</li><li>Máquina de café expresso</li><li>Máquina de lavar roupa e loiça</li><li>Varanda com vista de mar</li>
           <li>Estacionamento gratuito próximo</li><li>3.º andar — sem elevador</li>
         </ul>
-        <div class="apt-actions"><a class="btn-solid" href="https://app.pingotel.com/book/oms7lfyd" target="_blank" rel="noopener">Reservar agora</a></div>
+        <div class="apt-actions"><a class="btn-solid" href="#calendar">Reservar agora</a></div>
       </div>
       <div data-i18n-block="en">
         <h3 class="apt-title">Beachside</h3>
@@ -579,7 +565,7 @@ footer { background: #0D1615; color: rgba(235,238,230,.55); padding: 64px var(--
           <li>Microwave</li><li>Espresso machine</li><li>Washing machine &amp; dishwasher</li><li>Balcony with sea view</li>
           <li>Free parking nearby</li><li>3rd floor — no elevator</li>
         </ul>
-        <div class="apt-actions"><a class="btn-solid" href="https://app.pingotel.com/book/oms7lfyd" target="_blank" rel="noopener">Reserve now</a></div>
+        <div class="apt-actions"><a class="btn-solid" href="#calendar">Reserve now</a></div>
       </div>
       <div data-i18n-block="fr">
         <h3 class="apt-title">Beachside</h3>
@@ -590,7 +576,7 @@ footer { background: #0D1615; color: rgba(235,238,230,.55); padding: 64px var(--
           <li>Micro-ondes</li><li>Machine à expresso</li><li>Lave-linge &amp; lave-vaisselle</li><li>Balcon avec vue mer</li>
           <li>Parking gratuit à proximité</li><li>3ᵉ étage — sans ascenseur</li>
         </ul>
-        <div class="apt-actions"><a class="btn-solid" href="https://app.pingotel.com/book/oms7lfyd" target="_blank" rel="noopener">Réserver maintenant</a></div>
+        <div class="apt-actions"><a class="btn-solid" href="#calendar">Réserver maintenant</a></div>
       </div>
     </div>
   </div>
@@ -728,11 +714,11 @@ footer { background: #0D1615; color: rgba(235,238,230,.55); padding: 64px var(--
 
 <section class="section section--stone" id="calendar">
   <div class="section-inner ps-scope" data-lang="pt">
-    <div data-i18n-block="pt"><h2 class="head">Calendário de disponibilidade</h2></div>
-    <div data-i18n-block="en"><h2 class="head">Availability calendar</h2></div>
-    <div data-i18n-block="fr"><h2 class="head">Calendrier de disponibilité</h2></div>
-    <div class="map-card" style="min-height:480px; background:var(--paper);">
-      <div class="pingotel-embed" data-form="oms7lfyd"></div>
+    <div data-i18n-block="pt"><h2 class="head">Disponibilidade &amp; reserva</h2><p class="lede" style="margin-top:14px;">Reserve diretamente connosco através do nosso sistema de reservas — sem comissões de plataformas.</p></div>
+    <div data-i18n-block="en"><h2 class="head">Availability &amp; booking</h2><p class="lede" style="margin-top:14px;">Book directly with us through our own booking system — no platform commissions.</p></div>
+    <div data-i18n-block="fr"><h2 class="head">Disponibilité &amp; réservation</h2><p class="lede" style="margin-top:14px;">Réservez directement avec nous via notre propre système — sans commission de plateforme.</p></div>
+    <div class="map-card" style="min-height:220px; background:var(--paper); display:flex; align-items:center; justify-content:center; padding:40px;">
+      <a class="btn-solid" href="#" id="book-direct-trigger">Book Direct</a>
     </div>
   </div>
 </section>
@@ -804,7 +790,6 @@ footer { background: #0D1615; color: rgba(235,238,230,.55); padding: 64px var(--
 </footer>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
-<script async src="https://app.pingotel.com/embed-scripts/book.js"></script>
 <script src="https://permanentsummer.github.io/direct-booking/widget.js"
   data-workspace="7c5d4583-de11-43f1-bb71-658aaf591f4e"
   data-color="#2C5164"
@@ -832,6 +817,14 @@ document.querySelectorAll('.search-bar').forEach(f => f.addEventListener('submit
   e.preventDefault();
   document.getElementById('calendar').scrollIntoView({ behavior: 'smooth' });
 }));
+
+/* Book Direct trigger — the SummerFlow widget script self-mounts (likely as a
+   floating button); we don't yet know its JS API for opening it programmatically
+   from a custom button, so this just avoids a dead "#" jump for now. */
+(function () {
+  const trigger = document.getElementById('book-direct-trigger');
+  if (trigger) trigger.addEventListener('click', e => e.preventDefault());
+})();
 
 function initCarousel(trackId, dotsId, autoMs) {
   const track = document.getElementById(trackId);
@@ -955,9 +948,6 @@ initCarousel('beach-track', 'beach-dots', 4500);
   const LS = 'ps-lang';
   function apply(lang) {
     document.querySelectorAll('.ps-scope').forEach(el => el.setAttribute('data-lang', lang));
-    document.querySelectorAll('.nav-links > [data-i18n-block]').forEach(b => {
-      b.style.display = b.getAttribute('data-i18n-block') === lang ? 'flex' : 'none';
-    });
     document.querySelectorAll('.ps-lang-btn').forEach(b => b.setAttribute('aria-current', b.dataset.setlang === lang ? 'true' : 'false'));
     localStorage.setItem(LS, lang);
   }
