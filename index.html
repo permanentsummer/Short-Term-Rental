@@ -104,17 +104,41 @@ img { display: block; max-width: 100%; }
   background: var(--paper); display: flex; align-items: stretch; box-shadow: 0 18px 40px rgba(20,33,31,.28);
   max-width: 760px; width: 100%; flex-wrap: wrap;
 }
-.search-field { flex: 1; min-width: 140px; padding: 16px 22px; border-right: 1px solid var(--line); }
+.search-field { flex: 1; min-width: 150px; padding: 20px 24px; border-right: 1px solid var(--line); position: relative; }
 .search-field:last-of-type { border-right: 0; }
-.search-field label { display: block; font: 500 .66rem var(--body); text-transform: uppercase; letter-spacing: .1em; color: var(--ink-soft); margin-bottom: 4px; }
+.search-field label { display: block; font: 500 .66rem var(--body); text-transform: uppercase; letter-spacing: .1em; color: var(--ink-soft); margin-bottom: 6px; }
 .search-field select, .search-field input {
-  border: 0; outline: 0; font: 400 .9rem var(--body); color: var(--ink); width: 100%; background: transparent;
+  border: 0; outline: 0; font: 400 .95rem var(--body); color: var(--ink); width: 100%; background: transparent;
 }
 .search-go {
-  background: var(--tan); color: var(--ink); border: 0; padding: 0 30px; font: 600 .74rem var(--body);
-  text-transform: uppercase; letter-spacing: .1em; cursor: pointer; transition: background .2s; white-space: nowrap;
+  background: var(--ink); color: var(--paper); border: 0; padding: 0 40px; font: 600 .82rem var(--body);
+  text-transform: uppercase; letter-spacing: .14em; cursor: pointer; transition: background .2s; white-space: nowrap;
 }
-.search-go:hover { background: #B48F55; }
+.search-go:hover { background: var(--azulejo); }
+
+/* date field + calendar panel */
+.date-trigger { border: 0; outline: 0; background: transparent; text-align: left; font: 400 .95rem var(--body); color: var(--ink); width: 100%; cursor: pointer; padding: 0; }
+.date-panel {
+  display: none; position: absolute; top: calc(100% + 16px); left: 0; z-index: 60;
+  background: var(--paper); box-shadow: 0 24px 60px rgba(20,33,31,.28); padding: 28px; width: min(760px, 92vw);
+}
+.date-panel.open { display: block; }
+.date-panel-months { display: flex; gap: 44px; flex-wrap: wrap; }
+.date-month { flex: 1; min-width: 260px; }
+.date-month-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; font: 500 1.05rem var(--disp); color: var(--ink); }
+.date-nav { background: none; border: 0; cursor: pointer; font-size: 1.3rem; color: var(--ink-soft); width: 30px; height: 30px; line-height: 1; }
+.date-nav[disabled] { opacity: .2; cursor: default; }
+.date-weekrow, .date-daysrow { display: grid; grid-template-columns: repeat(7, 1fr); text-align: center; }
+.date-weekrow span { font: 500 .68rem var(--body); text-transform: uppercase; color: var(--ink-soft); padding: 6px 0; }
+.date-day { padding: 9px 0; font-size: .9rem; cursor: pointer; color: var(--ink); }
+.date-day.blank { visibility: hidden; }
+.date-day.past { color: var(--line); text-decoration: line-through; cursor: default; }
+.date-day.in-range { background: var(--stone); }
+.date-day.selected { background: var(--ink); color: var(--paper); }
+.date-panel-footer { margin-top: 22px; display: flex; justify-content: flex-end; }
+.date-clear { border: 1px solid var(--line); background: none; padding: 12px 20px; font: 500 .76rem var(--body); text-transform: uppercase; letter-spacing: .06em; cursor: pointer; }
+.date-clear:hover { background: var(--stone); }
+@media (max-width: 700px) { .date-panel-months { flex-direction: column; gap: 24px; } }
 
 .section { padding: 128px var(--gut) 108px; }
 .section-inner { max-width: var(--max); margin: 0 auto; }
@@ -155,6 +179,30 @@ p.lede { font-size: 1.02rem; line-height: 1.75; color: var(--ink-soft); max-widt
 .dest-loc { margin-top: 3px; color: var(--ink-soft); font-size: .88rem; }
 .dest-specs { margin-top: 6px; color: var(--ink-soft); font-size: .84rem; }
 .dest-cta { margin-top: 10px; display: inline-block; font: 500 .76rem var(--body); text-transform: uppercase; letter-spacing: .08em; border-bottom: 1px solid var(--ink); padding-bottom: 2px; }
+
+/* search results (listing + map) */
+.results-head { display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; margin-bottom: 30px; }
+.results-count { font: 500 1.4rem var(--disp); }
+.results-close { background: none; border: 1px solid var(--line); padding: 10px 18px; font: 500 .78rem var(--body); cursor: pointer; transition: background .2s; }
+.results-close:hover { background: var(--stone); }
+.results-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 40px; align-items: start; }
+.results-list { display: flex; flex-direction: column; gap: 26px; }
+.results-card { display: grid; grid-template-columns: 200px 1fr; gap: 20px; border: 1px solid var(--line); }
+.results-photo { aspect-ratio: 4/3; overflow: hidden; }
+.results-photo img { width: 100%; height: 100%; object-fit: cover; }
+.results-body { padding: 18px 18px 18px 0; }
+.results-name { font: 600 1.15rem var(--disp); }
+.results-loc { color: var(--ink-soft); font-size: .84rem; margin-top: 2px; }
+.results-specs { color: var(--ink-soft); font-size: .84rem; margin-top: 8px; }
+.results-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.results-tag { font: 500 .74rem var(--body); background: var(--stone); color: var(--ink-soft); padding: 6px 12px; }
+.results-map-wrap { position: sticky; top: 100px; height: 640px; border: 1px solid var(--line); }
+#results-map { width: 100%; height: 100%; }
+@media (max-width: 960px) {
+  .results-grid { grid-template-columns: 1fr !important; }
+  .results-map-wrap { position: relative; top: 0; height: 380px; }
+  .results-card { grid-template-columns: 1fr; }
+}
 
 .apt-detail { scroll-margin-top: 90px; }
 .apt-detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
@@ -315,10 +363,16 @@ footer { background: #0D1615; color: rgba(235,238,230,.55); padding: 64px var(--
       <div class="search-bar-wrap">
         <form class="search-bar" id="search-bar-pt">
           <div class="search-field"><label>Apartamento</label><select><option>Ambos</option><option>Ocean Side</option><option>Beachside</option></select></div>
-          <div class="search-field"><label>Check-in</label><input type="date"></div>
-          <div class="search-field"><label>Check-out</label><input type="date"></div>
+          <div class="search-field date-field">
+            <label>Datas</label>
+            <button type="button" class="date-trigger">Selecionar datas</button>
+            <div class="date-panel">
+              <div class="date-panel-months"></div>
+              <div class="date-panel-footer"><button type="button" class="date-clear">Limpar datas</button></div>
+            </div>
+          </div>
           <div class="search-field"><label>Hóspedes</label><select><option>1</option><option selected>2</option><option>3</option><option>4</option></select></div>
-          <button type="submit" class="search-go">Ver disponibilidade</button>
+          <button type="submit" class="search-go">Pesquisar</button>
         </form>
         <p class="hero-trust">Avaliações <strong>excelentes</strong> · Booking.com &amp; Airbnb</p>
       </div>
@@ -330,10 +384,16 @@ footer { background: #0D1615; color: rgba(235,238,230,.55); padding: 64px var(--
       <div class="search-bar-wrap">
         <form class="search-bar" id="search-bar-en">
           <div class="search-field"><label>Apartment</label><select><option>Either</option><option>Ocean Side</option><option>Beachside</option></select></div>
-          <div class="search-field"><label>Check-in</label><input type="date"></div>
-          <div class="search-field"><label>Check-out</label><input type="date"></div>
+          <div class="search-field date-field">
+            <label>Dates</label>
+            <button type="button" class="date-trigger">Select dates</button>
+            <div class="date-panel">
+              <div class="date-panel-months"></div>
+              <div class="date-panel-footer"><button type="button" class="date-clear">Clear dates</button></div>
+            </div>
+          </div>
           <div class="search-field"><label>Guests</label><select><option>1</option><option selected>2</option><option>3</option><option>4</option></select></div>
-          <button type="submit" class="search-go">Check availability</button>
+          <button type="submit" class="search-go">Search</button>
         </form>
         <p class="hero-trust"><strong>Excellent</strong> reviews · Booking.com &amp; Airbnb</p>
       </div>
@@ -345,13 +405,65 @@ footer { background: #0D1615; color: rgba(235,238,230,.55); padding: 64px var(--
       <div class="search-bar-wrap">
         <form class="search-bar" id="search-bar-fr">
           <div class="search-field"><label>Appartement</label><select><option>Les deux</option><option>Ocean Side</option><option>Beachside</option></select></div>
-          <div class="search-field"><label>Arrivée</label><input type="date"></div>
-          <div class="search-field"><label>Départ</label><input type="date"></div>
+          <div class="search-field date-field">
+            <label>Dates</label>
+            <button type="button" class="date-trigger">Sélectionner les dates</button>
+            <div class="date-panel">
+              <div class="date-panel-months"></div>
+              <div class="date-panel-footer"><button type="button" class="date-clear">Effacer les dates</button></div>
+            </div>
+          </div>
           <div class="search-field"><label>Voyageurs</label><select><option>1</option><option selected>2</option><option>3</option><option>4</option></select></div>
-          <button type="submit" class="search-go">Disponibilités</button>
+          <button type="submit" class="search-go">Rechercher</button>
         </form>
         <p class="hero-trust">Avis <strong>excellents</strong> · Booking.com &amp; Airbnb</p>
       </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="search-results" style="display:none; padding-top:150px; padding-bottom:80px;">
+  <div class="section-inner ps-scope" data-lang="pt">
+    <div class="results-head">
+      <div data-i18n-block="pt"><span class="results-count">2 apartamentos</span></div>
+      <div data-i18n-block="en"><span class="results-count">2 apartments</span></div>
+      <div data-i18n-block="fr"><span class="results-count">2 appartements</span></div>
+      <button type="button" class="results-close" id="results-close">
+        <span data-i18n-block="pt">Fechar pesquisa</span><span data-i18n-block="en">Close search</span><span data-i18n-block="fr">Fermer la recherche</span> &times;
+      </button>
+    </div>
+    <div class="results-grid">
+      <div class="results-list">
+        <a class="results-card" href="#oceanside">
+          <div class="results-photo"><div class="dest-placeholder">Photos coming soon</div></div>
+          <div class="results-body">
+            <div class="results-name">Ocean Side</div>
+            <div class="results-loc">Altura, Algarve</div>
+            <div class="results-specs" data-i18n-block="pt">4 hóspedes · 1 quarto · varanda vista mar</div>
+            <div class="results-specs" data-i18n-block="en">4 guests · 1 bedroom · sea-view balcony</div>
+            <div class="results-specs" data-i18n-block="fr">4 pers. · 1 chambre · balcon vue mer</div>
+            <div class="results-tags">
+              <span class="results-tag" data-i18n-block="pt">800m da praia</span><span class="results-tag" data-i18n-block="en">800m from the beach</span><span class="results-tag" data-i18n-block="fr">à 800m de la plage</span>
+              <span class="results-tag" data-i18n-block="pt">Acesso por elevador</span><span class="results-tag" data-i18n-block="en">Elevator access</span><span class="results-tag" data-i18n-block="fr">Accès par ascenseur</span>
+            </div>
+          </div>
+        </a>
+        <a class="results-card" href="#beachside">
+          <div class="results-photo"><img src="assets/images/beachside/IMG_3681.jpg" alt="Beachside" loading="lazy"></div>
+          <div class="results-body">
+            <div class="results-name">Beachside</div>
+            <div class="results-loc">Altura, Algarve</div>
+            <div class="results-specs" data-i18n-block="pt">4 hóspedes · 1 quarto · varanda vista mar</div>
+            <div class="results-specs" data-i18n-block="en">4 guests · 1 bedroom · sea-view balcony</div>
+            <div class="results-specs" data-i18n-block="fr">4 pers. · 1 chambre · balcon vue mer</div>
+            <div class="results-tags">
+              <span class="results-tag" data-i18n-block="pt">300m da praia</span><span class="results-tag" data-i18n-block="en">300m from the beach</span><span class="results-tag" data-i18n-block="fr">à 300m de la plage</span>
+              <span class="results-tag" data-i18n-block="pt">Localização central</span><span class="results-tag" data-i18n-block="en">Central location</span><span class="results-tag" data-i18n-block="fr">Emplacement central</span>
+            </div>
+          </div>
+        </a>
+      </div>
+      <div class="results-map-wrap"><div id="results-map"></div></div>
     </div>
   </div>
 </section>
@@ -813,17 +925,146 @@ footer { background: #0D1615; color: rgba(235,238,230,.55); padding: 64px var(--
   panel && panel.querySelectorAll('a').forEach(a => a.addEventListener('click', () => panel.classList.remove('open')));
 })();
 
+/* ─── SEARCH → SHOW RESULTS PANEL (not the bottom calendar) ─────── */
 document.querySelectorAll('.search-bar').forEach(f => f.addEventListener('submit', e => {
   e.preventDefault();
-  document.getElementById('calendar').scrollIntoView({ behavior: 'smooth' });
+  const panel = document.getElementById('search-results');
+  panel.style.display = 'block';
+  panel.scrollIntoView({ behavior: 'smooth' });
+  initResultsMap();
 }));
+document.getElementById('results-close') && document.getElementById('results-close').addEventListener('click', () => {
+  document.getElementById('search-results').style.display = 'none';
+  document.getElementById('top').scrollIntoView({ behavior: 'smooth' });
+});
 
-/* Book Direct trigger — the SummerFlow widget script self-mounts (likely as a
-   floating button); we don't yet know its JS API for opening it programmatically
-   from a custom button, so this just avoids a dead "#" jump for now. */
 (function () {
   const trigger = document.getElementById('book-direct-trigger');
   if (trigger) trigger.addEventListener('click', e => e.preventDefault());
+})();
+
+let resultsMapInited = false;
+function initResultsMap() {
+  if (resultsMapInited) return;
+  resultsMapInited = true;
+  const OS = [37.174878, -7.504644];
+  const BS = [37.173125, -7.498954];
+  const m = L.map('results-map', { zoomControl: true, scrollWheelZoom: false }).setView([(OS[0]+BS[0])/2, (OS[1]+BS[1])/2], 15);
+  m.attributionControl.setPrefix(false);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '© OpenStreetMap contributors' }).addTo(m);
+  const pin = c => L.icon({ iconUrl: 'data:image/svg+xml;utf8,' + encodeURIComponent(`<svg width="26" height="36" viewBox="0 0 26 36" xmlns="http://www.w3.org/2000/svg"><path d="M13 0C6.37 0 1 5.37 1 12c0 8.9 10.6 20.9 11.15 21.55.5.58 1.3.58 1.8 0C14.4 32.9 25 20.9 25 12 25 5.37 19.63 0 13 0z" fill="${c}"/><circle cx="13" cy="12" r="4.8" fill="#fff"/></svg>`), iconSize:[26,36], iconAnchor:[13,36], popupAnchor:[0,-32] });
+  L.marker(OS, { icon: pin('#B9B36A') }).addTo(m).bindPopup('<div class="popup-title">Ocean Side</div>');
+  L.marker(BS, { icon: pin('#B9B36A') }).addTo(m).bindPopup('<div class="popup-title">Beachside</div>');
+  setTimeout(() => m.invalidateSize(), 200);
+}
+
+/* ─── DATE-RANGE PICKER (two-month calendar) ─────────────────────── */
+(function () {
+  const MONTHS = {
+    pt: ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'],
+    en: ['January','February','March','April','May','June','July','August','September','October','November','December'],
+    fr: ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre']
+  };
+  const DAYS = {
+    pt: ['Seg','Ter','Qua','Qui','Sex','Sáb','Dom'],
+    en: ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],
+    fr: ['Lun','Mar','Mer','Jeu','Ven','Sam','Dim']
+  };
+  const CLEAR_LABEL = { pt: 'Selecionar datas', en: 'Select dates', fr: 'Sélectionner les dates' };
+
+  function fmt(d) { return String(d.getDate()).padStart(2,'0') + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + d.getFullYear(); }
+  function sameDay(a,b) { return a && b && a.getFullYear()===b.getFullYear() && a.getMonth()===b.getMonth() && a.getDate()===b.getDate(); }
+  function startOfToday() { const d = new Date(); d.setHours(0,0,0,0); return d; }
+
+  document.querySelectorAll('.date-field').forEach(field => {
+    const form = field.closest('form');
+    const lang = form.id.split('-').pop(); // search-bar-pt -> pt
+    const trigger = field.querySelector('.date-trigger');
+    const panel = field.querySelector('.date-panel');
+    const monthsWrap = panel.querySelector('.date-panel-months');
+    const clearBtn = panel.querySelector('.date-clear');
+    const state = { baseOffset: 0, checkIn: null, checkOut: null };
+
+    function render() {
+      monthsWrap.innerHTML = '';
+      const today = startOfToday();
+      for (let i = 0; i < 2; i++) {
+        const view = new Date(today.getFullYear(), today.getMonth() + state.baseOffset + i, 1);
+        const y = view.getFullYear(), mo = view.getMonth();
+        const daysInMonth = new Date(y, mo + 1, 0).getDate();
+        const firstWeekday = (new Date(y, mo, 1).getDay() + 6) % 7;
+
+        const monthEl = document.createElement('div');
+        monthEl.className = 'date-month';
+
+        const head = document.createElement('div');
+        head.className = 'date-month-head';
+        const prevBtn = document.createElement('button');
+        prevBtn.type = 'button'; prevBtn.className = 'date-nav'; prevBtn.innerHTML = '&#8249;';
+        prevBtn.style.visibility = i === 0 ? 'visible' : 'hidden';
+        prevBtn.disabled = state.baseOffset <= 0;
+        prevBtn.addEventListener('click', () => { if (state.baseOffset > 0) { state.baseOffset--; render(); } });
+        const label = document.createElement('span');
+        label.textContent = MONTHS[lang][mo] + ' ' + y;
+        const nextBtn = document.createElement('button');
+        nextBtn.type = 'button'; nextBtn.className = 'date-nav'; nextBtn.innerHTML = '&#8250;';
+        nextBtn.style.visibility = i === 1 ? 'visible' : 'hidden';
+        nextBtn.addEventListener('click', () => { state.baseOffset++; render(); });
+        head.appendChild(prevBtn); head.appendChild(label); head.appendChild(nextBtn);
+        monthEl.appendChild(head);
+
+        const weekRow = document.createElement('div');
+        weekRow.className = 'date-weekrow';
+        DAYS[lang].forEach(d => { const s = document.createElement('span'); s.textContent = d; weekRow.appendChild(s); });
+        monthEl.appendChild(weekRow);
+
+        const daysRow = document.createElement('div');
+        daysRow.className = 'date-daysrow';
+        for (let b = 0; b < firstWeekday; b++) { const s = document.createElement('span'); s.className = 'date-day blank'; daysRow.appendChild(s); }
+        for (let d = 1; d <= daysInMonth; d++) {
+          const cellDate = new Date(y, mo, d);
+          const cell = document.createElement('span');
+          cell.className = 'date-day';
+          cell.textContent = d;
+          if (cellDate < today) {
+            cell.classList.add('past');
+          } else {
+            if (state.checkIn && sameDay(cellDate, state.checkIn)) cell.classList.add('selected');
+            if (state.checkOut && sameDay(cellDate, state.checkOut)) cell.classList.add('selected');
+            if (state.checkIn && state.checkOut && cellDate > state.checkIn && cellDate < state.checkOut) cell.classList.add('in-range');
+            cell.addEventListener('click', () => {
+              if (!state.checkIn || (state.checkIn && state.checkOut) || cellDate <= state.checkIn) {
+                state.checkIn = cellDate; state.checkOut = null;
+              } else {
+                state.checkOut = cellDate;
+              }
+              render();
+              if (state.checkIn && state.checkOut) {
+                trigger.textContent = fmt(state.checkIn) + ' → ' + fmt(state.checkOut);
+              }
+            });
+          }
+          daysRow.appendChild(cell);
+        }
+        monthEl.appendChild(daysRow);
+        monthsWrap.appendChild(monthEl);
+      }
+    }
+
+    trigger.addEventListener('click', e => {
+      e.stopPropagation();
+      document.querySelectorAll('.date-panel.open').forEach(p => { if (p !== panel) p.classList.remove('open'); });
+      panel.classList.toggle('open');
+    });
+    clearBtn.addEventListener('click', () => {
+      state.checkIn = null; state.checkOut = null;
+      trigger.textContent = CLEAR_LABEL[lang] || CLEAR_LABEL.en;
+      render();
+    });
+    document.addEventListener('click', e => { if (!field.contains(e.target)) panel.classList.remove('open'); });
+
+    render();
+  });
 })();
 
 function initCarousel(trackId, dotsId, autoMs) {
