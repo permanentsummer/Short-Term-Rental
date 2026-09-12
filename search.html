@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Availability — Permanent Summer</title>
+<meta name="description" content="Check availability for Ocean Side and Beachside, our two apartments in Altura, Eastern Algarve.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,500;1,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
+
+<style>
+:root {
+  --ink:      #14211F;
+  --ink-soft: #4B5750;
+  --paper:    #FFFFFF;
+  --stone:    #EBEEE6;
+  --line:     #DADFD5;
+  --khaki:    #B9B36A;
+  --khaki-d:  #9C9656;
+  --tan:      #C9A66B;
+  --azulejo:  #2C5164;
+
+  --disp: "Playfair Display", Georgia, serif;
+  --body: "Inter", system-ui, sans-serif;
+
+  --max: 1280px;
+  --gut: clamp(20px, 5vw, 70px);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { background: var(--paper); color: var(--ink); font-family: var(--body); font-size: 16px; line-height: 1.5; -webkit-font-smoothing: antialiased; }
+a { color: inherit; text-decoration: none; }
+img { display: block; max-width: 100%; }
+::selection { background: var(--khaki); color: var(--ink); }
+@media (prefers-reduced-motion: reduce) { * { animation-duration: .001ms !important; transition-duration: .001ms !important; scroll-behavior: auto !important; } }
+
+.ps-scope [data-i18n-block]                      { display: none !important; }
+.ps-scope[data-lang="pt"] [data-i18n-block="pt"] { display: block !important; }
+.ps-scope[data-lang="en"] [data-i18n-block="en"] { display: block !important; }
+.ps-scope[data-lang="fr"] [data-i18n-block="fr"] { display: block !important; }
+
+#ps-header {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 900;
+  padding: 20px var(--gut);
+  display: flex; align-items: center; justify-content: space-between; gap: 24px;
+  background: transparent; transition: background .3s, padding .3s, box-shadow .3s;
+}
+#ps-header.scrolled { background: var(--paper); padding: 13px var(--gut); box-shadow: 0 1px 0 var(--line); }
+.wordmark { font: 600 1.15rem var(--disp); color: var(--paper); letter-spacing: .01em; transition: color .3s; white-space: nowrap; }
+#ps-header.scrolled .wordmark { color: var(--ink); }
+
+.nav-left { display: flex; align-items: center; gap: 18px; }
+.nav-icon { display: flex; color: var(--paper); opacity: .92; transition: color .3s, opacity .2s; }
+#ps-header.scrolled .nav-icon { color: var(--ink); }
+.nav-icon:hover { opacity: 1; }
+.nav-divider { width: 1px; height: 20px; background: rgba(255,255,255,.35); transition: background .3s; }
+#ps-header.scrolled .nav-divider { background: var(--line); }
+
+.nav-right { display: flex; align-items: center; gap: 20px; }
+.ps-lang-bar { display: flex; gap: 8px; }
+.ps-lang-btn {
+  appearance: none; border: 0; background: none; cursor: pointer;
+  font: 500 .74rem var(--body); letter-spacing: .06em; color: var(--paper); opacity: .6;
+  padding: 2px 3px; transition: opacity .2s, color .3s;
+}
+#ps-header.scrolled .ps-lang-btn { color: var(--ink); }
+.ps-lang-btn[aria-current="true"] { opacity: 1; text-decoration: underline; text-underline-offset: 4px; }
+.nav-cta {
+  font: 600 .72rem var(--body); text-transform: uppercase; letter-spacing: .1em;
+  background: var(--khaki); color: var(--ink); padding: 11px 20px; transition: background .2s;
+}
+.nav-cta:hover { background: var(--khaki-d); }
+.nav-toggle {
+  display: flex; align-items: center; background: none; border: 0; cursor: pointer;
+  color: var(--paper); transition: color .3s;
+}
+#ps-header.scrolled .nav-toggle { color: var(--ink); }
+
+.hero { position: relative; height: 96svh; min-height: 620px; overflow: hidden; }
+.hero-bg {
+  position: absolute; inset: 0;
+  background: linear-gradient(0deg, rgba(20,33,31,.5) 0%, rgba(20,33,31,.08) 45%, rgba(20,33,31,.4) 100%),
+              url('assets/images/beachside/IMG_3696.jpg') center 40%/cover no-repeat;
+}
+.hero-inner {
+  position: relative; z-index: 1; height: 100%; text-align: center;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  padding: 0 var(--gut); max-width: 900px; margin: 0 auto;
+}
+.hero-eyebrow { font: 500 .82rem var(--body); text-transform: uppercase; letter-spacing: .22em; color: rgba(255,255,255,.85); margin-bottom: 16px; }
+.hero-title { font: 600 clamp(3.2rem, 10vw, 6.4rem) var(--disp); color: var(--paper); line-height: .96; }
+.hero-sub { color: rgba(255,255,255,.9); font-size: 1.05rem; max-width: 44ch; margin: 18px auto 0; }
+.hero-btn { margin-top: 30px; display: inline-block; font: 500 .78rem var(--body); text-transform: uppercase; letter-spacing: .12em; color: var(--paper); border: 1px solid rgba(255,255,255,.7); padding: 14px 30px; transition: background .2s, color .2s; }
+.hero-btn:hover { background: var(--paper); color: var(--ink); }
+
+.search-bar-wrap { position: relative; z-index: 5; display: flex; flex-direction: column; align-items: center; gap: 16px; margin-top: 40px; padding: 0 var(--gut); width: 100%; }
+.hero-trust { font: 500 .84rem var(--body); color: rgba(255,255,255,.85); }
+.hero-trust strong { color: var(--paper); }
+.search-bar {
+  background: var(--paper); display: flex; align-items: stretch; box-shadow: 0 18px 40px rgba(20,33,31,.28);
+  max-width: 760px; width: 100%; flex-wrap: wrap;
+}
+.search-field { flex: 1; min-width: 150px; padding: 20px 24px; border-right: 1px solid var(--line); position: relative; }
+.search-field:last-of-type { border-right: 0; }
+.search-field label { display: block; font: 500 .66rem var(--body); text-transform: uppercase; letter-spacing: .1em; color: var(--ink-soft); margin-bottom: 6px; }
+.search-field select, .search-field input {
+  border: 0; outline: 0; font: 400 .95rem var(--body); color: var(--ink); width: 100%; background: transparent;
+}
+.search-go {
+  background: var(--ink); color: var(--paper); border: 0; padding: 0 40px; font: 600 .82rem var(--body);
+  text-transform: uppercase; letter-spacing: .14em; cursor: pointer; transition: background .2s; white-space: nowrap;
+}
+.search-go:hover { background: var(--azulejo); }
+
+/* date field + calendar panel */
+.date-trigger { border: 0; outline: 0; background: transparent; text-align: left; font: 400 .95rem var(--body); color: var(--ink); width: 100%; cursor: pointer; padding: 0; }
+.date-panel {
+  display: none; position: absolute; top: calc(100% + 16px); left: 0; z-index: 60;
+  background: var(--paper); box-shadow: 0 24px 60px rgba(20,33,31,.28); padding: 28px; width: min(760px, 92vw);
+}
+.date-panel.open { display: block; }
+.date-panel-months { display: flex; gap: 44px; flex-wrap: wrap; }
+.date-month { flex: 1; min-width: 260px; }
+.date-month-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; font: 500 1.05rem var(--disp); color: var(--ink); }
+.date-nav { background: none; border: 0; cursor: pointer; font-size: 1.3rem; color: var(--ink-soft); width: 30px; height: 30px; line-height: 1; }
+.date-nav[disabled] { opacity: .2; cursor: default; }
+.date-weekrow, .date-daysrow { display: grid; grid-template-columns: repeat(7, 1fr); text-align: center; }
+.date-weekrow span { font: 500 .68rem var(--body); text-transform: uppercase; color: var(--ink-soft); padding: 6px 0; }
+.date-day { padding: 9px 0; font-size: .9rem; cursor: pointer; color: var(--ink); }
+.date-day.blank { visibility: hidden; }
+.date-day.past { color: var(--line); text-decoration: line-through; cursor: default; }
+.date-day.in-range { background: var(--stone); }
+.date-day.selected { background: var(--ink); color: var(--paper); }
+.date-panel-footer { margin-top: 22px; display: flex; justify-content: flex-end; }
+.date-clear { border: 1px solid var(--line); background: none; padding: 12px 20px; font: 500 .76rem var(--body); text-transform: uppercase; letter-spacing: .06em; cursor: pointer; }
+.date-clear:hover { background: var(--stone); }
+@media (max-width: 700px) { .date-panel-months { flex-direction: column; gap: 24px; } }
+
+.search-strip { padding: 130px var(--gut) 0; background: var(--stone); }
+.on-light .hero-trust { color: var(--ink-soft); }
+.on-light .hero-trust strong { color: var(--ink); }
+.search-strip .search-bar-wrap { margin-top: 0; padding-bottom: 30px; }
+
+.section { padding: 128px var(--gut) 108px; }
+.section-inner { max-width: var(--max); margin: 0 auto; }
+.section--stone { background: var(--stone); }
+.section--ink { background: var(--ink); color: var(--stone); }
+.eyebrow-italic { font: 500 1.2rem var(--disp); font-style: italic; color: var(--ink-soft); }
+h2.head { font: 600 clamp(1.9rem, 3.2vw, 2.7rem) var(--disp); line-height: 1.15; }
+p.lede { font-size: 1.02rem; line-height: 1.75; color: var(--ink-soft); max-width: 52ch; }
+.section--ink p.lede { color: rgba(235,238,230,.78); }
+
+.intro-grid { display: grid; grid-template-columns: .85fr 1.15fr; gap: 70px; align-items: center; }
+.intro-copy { border-left: 2px solid var(--khaki); padding-left: 32px; }
+.intro-copy p.lede { margin-top: 18px; }
+.intro-link { display: inline-block; margin-top: 22px; font: 500 .82rem var(--body); text-transform: uppercase; letter-spacing: .08em; border-bottom: 1px solid var(--ink); padding-bottom: 3px; }
+.intro-photo { aspect-ratio: 5/4; overflow: hidden; }
+.intro-photo img { width: 100%; height: 100%; object-fit: cover; }
+
+.feat-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 48px; margin-top: 56px; text-align: center; }
+.feat-icon {
+  width: 84px; height: 84px; border-radius: 50%; background: var(--stone);
+  display: flex; align-items: center; justify-content: center; margin: 0 auto 22px; color: var(--azulejo);
+}
+.feat-title { font: 600 1.2rem var(--disp); }
+.feat-text { margin-top: 10px; color: var(--ink-soft); font-size: .92rem; line-height: 1.6; max-width: 32ch; margin-inline: auto; }
+
+.host-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 70px; align-items: center; }
+.host-photo { aspect-ratio: 4/3.4; overflow: hidden; }
+.host-photo img { width: 100%; height: 100%; object-fit: cover; }
+
+.dest-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+.dest-track { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 44px; }
+.dest-card { display: block; }
+.dest-photo { aspect-ratio: 4/3; overflow: hidden; position: relative; }
+.dest-photo img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s; }
+.dest-card:hover .dest-photo img { transform: scale(1.05); }
+.dest-placeholder { width: 100%; height: 100%; background: var(--line); display: flex; align-items: center; justify-content: center; color: var(--ink-soft); font-size: .82rem; }
+.dest-name { margin-top: 18px; font: 600 1.25rem var(--disp); }
+.dest-loc { margin-top: 3px; color: var(--ink-soft); font-size: .88rem; }
+.dest-specs { margin-top: 6px; color: var(--ink-soft); font-size: .84rem; }
+.dest-cta { margin-top: 10px; display: inline-block; font: 500 .76rem var(--body); text-transform: uppercase; letter-spacing: .08em; border-bottom: 1px solid var(--ink); padding-bottom: 2px; }
+
+/* search results (listing + map) */
+.results-head { display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; margin-bottom: 30px; }
+.results-count { font: 500 1.4rem var(--disp); }
+.results-close { display: inline-block; background: none; border: 1px solid var(--line); padding: 10px 18px; font: 500 .78rem var(--body); cursor: pointer; transition: background .2s; }
+.results-close:hover { background: var(--stone); }
+.results-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 40px; align-items: start; }
+.results-list { display: flex; flex-direction: column; gap: 26px; }
+.results-card { display: grid; grid-template-columns: 200px 1fr; gap: 20px; border: 1px solid var(--line); }
+.results-photo { aspect-ratio: 4/3; overflow: hidden; }
+.results-photo img { width: 100%; height: 100%; object-fit: cover; }
+.results-body { padding: 18px 18px 18px 0; }
+.results-name { font: 600 1.15rem var(--disp); }
+.results-loc { color: var(--ink-soft); font-size: .84rem; margin-top: 2px; }
+.results-specs { color: var(--ink-soft); font-size: .84rem; margin-top: 8px; }
+.results-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.results-tag { font: 500 .74rem var(--body); background: var(--stone); color: var(--ink-soft); padding: 6px 12px; }
+.results-map-wrap { position: sticky; top: 100px; height: 640px; border: 1px solid var(--line); }
+#results-map { width: 100%; height: 100%; }
+@media (max-width: 960px) {
+  .results-grid { grid-template-columns: 1fr !important; }
+  .results-map-wrap { position: relative; top: 0; height: 380px; }
+  .results-card { grid-template-columns: 1fr; }
+}
+
+.apt-detail { scroll-margin-top: 90px; }
+.apt-detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
+.apt-detail.reverse .apt-detail-grid { direction: rtl; }
+.apt-detail.reverse .apt-detail-grid > * { direction: ltr; }
+.carousel { position: relative; aspect-ratio: 4/3; overflow: hidden; background: var(--line); }
+.carousel-track { display: flex; height: 100%; width: 100%; transition: transform .5s cubic-bezier(.4,0,.2,1); }
+.carousel-slide { min-width: 100%; height: 100%; }
+.carousel-slide img { width: 100%; height: 100%; object-fit: cover; }
+.carousel-btn { position: absolute; top: 50%; transform: translateY(-50%); z-index: 10; background: rgba(20,33,31,.55); color: #fff; border: 0; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 20px; transition: background .2s; }
+.carousel-btn:hover { background: var(--azulejo); }
+.carousel-btn.prev { left: 0; } .carousel-btn.next { right: 0; }
+.carousel-dots { position: absolute; bottom: 14px; left: 50%; transform: translateX(-50%); display: flex; gap: 7px; }
+.carousel-dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(255,255,255,.5); border: none; cursor: pointer; padding: 0; }
+.carousel-dot.active { background: #fff; }
+.carousel-placeholder { width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; color: var(--ink-soft); font-size: .84rem; }
+.apt-title { font: 600 2.2rem var(--disp); }
+.apt-tag { color: var(--azulejo); font-size: .9rem; margin-top: 10px; }
+.apt-desc { margin-top: 18px; font-size: 1rem; line-height: 1.7; color: var(--ink-soft); max-width: 46ch; }
+.apt-amenities { margin-top: 26px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px 24px; }
+.apt-amenities li { list-style: none; font-size: .9rem; color: var(--ink-soft); padding-left: 16px; position: relative; }
+.apt-amenities li::before { content: ""; position: absolute; left: 0; top: .62em; width: 6px; height: 1px; background: var(--khaki-d); }
+.apt-actions { margin-top: 32px; }
+.btn-solid { display: inline-block; font: 600 .76rem var(--body); text-transform: uppercase; letter-spacing: .1em; background: var(--ink); color: var(--paper); padding: 15px 28px; transition: background .2s; }
+.btn-solid:hover { background: var(--azulejo); }
+
+.trust-strip { padding: 46px var(--gut); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.trust-inner { max-width: var(--max); margin: 0 auto; display: flex; align-items: center; justify-content: center; gap: 48px; flex-wrap: wrap; text-align: center; }
+.trust-item { font: 500 .82rem var(--body); color: var(--ink-soft); letter-spacing: .02em; }
+.trust-item strong { color: var(--ink); font-family: var(--disp); font-size: 1rem; }
+
+.map-card { position: relative; border: 1px solid var(--line); margin-top: 40px; }
+#so-map { height: 560px; width: 100%; }
+.so-search { position: absolute; right: 14px; top: 14px; z-index: 500; background: var(--paper); border: 1px solid var(--line); display: flex; gap: 8px; align-items: center; padding: 9px 11px; }
+.so-search input { border: 0; outline: 0; font: 400 .88rem var(--body); min-width: 190px; color: var(--ink); background: transparent; }
+.so-search button { border: 0; padding: 7px 12px; cursor: pointer; font: 500 .76rem var(--body); }
+.so-search .go  { background: var(--azulejo); color: #fff; }
+.so-search .clr { background: var(--stone); color: var(--ink); }
+.so-legend { position: absolute; left: 14px; bottom: 14px; z-index: 400; min-width: 210px; background: var(--paper); border: 1px solid var(--line); padding: 12px 14px; font: 400 .78rem var(--body); color: var(--ink); }
+.so-legend .row { display: flex; align-items: center; gap: 9px; margin: 5px 0; }
+.swatch { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
+.legend-label { flex: 1; }
+.popup-title { font: 500 .86rem var(--body); color: var(--ink); }
+.popup-meta { font-size: .74rem; color: var(--ink-soft); margin-top: 2px; }
+
+.video-inner { position: relative; width: 100%; padding-top: 56.25%; border: 1px solid var(--line); }
+.video-inner iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+
+.review-wall { columns: 2 260px; column-gap: 48px; margin-top: 48px; }
+.review { break-inside: avoid; margin-bottom: 40px; }
+.review-quote { font: 500 1.08rem/1.6 var(--disp); font-style: italic; }
+.review-meta { margin-top: 14px; display: flex; align-items: center; gap: 10px; font-size: .84rem; color: var(--ink-soft); }
+.review-meta .plat { color: var(--azulejo); }
+
+.ig-head { display: flex; align-items: baseline; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+.ig-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-top: 40px; }
+.ig-tile { position: relative; aspect-ratio: 1; overflow: hidden; display: block; }
+.ig-tile img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s; }
+.ig-tile:hover img { transform: scale(1.06); }
+.ig-tile-overlay { position: absolute; inset: 0; background: rgba(20,33,31,0); display: flex; align-items: center; justify-content: center; color: #fff; font-size: 1.3rem; transition: background .25s; }
+.ig-tile:hover .ig-tile-overlay { background: rgba(20,33,31,.35); }
+
+.contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; }
+.addr { margin-top: 22px; }
+.addr strong { display: block; font: 600 1.05rem var(--disp); color: var(--khaki); margin-top: 20px; }
+.addr div { font-size: .92rem; color: rgba(235,238,230,.78); line-height: 1.7; }
+.contact-links { display: flex; flex-direction: column; gap: 12px; margin-top: 26px; align-items: flex-start; }
+.contact-link { display: inline-flex; align-items: center; gap: 10px; font-size: .94rem; border-bottom: 1px solid rgba(235,238,230,.3); padding-bottom: 3px; transition: border-color .2s, color .2s; }
+.contact-link:hover { border-color: var(--khaki); color: var(--khaki); }
+.contact-link svg { width: 17px; height: 17px; }
+
+footer { background: #0D1615; color: rgba(235,238,230,.55); padding: 64px var(--gut) 30px; }
+.footer-grid { max-width: var(--max); margin: 0 auto; display: grid; grid-template-columns: 1.3fr 1fr 1fr 1fr; gap: 40px; }
+.footer-col h4 { font: 500 .72rem var(--body); text-transform: uppercase; letter-spacing: .1em; color: rgba(235,238,230,.4); margin-bottom: 16px; }
+.footer-col a { display: block; font-size: .88rem; margin-bottom: 10px; color: rgba(235,238,230,.72); transition: color .2s; }
+.footer-col a:hover { color: var(--khaki); }
+.footer-word { font: 600 1.4rem var(--disp); color: var(--paper); }
+.footer-social { display: flex; gap: 14px; margin-top: 18px; }
+.footer-social a { width: 34px; height: 34px; border: 1px solid rgba(235,238,230,.25); border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+.footer-bottom { max-width: var(--max); margin: 48px auto 0; padding-top: 22px; border-top: 1px solid rgba(235,238,230,.12); font-size: .78rem; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+
+/* nav panel (opened by the hamburger at every width) */
+.mobile-panel { display: none; position: fixed; inset: 0; z-index: 950; background: var(--paper); padding: 100px var(--gut) 40px; flex-direction: column; gap: 20px; overflow-y: auto; }
+.mobile-panel.open { display: flex; }
+.mobile-panel a { font: 600 1.5rem var(--disp); color: var(--ink); }
+.mobile-panel .panel-cta {
+  display: inline-block; margin-top: 8px; font: 600 .78rem var(--body); text-transform: uppercase; letter-spacing: .1em;
+  background: var(--khaki); color: var(--ink); padding: 14px 24px; width: fit-content;
+}
+.mobile-panel .ps-lang-bar { display: flex; gap: 14px; margin-top: 18px; }
+.mobile-panel .ps-lang-btn { color: var(--ink); opacity: .55; font-size: .95rem; }
+.mobile-close { position: absolute; top: 26px; right: var(--gut); background: none; border: 0; font-size: 1.8rem; color: var(--ink); cursor: pointer; }
+
+@media (max-width: 960px) {
+  .intro-grid, .host-grid, .contact-grid, .dest-track { grid-template-columns: 1fr !important; gap: 34px !important; }
+  .apt-detail-grid { grid-template-columns: 1fr !important; gap: 34px !important; }
+  .apt-detail.reverse .apt-detail-grid { direction: ltr; }
+  .feat-row { grid-template-columns: 1fr; gap: 40px; }
+  .review-wall { columns: 1; }
+  .ig-grid { grid-template-columns: repeat(2, 1fr); }
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+  .search-bar { flex-direction: column; }
+  .search-field { border-right: 0; border-bottom: 1px solid var(--line); }
+}
+
+@media (max-width: 640px) {
+  .nav-cta, .nav-right .ps-lang-bar { display: none; }
+}
+</style>
+</head>
+<body>
+
+<header id="ps-header" class="scrolled">
+  <div class="nav-left">
+    <button class="nav-toggle" id="mobile-open" aria-label="Open menu">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M2 5h16M2 10h16M2 15h16" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+    </button>
+    <a class="wordmark" href="index.html">Permanent Summer</a>
+  </div>
+  <div class="nav-right">
+    <a class="nav-icon" href="https://whatsapp.com/dl/" target="_blank" rel="noopener" aria-label="WhatsApp">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12c0 1.85.5 3.58 1.37 5.07L2 22l5.09-1.33A9.94 9.94 0 0012 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm5.01 14.16c-.21.58-1.22 1.12-1.67 1.19-.45.07-.99.1-1.59-.1-.37-.12-.84-.28-1.44-.55-2.52-1.09-4.17-3.62-4.3-3.79-.13-.17-1.05-1.39-1.05-2.65s.67-1.88.9-2.14c.24-.26.52-.32.69-.32h.5c.16 0 .38-.06.59.45.21.52.73 1.77.79 1.9.06.13.1.28.02.45-.08.17-.12.27-.24.42-.12.14-.25.32-.36.43-.12.12-.24.25-.1.49.14.24.62 1.02 1.33 1.65.91.81 1.68 1.06 1.92 1.17.24.12.38.1.52-.06.14-.16.59-.69.75-.93.16-.24.32-.2.54-.12.22.08 1.4.66 1.64.78.24.12.4.17.46.27.06.1.06.58-.15 1.16z"/></svg>
+    </a>
+    <span class="nav-divider"></span>
+    <a class="nav-cta" href="index.html#calendar">Book Direct</a>
+    <div class="ps-lang-bar" aria-label="Language">
+      <button class="ps-lang-btn" data-setlang="pt" aria-current="true">PT</button>
+      <button class="ps-lang-btn" data-setlang="en">EN</button>
+      <button class="ps-lang-btn" data-setlang="fr">FR</button>
+    </div>
+  </div>
+</header>
+
+<div class="mobile-panel" id="mobile-panel">
+  <button class="mobile-close" id="mobile-close" aria-label="Close menu">&times;</button>
+  <a href="index.html#region">The Region</a>
+  <a href="index.html#apartments">Apartments</a>
+  <a href="index.html#oceanside">Ocean Side</a>
+  <a href="index.html#beachside">Beachside</a>
+  <a href="index.html#reviews">Reviews</a>
+  <a href="index.html#instagram">Instagram</a>
+  <a href="index.html#contact">Contact</a>
+  <a href="blog.html">Blog</a>
+  <a href="index.html#calendar" class="panel-cta">Book Direct</a>
+  <div class="ps-lang-bar">
+    <button class="ps-lang-btn" data-setlang="pt" aria-current="true">PT</button>
+    <button class="ps-lang-btn" data-setlang="en">EN</button>
+    <button class="ps-lang-btn" data-setlang="fr">FR</button>
+  </div>
+</div>
+
+<section class="search-strip" id="top">
+  <div class="section-inner">
+    <div class="search-bar-wrap on-light ps-scope" data-lang="pt">
+      <div data-i18n-block="pt">
+        <form class="search-bar" id="search-bar-pt" method="get" action="search.html">
+          <input type="hidden" name="lang" value="pt">
+          <div class="search-field"><label>Apartamento</label><select name="apt"><option value="all">Ambos</option><option value="ocean">Ocean Side</option><option value="beach">Beachside</option></select></div>
+          <div class="search-field date-field">
+            <label>Datas</label>
+            <button type="button" class="date-trigger">Selecionar datas</button>
+            <input type="hidden" name="checkin"><input type="hidden" name="checkout">
+            <div class="date-panel">
+              <div class="date-panel-months"></div>
+              <div class="date-panel-footer"><button type="button" class="date-clear">Limpar datas</button></div>
+            </div>
+          </div>
+          <div class="search-field"><label>Hóspedes</label><select name="guests"><option>1</option><option selected>2</option><option>3</option><option>4</option></select></div>
+          <button type="submit" class="search-go">Pesquisar</button>
+        </form>
+      </div>
+      <div data-i18n-block="en">
+        <form class="search-bar" id="search-bar-en" method="get" action="search.html">
+          <input type="hidden" name="lang" value="en">
+          <div class="search-field"><label>Apartment</label><select name="apt"><option value="all">Either</option><option value="ocean">Ocean Side</option><option value="beach">Beachside</option></select></div>
+          <div class="search-field date-field">
+            <label>Dates</label>
+            <button type="button" class="date-trigger">Select dates</button>
+            <input type="hidden" name="checkin"><input type="hidden" name="checkout">
+            <div class="date-panel">
+              <div class="date-panel-months"></div>
+              <div class="date-panel-footer"><button type="button" class="date-clear">Clear dates</button></div>
+            </div>
+          </div>
+          <div class="search-field"><label>Guests</label><select name="guests"><option>1</option><option selected>2</option><option>3</option><option>4</option></select></div>
+          <button type="submit" class="search-go">Search</button>
+        </form>
+      </div>
+      <div data-i18n-block="fr">
+        <form class="search-bar" id="search-bar-fr" method="get" action="search.html">
+          <input type="hidden" name="lang" value="fr">
+          <div class="search-field"><label>Appartement</label><select name="apt"><option value="all">Les deux</option><option value="ocean">Ocean Side</option><option value="beach">Beachside</option></select></div>
+          <div class="search-field date-field">
+            <label>Dates</label>
+            <button type="button" class="date-trigger">Sélectionner les dates</button>
+            <input type="hidden" name="checkin"><input type="hidden" name="checkout">
+            <div class="date-panel">
+              <div class="date-panel-months"></div>
+              <div class="date-panel-footer"><button type="button" class="date-clear">Effacer les dates</button></div>
+            </div>
+          </div>
+          <div class="search-field"><label>Voyageurs</label><select name="guests"><option>1</option><option selected>2</option><option>3</option><option>4</option></select></div>
+          <button type="submit" class="search-go">Rechercher</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="padding-top:56px; padding-bottom:100px;">
+  <div class="section-inner ps-scope" data-lang="pt">
+    <div class="results-head">
+      <span class="results-count" id="results-count">2 apartamentos</span>
+      <a class="results-close" href="index.html">
+        <span data-i18n-block="pt">← Voltar ao início</span><span data-i18n-block="en">← Back to home</span><span data-i18n-block="fr">← Retour à l'accueil</span>
+      </a>
+    </div>
+    <div class="results-grid">
+      <div class="results-list" id="results-list">
+        <a class="results-card" href="index.html#oceanside" data-apt="ocean">
+          <div class="results-photo"><div class="dest-placeholder">Photos coming soon</div></div>
+          <div class="results-body">
+            <div class="results-name">Ocean Side</div>
+            <div class="results-loc">Altura, Algarve</div>
+            <div class="results-specs" data-i18n-block="pt">4 hóspedes · 1 quarto · varanda vista mar</div>
+            <div class="results-specs" data-i18n-block="en">4 guests · 1 bedroom · sea-view balcony</div>
+            <div class="results-specs" data-i18n-block="fr">4 pers. · 1 chambre · balcon vue mer</div>
+            <div class="results-tags">
+              <span class="results-tag" data-i18n-block="pt">800m da praia</span><span class="results-tag" data-i18n-block="en">800m from the beach</span><span class="results-tag" data-i18n-block="fr">à 800m de la plage</span>
+              <span class="results-tag" data-i18n-block="pt">Acesso por elevador</span><span class="results-tag" data-i18n-block="en">Elevator access</span><span class="results-tag" data-i18n-block="fr">Accès par ascenseur</span>
+            </div>
+          </div>
+        </a>
+        <a class="results-card" href="index.html#beachside" data-apt="beach">
+          <div class="results-photo"><img src="assets/images/beachside/IMG_3681.jpg" alt="Beachside" loading="lazy"></div>
+          <div class="results-body">
+            <div class="results-name">Beachside</div>
+            <div class="results-loc">Altura, Algarve</div>
+            <div class="results-specs" data-i18n-block="pt">4 hóspedes · 1 quarto · varanda vista mar</div>
+            <div class="results-specs" data-i18n-block="en">4 guests · 1 bedroom · sea-view balcony</div>
+            <div class="results-specs" data-i18n-block="fr">4 pers. · 1 chambre · balcon vue mer</div>
+            <div class="results-tags">
+              <span class="results-tag" data-i18n-block="pt">300m da praia</span><span class="results-tag" data-i18n-block="en">300m from the beach</span><span class="results-tag" data-i18n-block="fr">à 300m de la plage</span>
+              <span class="results-tag" data-i18n-block="pt">Localização central</span><span class="results-tag" data-i18n-block="en">Central location</span><span class="results-tag" data-i18n-block="fr">Emplacement central</span>
+            </div>
+          </div>
+        </a>
+      </div>
+      <div class="results-map-wrap"><div id="results-map"></div></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-word">Permanent Summer</div>
+      <div class="footer-social">
+        <a href="https://instagram.com/permanentsummer.co" target="_blank" rel="noopener" aria-label="Instagram"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="12" cy="12" r="3.5"/></svg></a>
+        <a href="https://youtu.be/CwSCYQrg_f8" target="_blank" rel="noopener" aria-label="YouTube"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M21.8 8s-.2-1.4-.8-2c-.8-.8-1.6-.8-2-.9C16.8 5 12 5 12 5s-4.8 0-7 .1c-.4.1-1.2.1-2 .9-.6.6-.8 2-.8 2S2 9.6 2 11.2v1.5c0 1.6.2 3.2.2 3.2s.2 1.4.8 2c.8.8 1.8.8 2.3.8C6.8 19 12 19 12 19s4.8 0 7-.1c.4-.1 1.2-.1 2-.9.6-.6.8-2 .8-2s.2-1.6.2-3.2v-1.5C22 9.6 21.8 8 21.8 8zM10 15V9l5.5 3-5.5 3z"/></svg></a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Navigation</h4>
+      <a href="index.html#region">The Region</a><a href="index.html#apartments">Apartments</a><a href="index.html#reviews">Reviews</a>
+    </div>
+    <div class="footer-col">
+      <h4>Apartments</h4>
+      <a href="index.html#oceanside">Ocean Side</a><a href="index.html#beachside">Beachside</a><a href="index.html#calendar">Availability</a>
+    </div>
+    <div class="footer-col">
+      <h4>Get in touch</h4>
+      <a href="mailto:christopher@permanentsummer.co">christopher@permanentsummer.co</a>
+      <a href="https://instagram.com/permanentsummer.co" target="_blank" rel="noopener">@permanentsummer.co</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Permanent Summer · Altura, Algarve</span>
+    <span>Alojamento Local 162327 &amp; 170254</span>
+  </div>
+</footer>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+<script src="https://permanentsummer.github.io/direct-booking/widget.js"
+  data-workspace="7c5d4583-de11-43f1-bb71-658aaf591f4e"
+  data-color="#2C5164"
+  data-label="Book Direct">
+</script>
+
+<script>
+(function () {
+  const h = document.getElementById('ps-header');
+  const onScroll = () => h.classList.toggle('scrolled', window.scrollY > 40);
+  document.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+})();
+
+(function () {
+  const open = document.getElementById('mobile-open');
+  const close = document.getElementById('mobile-close');
+  const panel = document.getElementById('mobile-panel');
+  open && open.addEventListener('click', () => panel.classList.add('open'));
+  close && close.addEventListener('click', () => panel.classList.remove('open'));
+  panel && panel.querySelectorAll('a').forEach(a => a.addEventListener('click', () => panel.classList.remove('open')));
+})();
+
+(function () {
+  const trigger = document.getElementById('book-direct-trigger');
+  if (trigger) trigger.addEventListener('click', e => e.preventDefault());
+})();
+
+/* ─── DATE-RANGE PICKER (two-month calendar) ─────────────────────── */
+(function () {
+  const MONTHS = {
+    pt: ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'],
+    en: ['January','February','March','April','May','June','July','August','September','October','November','December'],
+    fr: ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre']
+  };
+  const DAYS = {
+    pt: ['Seg','Ter','Qua','Qui','Sex','Sáb','Dom'],
+    en: ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],
+    fr: ['Lun','Mar','Mer','Jeu','Ven','Sam','Dim']
+  };
+  const CLEAR_LABEL = { pt: 'Selecionar datas', en: 'Select dates', fr: 'Sélectionner les dates' };
+
+  function fmt(d) { return String(d.getDate()).padStart(2,'0') + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + d.getFullYear(); }
+  function iso(d) { return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0'); }
+  function sameDay(a,b) { return a && b && a.getFullYear()===b.getFullYear() && a.getMonth()===b.getMonth() && a.getDate()===b.getDate(); }
+  function startOfToday() { const d = new Date(); d.setHours(0,0,0,0); return d; }
+
+  document.querySelectorAll('.date-field').forEach(field => {
+    const form = field.closest('form');
+    const lang = form.id.split('-').pop(); // search-bar-pt -> pt
+    const trigger = field.querySelector('.date-trigger');
+    const panel = field.querySelector('.date-panel');
+    const checkinInput = field.querySelector('input[name="checkin"]');
+    const checkoutInput = field.querySelector('input[name="checkout"]');
+    const monthsWrap = panel.querySelector('.date-panel-months');
+    const clearBtn = panel.querySelector('.date-clear');
+    const state = { baseOffset: 0, checkIn: null, checkOut: null };
+
+    function render() {
+      monthsWrap.innerHTML = '';
+      const today = startOfToday();
+      for (let i = 0; i < 2; i++) {
+        const view = new Date(today.getFullYear(), today.getMonth() + state.baseOffset + i, 1);
+        const y = view.getFullYear(), mo = view.getMonth();
+        const daysInMonth = new Date(y, mo + 1, 0).getDate();
+        const firstWeekday = (new Date(y, mo, 1).getDay() + 6) % 7;
+
+        const monthEl = document.createElement('div');
+        monthEl.className = 'date-month';
+
+        const head = document.createElement('div');
+        head.className = 'date-month-head';
+        const prevBtn = document.createElement('button');
+        prevBtn.type = 'button'; prevBtn.className = 'date-nav'; prevBtn.innerHTML = '&#8249;';
+        prevBtn.style.visibility = i === 0 ? 'visible' : 'hidden';
+        prevBtn.disabled = state.baseOffset <= 0;
+        prevBtn.addEventListener('click', () => { if (state.baseOffset > 0) { state.baseOffset--; render(); } });
+        const label = document.createElement('span');
+        label.textContent = MONTHS[lang][mo] + ' ' + y;
+        const nextBtn = document.createElement('button');
+        nextBtn.type = 'button'; nextBtn.className = 'date-nav'; nextBtn.innerHTML = '&#8250;';
+        nextBtn.style.visibility = i === 1 ? 'visible' : 'hidden';
+        nextBtn.addEventListener('click', () => { state.baseOffset++; render(); });
+        head.appendChild(prevBtn); head.appendChild(label); head.appendChild(nextBtn);
+        monthEl.appendChild(head);
+
+        const weekRow = document.createElement('div');
+        weekRow.className = 'date-weekrow';
+        DAYS[lang].forEach(d => { const s = document.createElement('span'); s.textContent = d; weekRow.appendChild(s); });
+        monthEl.appendChild(weekRow);
+
+        const daysRow = document.createElement('div');
+        daysRow.className = 'date-daysrow';
+        for (let b = 0; b < firstWeekday; b++) { const s = document.createElement('span'); s.className = 'date-day blank'; daysRow.appendChild(s); }
+        for (let d = 1; d <= daysInMonth; d++) {
+          const cellDate = new Date(y, mo, d);
+          const cell = document.createElement('span');
+          cell.className = 'date-day';
+          cell.textContent = d;
+          if (cellDate < today) {
+            cell.classList.add('past');
+          } else {
+            if (state.checkIn && sameDay(cellDate, state.checkIn)) cell.classList.add('selected');
+            if (state.checkOut && sameDay(cellDate, state.checkOut)) cell.classList.add('selected');
+            if (state.checkIn && state.checkOut && cellDate > state.checkIn && cellDate < state.checkOut) cell.classList.add('in-range');
+            cell.addEventListener('click', () => {
+              if (!state.checkIn || (state.checkIn && state.checkOut) || cellDate <= state.checkIn) {
+                state.checkIn = cellDate; state.checkOut = null;
+              } else {
+                state.checkOut = cellDate;
+              }
+              render();
+              if (state.checkIn && state.checkOut) {
+                trigger.textContent = fmt(state.checkIn) + ' → ' + fmt(state.checkOut);
+                if (checkinInput) checkinInput.value = iso(state.checkIn);
+                if (checkoutInput) checkoutInput.value = iso(state.checkOut);
+              }
+            });
+          }
+          daysRow.appendChild(cell);
+        }
+        monthEl.appendChild(daysRow);
+        monthsWrap.appendChild(monthEl);
+      }
+    }
+
+    trigger.addEventListener('click', e => {
+      e.stopPropagation();
+      document.querySelectorAll('.date-panel.open').forEach(p => { if (p !== panel) p.classList.remove('open'); });
+      panel.classList.toggle('open');
+    });
+    clearBtn.addEventListener('click', () => {
+      state.checkIn = null; state.checkOut = null;
+      trigger.textContent = CLEAR_LABEL[lang] || CLEAR_LABEL.en;
+      if (checkinInput) checkinInput.value = '';
+      if (checkoutInput) checkoutInput.value = '';
+      render();
+    });
+    document.addEventListener('mousedown', e => { if (!field.contains(e.target)) panel.classList.remove('open'); });
+
+    render();
+  });
+})();
+
+(function () {
+  const OS = [37.174878, -7.504644];
+  const BS = [37.173125, -7.498954];
+  const m = L.map('results-map', { zoomControl: true }).setView([(OS[0]+BS[0])/2, (OS[1]+BS[1])/2], 15);
+  m.attributionControl.setPrefix(false);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '© OpenStreetMap contributors' }).addTo(m);
+  const pin = c => L.icon({ iconUrl: 'data:image/svg+xml;utf8,' + encodeURIComponent(`<svg width="26" height="36" viewBox="0 0 26 36" xmlns="http://www.w3.org/2000/svg"><path d="M13 0C6.37 0 1 5.37 1 12c0 8.9 10.6 20.9 11.15 21.55.5.58 1.3.58 1.8 0C14.4 32.9 25 20.9 25 12 25 5.37 19.63 0 13 0z" fill="${c}"/><circle cx="13" cy="12" r="4.8" fill="#fff"/></svg>`), iconSize:[26,36], iconAnchor:[13,36], popupAnchor:[0,-32] });
+  L.marker(OS, { icon: pin('#B9B36A') }).addTo(m).bindPopup('<div class="popup-title">Ocean Side</div>');
+  L.marker(BS, { icon: pin('#B9B36A') }).addTo(m).bindPopup('<div class="popup-title">Beachside</div>');
+  setTimeout(() => m.invalidateSize(), 150);
+})();
+
+/* ─── READ SEARCH PARAMS: prefill fields, filter results, apply language ── */
+(function () {
+  const params = new URLSearchParams(window.location.search);
+  const apt = params.get('apt');       // 'all' | 'ocean' | 'beach'
+  const guests = params.get('guests');
+  const checkin = params.get('checkin');
+  const checkout = params.get('checkout');
+  const lang = params.get('lang');
+
+  if (lang && ['pt','en','fr'].includes(lang)) localStorage.setItem('ps-lang', lang);
+
+  document.querySelectorAll('.search-bar').forEach(form => {
+    if (apt) { const sel = form.querySelector('select[name="apt"]'); if (sel) sel.value = apt; }
+    if (guests) { const sel = form.querySelector('select[name="guests"]'); if (sel) sel.value = guests; }
+    if (checkin) { const inp = form.querySelector('input[name="checkin"]'); if (inp) inp.value = checkin; }
+    if (checkout) { const inp = form.querySelector('input[name="checkout"]'); if (inp) inp.value = checkout; }
+    if (checkin && checkout) {
+      const trigger = form.querySelector('.date-trigger');
+      const toDisplay = iso => { const [y,mo,d] = iso.split('-'); return `${d}-${mo}-${y}`; };
+      if (trigger) trigger.textContent = toDisplay(checkin) + ' → ' + toDisplay(checkout);
+    }
+  });
+
+  if (apt === 'ocean' || apt === 'beach') {
+    document.querySelectorAll('.results-card').forEach(card => {
+      card.style.display = card.dataset.apt === apt ? '' : 'none';
+    });
+    const countText = { pt: '1 apartamento', en: '1 apartment', fr: '1 appartement' };
+    document.getElementById('results-count').textContent = countText[lang] || countText.en;
+  }
+})();
+
+(function () {
+  const LS = 'ps-lang';
+  function apply(lang) {
+    document.querySelectorAll('.ps-scope').forEach(el => el.setAttribute('data-lang', lang));
+    document.querySelectorAll('.ps-lang-btn').forEach(b => b.setAttribute('aria-current', b.dataset.setlang === lang ? 'true' : 'false'));
+    localStorage.setItem(LS, lang);
+  }
+  apply(localStorage.getItem(LS) || 'pt');
+  document.addEventListener('click', e => { const b = e.target.closest('.ps-lang-btn'); if (b) apply(b.dataset.setlang || 'pt'); });
+})();
+</script>
+</body>
+</html>

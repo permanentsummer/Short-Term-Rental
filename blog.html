@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Journal — Permanent Summer</title>
+<meta name="description" content="Notes on the Algarve, Portuguese culture, and travel — from the team behind Permanent Summer in Altura.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,500;1,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --ink:      #14211F;
+  --ink-soft: #4B5750;
+  --paper:    #FFFFFF;
+  --stone:    #EBEEE6;
+  --line:     #DADFD5;
+  --khaki:    #B9B36A;
+  --khaki-d:  #9C9656;
+  --tan:      #C9A66B;
+  --azulejo:  #2C5164;
+
+  --disp: "Playfair Display", Georgia, serif;
+  --body: "Inter", system-ui, sans-serif;
+
+  --max: 1280px;
+  --gut: clamp(20px, 5vw, 70px);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { background: var(--paper); color: var(--ink); font-family: var(--body); font-size: 16px; line-height: 1.5; -webkit-font-smoothing: antialiased; }
+a { color: inherit; text-decoration: none; }
+img { display: block; max-width: 100%; }
+::selection { background: var(--khaki); color: var(--ink); }
+@media (prefers-reduced-motion: reduce) { * { animation-duration: .001ms !important; transition-duration: .001ms !important; scroll-behavior: auto !important; } }
+
+.ps-scope [data-i18n-block]                      { display: none !important; }
+.ps-scope[data-lang="pt"] [data-i18n-block="pt"] { display: block !important; }
+.ps-scope[data-lang="en"] [data-i18n-block="en"] { display: block !important; }
+.ps-scope[data-lang="fr"] [data-i18n-block="fr"] { display: block !important; }
+
+#ps-header {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 900;
+  padding: 13px var(--gut);
+  display: flex; align-items: center; justify-content: space-between; gap: 24px;
+  background: var(--paper); box-shadow: 0 1px 0 var(--line);
+}
+.wordmark { font: 600 1.15rem var(--disp); color: var(--ink); letter-spacing: .01em; white-space: nowrap; }
+.nav-left { display: flex; align-items: center; gap: 18px; }
+.nav-icon { display: flex; color: var(--ink); opacity: .92; transition: opacity .2s; }
+.nav-icon:hover { opacity: 1; }
+.nav-divider { width: 1px; height: 20px; background: var(--line); }
+.nav-right { display: flex; align-items: center; gap: 20px; }
+.ps-lang-bar { display: flex; gap: 8px; }
+.ps-lang-btn {
+  appearance: none; border: 0; background: none; cursor: pointer;
+  font: 500 .74rem var(--body); letter-spacing: .06em; color: var(--ink); opacity: .6;
+  padding: 2px 3px; transition: opacity .2s;
+}
+.ps-lang-btn[aria-current="true"] { opacity: 1; text-decoration: underline; text-underline-offset: 4px; }
+.nav-cta { font: 600 .72rem var(--body); text-transform: uppercase; letter-spacing: .1em; background: var(--khaki); color: var(--ink); padding: 11px 20px; transition: background .2s; }
+.nav-cta:hover { background: var(--khaki-d); }
+.nav-toggle { display: flex; align-items: center; background: none; border: 0; cursor: pointer; color: var(--ink); }
+
+.mobile-panel { display: none; position: fixed; inset: 0; z-index: 950; background: var(--paper); padding: 100px var(--gut) 40px; flex-direction: column; gap: 20px; overflow-y: auto; }
+.mobile-panel.open { display: flex; }
+.mobile-panel a { font: 600 1.5rem var(--disp); color: var(--ink); }
+.mobile-panel a.active { color: var(--azulejo); }
+.mobile-panel .panel-cta { display: inline-block; margin-top: 8px; font: 600 .78rem var(--body); text-transform: uppercase; letter-spacing: .1em; background: var(--khaki); color: var(--ink); padding: 14px 24px; width: fit-content; }
+.mobile-panel .ps-lang-bar { display: flex; gap: 14px; margin-top: 18px; }
+.mobile-panel .ps-lang-btn { color: var(--ink); opacity: .55; font-size: .95rem; }
+.mobile-close { position: absolute; top: 26px; right: var(--gut); background: none; border: 0; font-size: 1.8rem; color: var(--ink); cursor: pointer; }
+
+.section { padding: 90px var(--gut) 108px; }
+.section-inner { max-width: var(--max); margin: 0 auto; }
+h2.head { font: 600 clamp(1.9rem, 3.2vw, 2.7rem) var(--disp); line-height: 1.15; }
+p.lede { font-size: 1.02rem; line-height: 1.75; color: var(--ink-soft); max-width: 60ch; }
+
+.journal-hero { background: var(--stone); padding: 150px var(--gut) 70px; text-align: center; }
+.journal-hero h1 { font: 600 clamp(2.6rem, 6vw, 4.2rem) var(--disp); font-style: italic; }
+.journal-hero p { margin: 18px auto 0; color: var(--ink-soft); max-width: 46ch; font-size: 1.05rem; }
+
+.article-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; margin-top: 10px; }
+.article-card { display: block; }
+.article-photo { aspect-ratio: 4/3; overflow: hidden; }
+.article-photo img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s; }
+.article-card:hover .article-photo img { transform: scale(1.05); }
+.article-tag { display: inline-block; margin-top: 18px; font: 500 .7rem var(--body); text-transform: uppercase; letter-spacing: .1em; color: var(--azulejo); }
+.article-title { margin-top: 8px; font: 600 1.25rem var(--disp); line-height: 1.25; }
+.article-excerpt { margin-top: 8px; color: var(--ink-soft); font-size: .9rem; line-height: 1.6; }
+.article-more { display: inline-block; margin-top: 12px; font: 500 .76rem var(--body); text-transform: uppercase; letter-spacing: .08em; border-bottom: 1px solid var(--ink); padding-bottom: 2px; }
+
+.article-full { max-width: 720px; margin: 0 auto; padding: 90px var(--gut) 20px; scroll-margin-top: 90px; border-top: 1px solid var(--line); }
+.article-full:first-of-type { border-top: 0; }
+.article-full .article-tag { color: var(--azulejo); }
+.article-full h2 { margin-top: 10px; font: 600 clamp(1.8rem, 4vw, 2.6rem) var(--disp); line-height: 1.15; }
+.article-full .article-photo-full { aspect-ratio: 16/9; overflow: hidden; margin: 30px 0; }
+.article-full .article-photo-full img { width: 100%; height: 100%; object-fit: cover; }
+.article-full p { margin-top: 18px; font-size: 1.02rem; line-height: 1.8; color: var(--ink-soft); }
+.article-full .back-top { display: inline-block; margin-top: 34px; font: 500 .78rem var(--body); text-transform: uppercase; letter-spacing: .08em; border-bottom: 1px solid var(--ink); padding-bottom: 2px; }
+
+footer { background: #0D1615; color: rgba(235,238,230,.55); padding: 64px var(--gut) 30px; }
+.footer-grid { max-width: var(--max); margin: 0 auto; display: grid; grid-template-columns: 1.3fr 1fr 1fr 1fr; gap: 40px; }
+.footer-col h4 { font: 500 .72rem var(--body); text-transform: uppercase; letter-spacing: .1em; color: rgba(235,238,230,.4); margin-bottom: 16px; }
+.footer-col a { display: block; font-size: .88rem; margin-bottom: 10px; color: rgba(235,238,230,.72); transition: color .2s; }
+.footer-col a:hover { color: var(--khaki); }
+.footer-word { font: 600 1.4rem var(--disp); color: var(--paper); }
+.footer-social { display: flex; gap: 14px; margin-top: 18px; }
+.footer-social a { width: 34px; height: 34px; border: 1px solid rgba(235,238,230,.25); border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+.footer-bottom { max-width: var(--max); margin: 48px auto 0; padding-top: 22px; border-top: 1px solid rgba(235,238,230,.12); font-size: .78rem; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+
+@media (max-width: 960px) {
+  .article-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 640px) {
+  .article-grid { grid-template-columns: 1fr; }
+  .nav-cta, .nav-right .ps-lang-bar { display: none; }
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+}
+</style>
+</head>
+<body>
+
+<header id="ps-header">
+  <div class="nav-left">
+    <button class="nav-toggle" id="mobile-open" aria-label="Open menu">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M2 5h16M2 10h16M2 15h16" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+    </button>
+    <a class="wordmark" href="index.html">Permanent Summer</a>
+  </div>
+  <div class="nav-right">
+    <a class="nav-icon" href="https://whatsapp.com/dl/" target="_blank" rel="noopener" aria-label="WhatsApp">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12c0 1.85.5 3.58 1.37 5.07L2 22l5.09-1.33A9.94 9.94 0 0012 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm5.01 14.16c-.21.58-1.22 1.12-1.67 1.19-.45.07-.99.1-1.59-.1-.37-.12-.84-.28-1.44-.55-2.52-1.09-4.17-3.62-4.3-3.79-.13-.17-1.05-1.39-1.05-2.65s.67-1.88.9-2.14c.24-.26.52-.32.69-.32h.5c.16 0 .38-.06.59.45.21.52.73 1.77.79 1.9.06.13.1.28.02.45-.08.17-.12.27-.24.42-.12.14-.25.32-.36.43-.12.12-.24.25-.1.49.14.24.62 1.02 1.33 1.65.91.81 1.68 1.06 1.92 1.17.24.12.38.1.52-.06.14-.16.59-.69.75-.93.16-.24.32-.2.54-.12.22.08 1.4.66 1.64.78.24.12.4.17.46.27.06.1.06.58-.15 1.16z"/></svg>
+    </a>
+    <span class="nav-divider"></span>
+    <a class="nav-cta" href="index.html#calendar">Book Direct</a>
+    <div class="ps-lang-bar" aria-label="Language">
+      <button class="ps-lang-btn" data-setlang="pt" aria-current="true">PT</button>
+      <button class="ps-lang-btn" data-setlang="en">EN</button>
+      <button class="ps-lang-btn" data-setlang="fr">FR</button>
+    </div>
+  </div>
+</header>
+
+<div class="mobile-panel" id="mobile-panel">
+  <button class="mobile-close" id="mobile-close" aria-label="Close menu">&times;</button>
+  <a href="index.html#region">The Region</a>
+  <a href="index.html#apartments">Apartments</a>
+  <a href="index.html#oceanside">Ocean Side</a>
+  <a href="index.html#beachside">Beachside</a>
+  <a href="index.html#reviews">Reviews</a>
+  <a href="index.html#instagram">Instagram</a>
+  <a href="index.html#contact">Contact</a>
+  <a href="blog.html" class="active">Blog</a>
+  <a href="index.html#calendar" class="panel-cta">Book Direct</a>
+  <div class="ps-lang-bar">
+    <button class="ps-lang-btn" data-setlang="pt" aria-current="true">PT</button>
+    <button class="ps-lang-btn" data-setlang="en">EN</button>
+    <button class="ps-lang-btn" data-setlang="fr">FR</button>
+  </div>
+</div>
+
+<section class="journal-hero ps-scope" data-lang="pt" id="top">
+  <div data-i18n-block="pt"><h1>Jornal</h1><p>Notas sobre o Algarve, cultura portuguesa e viagens — escritas por quem vive aqui.</p></div>
+  <div data-i18n-block="en"><h1>Journal</h1><p>Notes on the Algarve, Portuguese culture, and travel — written by people who live here.</p></div>
+  <div data-i18n-block="fr"><h1>Journal</h1><p>Notes sur l'Algarve, la culture portugaise et les voyages — écrites par des gens qui vivent ici.</p></div>
+</section>
+
+<section class="section">
+  <div class="section-inner ps-scope" data-lang="pt">
+    <div class="article-grid">
+
+      <a class="article-card" href="#eastern-algarve">
+        <div class="article-photo"><img src="assets/images/beachside/IMG_3717.jpg" alt="" loading="lazy"></div>
+        <span class="article-tag" data-i18n-block="pt">A Região</span><span class="article-tag" data-i18n-block="en">The Region</span><span class="article-tag" data-i18n-block="fr">La Région</span>
+        <div class="article-title" data-i18n-block="pt">Descobrir o Sotavento Algarvio</div>
+        <div class="article-title" data-i18n-block="en">Discovering the Eastern Algarve</div>
+        <div class="article-title" data-i18n-block="fr">Découvrir l'Algarve oriental</div>
+        <p class="article-excerpt" data-i18n-block="pt">Longe das multidões do Algarve central, Altura e a sua vizinhança guardam vilas piscatórias, sapais e fronteiras tranquilas.</p>
+        <p class="article-excerpt" data-i18n-block="en">Away from the crowds of the central Algarve, Altura and its surroundings hold onto fishing villages, salt marshes, and quiet borders.</p>
+        <p class="article-excerpt" data-i18n-block="fr">Loin de la foule de l'Algarve central, Altura et ses environs conservent villages de pêcheurs, marais salants et frontières tranquilles.</p>
+        <div class="article-more" data-i18n-block="pt">Ler mais</div><div class="article-more" data-i18n-block="en">Read more</div><div class="article-more" data-i18n-block="fr">Lire la suite</div>
+      </a>
+
+      <a class="article-card" href="#portuguese-dishes">
+        <div class="article-photo"><img src="assets/images/beachside/IMG_3696.jpg" alt="" loading="lazy"></div>
+        <span class="article-tag" data-i18n-block="pt">Gastronomia</span><span class="article-tag" data-i18n-block="en">Food</span><span class="article-tag" data-i18n-block="fr">Gastronomie</span>
+        <div class="article-title" data-i18n-block="pt">Cinco pratos portugueses para provar</div>
+        <div class="article-title" data-i18n-block="en">Five Portuguese Dishes to Try</div>
+        <div class="article-title" data-i18n-block="fr">Cinq plats portugais à goûter</div>
+        <p class="article-excerpt" data-i18n-block="pt">Da cataplana às sardinhas assadas, um pequeno roteiro pela mesa algarvia e portuguesa.</p>
+        <p class="article-excerpt" data-i18n-block="en">From cataplana to grilled sardines, a short tour through Algarve and Portuguese cooking.</p>
+        <p class="article-excerpt" data-i18n-block="fr">De la cataplana aux sardines grillées, un petit tour de la cuisine algarvienne et portugaise.</p>
+        <div class="article-more" data-i18n-block="pt">Ler mais</div><div class="article-more" data-i18n-block="en">Read more</div><div class="article-more" data-i18n-block="fr">Lire la suite</div>
+      </a>
+
+      <a class="article-card" href="#direct-vs-airbnb">
+        <div class="article-photo"><img src="assets/images/beachside/IMG_3709.jpg" alt="" loading="lazy"></div>
+        <span class="article-tag" data-i18n-block="pt">Alojamento</span><span class="article-tag" data-i18n-block="en">Booking</span><span class="article-tag" data-i18n-block="fr">Réservation</span>
+        <div class="article-title" data-i18n-block="pt">Reserva direta vs. Airbnb: o que muda para si</div>
+        <div class="article-title" data-i18n-block="en">Direct Booking vs. Airbnb: What Changes for You</div>
+        <div class="article-title" data-i18n-block="fr">Réservation directe vs. Airbnb : ce qui change</div>
+        <p class="article-excerpt" data-i18n-block="pt">As plataformas são práticas, mas reservar diretamente com o anfitrião tem vantagens que vale a pena conhecer.</p>
+        <p class="article-excerpt" data-i18n-block="en">Platforms are convenient, but booking directly with a host has real advantages worth knowing about.</p>
+        <p class="article-excerpt" data-i18n-block="fr">Les plateformes sont pratiques, mais réserver directement avec l'hôte a de vrais avantages à connaître.</p>
+        <div class="article-more" data-i18n-block="pt">Ler mais</div><div class="article-more" data-i18n-block="en">Read more</div><div class="article-more" data-i18n-block="fr">Lire la suite</div>
+      </a>
+
+      <a class="article-card" href="#portuguese-culture">
+        <div class="article-photo"><img src="assets/images/beachside/IMG_3714.jpg" alt="" loading="lazy"></div>
+        <span class="article-tag" data-i18n-block="pt">Cultura</span><span class="article-tag" data-i18n-block="en">Culture</span><span class="article-tag" data-i18n-block="fr">Culture</span>
+        <div class="article-title" data-i18n-block="pt">Cultura e hábitos portugueses: um pequeno guia</div>
+        <div class="article-title" data-i18n-block="en">Portuguese Culture and Etiquette: A Short Guide</div>
+        <div class="article-title" data-i18n-block="fr">Culture et usages portugais : petit guide</div>
+        <p class="article-excerpt" data-i18n-block="pt">Cumprimentos, horários das refeições e outros pequenos costumes que ajudam a sentir-se em casa.</p>
+        <p class="article-excerpt" data-i18n-block="en">Greetings, mealtimes, and other small customs that help you feel at home.</p>
+        <p class="article-excerpt" data-i18n-block="fr">Salutations, horaires des repas et petites coutumes qui aident à se sentir chez soi.</p>
+        <div class="article-more" data-i18n-block="pt">Ler mais</div><div class="article-more" data-i18n-block="en">Read more</div><div class="article-more" data-i18n-block="fr">Lire la suite</div>
+      </a>
+
+      <a class="article-card" href="#best-beaches">
+        <div class="article-photo"><img src="assets/images/beachside/IMG_3702.jpg" alt="" loading="lazy"></div>
+        <span class="article-tag" data-i18n-block="pt">Praias</span><span class="article-tag" data-i18n-block="en">Beaches</span><span class="article-tag" data-i18n-block="fr">Plages</span>
+        <div class="article-title" data-i18n-block="pt">As melhores praias perto de Altura</div>
+        <div class="article-title" data-i18n-block="en">The Best Beaches Near Altura</div>
+        <div class="article-title" data-i18n-block="fr">Les plus belles plages près d'Altura</div>
+        <p class="article-excerpt" data-i18n-block="pt">Areia dourada, água calma e menos multidões do que no Algarve central.</p>
+        <p class="article-excerpt" data-i18n-block="en">Golden sand, calm water, and fewer crowds than the central Algarve.</p>
+        <p class="article-excerpt" data-i18n-block="fr">Sable doré, eau calme et moins de monde que dans l'Algarve central.</p>
+        <div class="article-more" data-i18n-block="pt">Ler mais</div><div class="article-more" data-i18n-block="en">Read more</div><div class="article-more" data-i18n-block="fr">Lire la suite</div>
+      </a>
+
+      <a class="article-card" href="#vila-real">
+        <div class="article-photo"><img src="assets/images/beachside/IMG_3698.jpg" alt="" loading="lazy"></div>
+        <span class="article-tag" data-i18n-block="pt">Escapadinhas</span><span class="article-tag" data-i18n-block="en">Day Trips</span><span class="article-tag" data-i18n-block="fr">Excursions</span>
+        <div class="article-title" data-i18n-block="pt">Um dia em Vila Real de Santo António</div>
+        <div class="article-title" data-i18n-block="en">A Day in Vila Real de Santo António</div>
+        <div class="article-title" data-i18n-block="fr">Une journée à Vila Real de Santo António</div>
+        <p class="article-excerpt" data-i18n-block="pt">Ruas em quadrícula, um rio e Espanha à vista — a poucos minutos de Altura.</p>
+        <p class="article-excerpt" data-i18n-block="en">Grid-plan streets, a river, and Spain in view — just minutes from Altura.</p>
+        <p class="article-excerpt" data-i18n-block="fr">Rues en damier, un fleuve et l'Espagne en vue — à quelques minutes d'Altura.</p>
+        <div class="article-more" data-i18n-block="pt">Ler mais</div><div class="article-more" data-i18n-block="en">Read more</div><div class="article-more" data-i18n-block="fr">Lire la suite</div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<article class="article-full ps-scope" data-lang="pt" id="eastern-algarve">
+  <div data-i18n-block="pt">
+    <span class="article-tag">A Região</span>
+    <h2>Descobrir o Sotavento Algarvio</h2>
+    <div class="article-photo-full"><img src="assets/images/beachside/IMG_3717.jpg" alt=""></div>
+    <p>A maioria das imagens do Algarve mostra falésias douradas e praias movimentadas perto de Lagos ou Albufeira. Mas a região oriental — o Sotavento — é diferente: mais plana, mais tranquila, e ainda profundamente ligada à pesca e ao sal.</p>
+    <p>Altura fica no coração desta zona, entre Tavira e a fronteira espanhola. Cacela Velha, uma pequena aldeia sobre uma falésia baixa com vista para a Ria Formosa, é um dos pontos mais fotografados — e mais silenciosos — da região. Castro Marim, mais para o interior, tem um castelo medieval com vista sobre o rio Guadiana e as salinas onde ainda se produz sal artesanalmente.</p>
+    <p>Esta é uma zona para explorar devagar: mercados locais, cafés à beira-mar, e vilas onde a vida continua com o seu próprio ritmo, independentemente da época alta.</p>
+    <a class="back-top" href="#top">↑ Voltar ao topo</a>
+  </div>
+  <div data-i18n-block="en">
+    <span class="article-tag">The Region</span>
+    <h2>Discovering the Eastern Algarve</h2>
+    <div class="article-photo-full"><img src="assets/images/beachside/IMG_3717.jpg" alt=""></div>
+    <p>Most postcards of the Algarve show golden cliffs and busy beaches near Lagos or Albufeira. The eastern region — the Sotavento — is different: flatter, quieter, and still deeply tied to fishing and salt.</p>
+    <p>Altura sits at the heart of this area, between Tavira and the Spanish border. Cacela Velha, a small village perched on a low cliff overlooking the Ria Formosa lagoon, is one of the most photographed — and quietest — spots in the region. Castro Marim, further inland, has a medieval castle overlooking the Guadiana river and the salt pans where salt is still harvested by hand.</p>
+    <p>This is a region for slow exploring: local markets, seaside cafés, and villages where life carries on at its own pace, regardless of the season.</p>
+    <a class="back-top" href="#top">↑ Back to top</a>
+  </div>
+  <div data-i18n-block="fr">
+    <span class="article-tag">La Région</span>
+    <h2>Découvrir l'Algarve oriental</h2>
+    <div class="article-photo-full"><img src="assets/images/beachside/IMG_3717.jpg" alt=""></div>
+    <p>La plupart des cartes postales de l'Algarve montrent des falaises dorées et des plages animées près de Lagos ou d'Albufeira. La région orientale — le Sotavento — est différente : plus plate, plus calme, et toujours profondément liée à la pêche et au sel.</p>
+    <p>Altura se trouve au cœur de cette zone, entre Tavira et la frontière espagnole. Cacela Velha, un petit village perché sur une falaise basse avec vue sur la lagune de la Ria Formosa, est l'un des endroits les plus photographiés — et les plus silencieux — de la région. Castro Marim, plus à l'intérieur des terres, possède un château médiéval surplombant le fleuve Guadiana et les marais salants où le sel est encore récolté à la main.</p>
+    <p>C'est une région à explorer lentement : marchés locaux, cafés en bord de mer, et villages où la vie suit son propre rythme, quelle que soit la saison.</p>
+    <a class="back-top" href="#top">↑ Retour en haut</a>
+  </div>
+</article>
+
+<article class="article-full ps-scope" data-lang="pt" id="portuguese-dishes">
+  <div data-i18n-block="pt">
+    <span class="article-tag">Gastronomia</span>
+    <h2>Cinco pratos portugueses para provar</h2>
+    <div class="article-photo-full"><img src="assets/images/beachside/IMG_3696.jpg" alt=""></div>
+    <p><strong>Cataplana</strong> — um guisado de marisco ou peixe cozinhado no recipiente de cobre com o mesmo nome, típico do Algarve. Cada tasca tem a sua versão.</p>
+    <p><strong>Frango piri-piri</strong> — frango grelhado marinado em piri-piri, um dos pratos mais exportados de Portugal e ainda um clássico local.</p>
+    <p><strong>Sardinhas assadas</strong> — grelhadas sobre brasas, sobretudo populares nos meses quentes de verão, servidas simplesmente com pão e salada.</p>
+    <p><strong>Açorda</strong> — um prato à base de pão, alho, coentros e, por vezes, marisco. Simples, mas reconfortante.</p>
+    <p><strong>Pastel de nata</strong> — o pequeno pastel de folhado com creme, encontrado em qualquer pastelaria do país, do café da manhã ao lanche da tarde.</p>
+    <a class="back-top" href="#top">↑ Voltar ao topo</a>
+  </div>
+  <div data-i18n-block="en">
+    <span class="article-tag">Food</span>
+    <h2>Five Portuguese Dishes to Try</h2>
+    <div class="article-photo-full"><img src="assets/images/beachside/IMG_3696.jpg" alt=""></div>
+    <p><strong>Cataplana</strong> — a seafood or fish stew cooked in the copper vessel it's named after, a signature Algarve dish. Every local restaurant has its own version.</p>
+    <p><strong>Piri-piri chicken</strong> — grilled chicken marinated in piri-piri, one of Portugal's most exported dishes and still a local staple.</p>
+    <p><strong>Grilled sardines</strong> — cooked over open coals, especially popular in the warm summer months, served simply with bread and salad.</p>
+    <p><strong>Açorda</strong> — a bread-based dish with garlic, coriander, and sometimes seafood. Simple, but deeply comforting.</p>
+    <p><strong>Pastel de nata</strong> — the small custard tart found in every pastelaria in the country, from breakfast to afternoon coffee.</p>
+    <a class="back-top" href="#top">↑ Back to top</a>
+  </div>
+  <div data-i18n-block="fr">
+    <span class="article-tag">Gastronomie</span>
+    <h2>Cinq plats portugais à goûter</h2>
+    <div class="article-photo-full"><img src="assets/images/beachside/IMG_3696.jpg" alt=""></div>
+    <p><strong>Cataplana</strong> — un ragoût de fruits de mer ou de poisson cuit dans le récipient en cuivre qui lui donne son nom, plat emblématique de l'Algarve. Chaque restaurant a sa propre version.</p>
+    <p><strong>Poulet piri-piri</strong> — poulet grillé mariné au piri-piri, l'un des plats portugais les plus exportés et toujours un classique local.</p>
+    <p><strong>Sardines grillées</strong> — cuites sur des braises, particulièrement populaires pendant les mois chauds d'été, servies simplement avec du pain et de la salade.</p>
+    <p><strong>Açorda</strong> — un plat à base de pain, d'ail, de coriandre et parfois de fruits de mer. Simple, mais très réconfortant.</p>
+    <p><strong>Pastel de nata</strong> — le petit flan feuilleté que l'on trouve dans chaque pâtisserie du pays, du petit-déjeuner au café de l'après-midi.</p>
+    <a class="back-top" href="#top">↑ Retour en haut</a>
+  </div>
+</article>
+
+<article class="article-full ps-scope" data-lang="pt" id="direct-vs-airbnb">
+  <div data-i18n-block="pt">
+    <span class="article-tag">Alojamento</span>
+    <h2>Reserva direta vs. Airbnb: o que muda para si</h2>
+    <div class="article-photo-full"><img src="assets/images/beachside/IMG_3709.jpg" alt=""></div>
+    <p>Plataformas como o Airbnb e o Booking.com facilitam a descoberta de alojamentos e oferecem proteções úteis, sobretudo para quem reserva pela primeira vez num destino desconhecido. Isso tem valor.</p>
+    <p>Mas reservar diretamente com o anfitrião também traz vantagens: comunicação mais rápida e pessoal, maior flexibilidade para pedidos especiais, e, muitas vezes, melhores condições — já que o anfitrião não paga comissão à plataforma.</p>
+    <p>Na prática, muitos hóspedes usam as plataformas para descobrir um alojamento e, em estadias seguintes, contactam o anfitrião diretamente. Não há uma resposta certa para todos — apenas vale a pena saber que a opção existe.</p>
+    <a class="back-top" href="#top">↑ Voltar ao topo</a>
+  </div>
+  <div data-i18n-block="en">
+    <span class="article-tag">Booking</span>
+    <h2>Direct Booking vs. Airbnb: What Changes for You</h2>
+    <div class="article-photo-full"><img src="assets/images/beachside/IMG_3709.jpg" alt=""></div>
+    <p>Platforms like Airbnb and Booking.com make it easy to discover places to stay and offer useful protections, especially for first-time bookings in an unfamiliar destination. That has real value.</p>
+    <p>But booking directly with a host has its own advantages: faster, more personal communication, more flexibility for special requests, and often better rates — since the host isn't paying a platform commission.</p>
+    <p>In practice, many guests use platforms to discover a place and then contact the host directly for future stays. There's no single right answer for everyone — it's just worth knowing the option exists.</p>
+    <a class="back-top" href="#top">↑ Back to top</a>
+  </div>
+  <div data-i18n-block="fr">
+    <span class="article-tag">Réservation</span>
+    <h2>Réservation directe vs. Airbnb : ce qui change</h2>
+    <div class="article-photo-full"><img src="assets/images/beachside/IMG_3709.jpg" alt=""></div>
+    <p>Des plateformes comme Airbnb et Booking.com facilitent la découverte de logements et offrent des protections utiles, surtout pour une première réservation dans une destination inconnue. Cela a une vraie valeur.</p>
+    <p>Mais réserver directement avec l'hôte présente aussi des avantages : une communication plus rapide et plus personnelle, plus de flexibilité pour les demandes particulières, et souvent de meilleures conditions — puisque l'hôte ne paie pas de commission à la plateforme.</p>
+    <p>En pratique, beaucoup de voyageurs utilisent les plateformes pour découvrir un logement, puis contactent l'hôte directement pour les séjours suivants. Il n'y a pas de bonne réponse unique — il est simplement utile de savoir que l'option existe.</p>
+    <a class="back-top" href="#top">↑ Retour en haut</a>
+  </div>
+</article>
+
+<article class="article-full ps-scope" data-lang="pt" id="portuguese-culture">
+  <div data-i18n-block="pt">
+    <span class="article-tag">Cultura</span>
+    <h2>Cultura e hábitos portugueses: um pequeno guia</h2>
+    <div class="article-photo-full"><img src="assets/images/beachside/IMG_3714.jpg" alt=""></div>
+    <p>Os portugueses cumprimentam-se, entre pessoas que já se conhecem, geralmente com dois beijos na face (entre mulheres, ou entre homem e mulher) ou um aperto de mão (entre homens). Entre desconhecidos, um aperto de mão simples é o mais comum.</p>
+    <p>Os horários das refeições são mais tardios do que no norte da Europa: o almoço costuma ser por volta do meio-dia às 14h, e o jantar raramente começa antes das 19h30. Ao contrário da vizinha Espanha, Portugal não tem uma sesta formalmente instituída, embora algumas lojas familiares mais pequenas possam fechar uma ou duas horas ao almoço.</p>
+    <p>Quanto a gorjetas, não são obrigatórias, mas é comum arredondar a conta ou deixar entre 5% a 10% num restaurante, se o serviço foi bom.</p>
+    <a class="back-top" href="#top">↑ Voltar ao topo</a>
+  </div>
+  <div data-i18n-block="en">
+    <span class="article-tag">Culture</span>
+    <h2>Portuguese Culture and Etiquette: A Short Guide</h2>
+    <div class="article-photo-full"><img src="assets/images/beachside/IMG_3714.jpg" alt=""></div>
+    <p>Among people who already know each other, Portuguese greetings are usually two kisses on the cheek (between women, or between a man and a woman) or a handshake (between men). Among strangers, a simple handshake is most common.</p>
+    <p>Mealtimes run later than in northern Europe: lunch is typically between noon and 2pm, and dinner rarely starts before 7:30pm. Unlike neighbouring Spain, Portugal doesn't have a formally observed siesta, though smaller family-run shops may close for an hour or two at lunchtime.</p>
+    <p>Tipping isn't obligatory, but it's common to round up the bill or leave 5–10% at a restaurant if the service was good.</p>
+    <a class="back-top" href="#top">↑ Back to top</a>
+  </div>
+  <div data-i18n-block="fr">
+    <span class="article-tag">Culture</span>
+    <h2>Culture et usages portugais : petit guide</h2>
+    <div class="article-photo-full"><img src="assets/images/beachside/IMG_3714.jpg" alt=""></div>
+    <p>Entre personnes qui se connaissent déjà, les Portugais se saluent généralement par deux baisers sur la joue (entre femmes, ou entre un homme et une femme) ou une poignée de main (entre hommes). Entre inconnus, une simple poignée de main est la norme.</p>
+    <p>Les horaires des repas sont plus tardifs qu'en Europe du Nord : le déjeuner a lieu généralement entre midi et 14h, et le dîner commence rarement avant 19h30. Contrairement à l'Espagne voisine, le Portugal n'a pas de sieste formellement instituée, bien que certains petits commerces familiaux puissent fermer une heure ou deux à midi.</p>
+    <p>Le pourboire n'est pas obligatoire, mais il est courant d'arrondir l'addition ou de laisser 5 à 10 % au restaurant si le service était bon.</p>
+    <a class="back-top" href="#top">↑ Retour en haut</a>
+  </div>
+</article>
+
+<article class="article-full ps-scope" data-lang="pt" id="best-beaches">
+  <div data-i18n-block="pt">
+    <span class="article-tag">Praias</span>
+    <h2>As melhores praias perto de Altura</h2>
+    <div class="article-photo-full"><img src="assets/images/beachside/IMG_3702.jpg" alt=""></div>
+    <p><strong>Praia da Alagoa</strong> — a praia de Altura propriamente dita, ampla, com areia dourada e apoios de praia, a poucos minutos a pé dos nossos apartamentos.</p>
+    <p><strong>Praia Verde</strong> — mais tranquila, rodeada por pinhal, ligeiramente a oeste de Altura.</p>
+    <p><strong>Praia de Monte Gordo</strong> — mais movimentada, com um passeio marítimo e boa oferta de restaurantes junto à areia.</p>
+    <p><strong>Ilha de Tavira</strong> — acessível de barco a partir de Tavira, faz parte da Ria Formosa e tem quilómetros de duna e areia praticamente intocada.</p>
+    <a class="back-top" href="#top">↑ Voltar ao topo</a>
+  </div>
+  <div data-i18n-block="en">
+    <span class="article-tag">Beaches</span>
+    <h2>The Best Beaches Near Altura</h2>
+    <div class="article-photo-full"><img src="assets/images/beachside/IMG_3702.jpg" alt=""></div>
+    <p><strong>Praia da Alagoa</strong> — Altura's own beach, wide and golden with beach bars, just a short walk from our apartments.</p>
+    <p><strong>Praia Verde</strong> — quieter, backed by pine trees, a little to the west of Altura.</p>
+    <p><strong>Praia de Monte Gordo</strong> — busier, with a proper seafront promenade and plenty of restaurants right on the sand.</p>
+    <p><strong>Ilha de Tavira</strong> — reachable by boat from Tavira, part of the Ria Formosa lagoon system, with kilometres of near-untouched dune and sand.</p>
+    <a class="back-top" href="#top">↑ Back to top</a>
+  </div>
+  <div data-i18n-block="fr">
+    <span class="article-tag">Plages</span>
+    <h2>Les plus belles plages près d'Altura</h2>
+    <div class="article-photo-full"><img src="assets/images/beachside/IMG_3702.jpg" alt=""></div>
+    <p><strong>Praia da Alagoa</strong> — la plage d'Altura elle-même, large et dorée, avec des bars de plage, à quelques minutes à pied de nos appartements.</p>
+    <p><strong>Praia Verde</strong> — plus tranquille, bordée de pins, un peu à l'ouest d'Altura.</p>
+    <p><strong>Praia de Monte Gordo</strong> — plus animée, avec une vraie promenade en bord de mer et de nombreux restaurants sur le sable.</p>
+    <p><strong>Ilha de Tavira</strong> — accessible en bateau depuis Tavira, elle fait partie de la lagune de la Ria Formosa, avec des kilomètres de dunes et de sable presque intacts.</p>
+    <a class="back-top" href="#top">↑ Retour en haut</a>
+  </div>
+</article>
+
+<article class="article-full ps-scope" data-lang="pt" id="vila-real">
+  <div data-i18n-block="pt">
+    <span class="article-tag">Escapadinhas</span>
+    <h2>Um dia em Vila Real de Santo António</h2>
+    <div class="article-photo-full"><img src="assets/images/beachside/IMG_3698.jpg" alt=""></div>
+    <p>A poucos minutos de Altura, Vila Real de Santo António é uma das cidades mais singulares do Algarve. Reconstruída no século XVIII segundo um plano urbanístico pombalino, tem um centro histórico em quadrícula, com ruas perfeitamente organizadas em torno de uma praça central.</p>
+    <p>Junto ao rio Guadiana, é possível ver a fronteira com Espanha do outro lado da água — e apanhar o pequeno ferry até Ayamonte para uma tarde de duas culturas num só dia.</p>
+    <p>Vale a pena reservar tempo para passear sem pressa pelas ruas, tomar um café na praça central e explorar as lojas locais antes de voltar para Altura.</p>
+    <a class="back-top" href="#top">↑ Voltar ao topo</a>
+  </div>
+  <div data-i18n-block="en">
+    <span class="article-tag">Day Trips</span>
+    <h2>A Day in Vila Real de Santo António</h2>
+    <div class="article-photo-full"><img src="assets/images/beachside/IMG_3698.jpg" alt=""></div>
+    <p>Just minutes from Altura, Vila Real de Santo António is one of the most distinctive towns in the Algarve. Rebuilt in the 18th century under a Pombaline urban plan, its historic centre follows a neat grid of streets organised around a central square.</p>
+    <p>Right on the Guadiana river, you can see the Spanish border on the far bank — and hop on the small ferry across to Ayamonte for an afternoon spanning two countries in one day.</p>
+    <p>It's worth setting aside time to wander the streets unhurried, have a coffee in the main square, and browse the local shops before heading back to Altura.</p>
+    <a class="back-top" href="#top">↑ Back to top</a>
+  </div>
+  <div data-i18n-block="fr">
+    <span class="article-tag">Excursions</span>
+    <h2>Une journée à Vila Real de Santo António</h2>
+    <div class="article-photo-full"><img src="assets/images/beachside/IMG_3698.jpg" alt=""></div>
+    <p>À quelques minutes d'Altura, Vila Real de Santo António est l'une des villes les plus singulières de l'Algarve. Reconstruite au XVIIIe siècle selon un plan urbain pombalin, son centre historique suit une grille de rues parfaitement organisée autour d'une place centrale.</p>
+    <p>Au bord du fleuve Guadiana, on aperçoit la frontière espagnole sur l'autre rive — et l'on peut prendre le petit ferry jusqu'à Ayamonte pour un après-midi à cheval sur deux pays.</p>
+    <p>Il vaut la peine de prendre le temps de flâner dans les rues, de prendre un café sur la place centrale et de parcourir les boutiques locales avant de rentrer à Altura.</p>
+    <a class="back-top" href="#top">↑ Retour en haut</a>
+  </div>
+</article>
+
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-word">Permanent Summer</div>
+      <div class="footer-social">
+        <a href="https://instagram.com/permanentsummer.co" target="_blank" rel="noopener" aria-label="Instagram"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="12" cy="12" r="3.5"/></svg></a>
+        <a href="https://youtu.be/CwSCYQrg_f8" target="_blank" rel="noopener" aria-label="YouTube"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M21.8 8s-.2-1.4-.8-2c-.8-.8-1.6-.8-2-.9C16.8 5 12 5 12 5s-4.8 0-7 .1c-.4.1-1.2.1-2 .9-.6.6-.8 2-.8 2S2 9.6 2 11.2v1.5c0 1.6.2 3.2.2 3.2s.2 1.4.8 2c.8.8 1.8.8 2.3.8C6.8 19 12 19 12 19s4.8 0 7-.1c.4-.1 1.2-.1 2-.9.6-.6.8-2 .8-2s.2-1.6.2-3.2v-1.5C22 9.6 21.8 8 21.8 8zM10 15V9l5.5 3-5.5 3z"/></svg></a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Navigation</h4>
+      <a href="index.html#region">The Region</a><a href="index.html#apartments">Apartments</a><a href="index.html#reviews">Reviews</a>
+    </div>
+    <div class="footer-col">
+      <h4>Apartments</h4>
+      <a href="index.html#oceanside">Ocean Side</a><a href="index.html#beachside">Beachside</a><a href="index.html#calendar">Availability</a>
+    </div>
+    <div class="footer-col">
+      <h4>Get in touch</h4>
+      <a href="mailto:christopher@permanentsummer.co">christopher@permanentsummer.co</a>
+      <a href="https://instagram.com/permanentsummer.co" target="_blank" rel="noopener">@permanentsummer.co</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Permanent Summer · Altura, Algarve</span>
+    <span>Alojamento Local 162327 &amp; 170254</span>
+  </div>
+</footer>
+
+<script>
+(function () {
+  const open = document.getElementById('mobile-open');
+  const close = document.getElementById('mobile-close');
+  const panel = document.getElementById('mobile-panel');
+  open && open.addEventListener('click', () => panel.classList.add('open'));
+  close && close.addEventListener('click', () => panel.classList.remove('open'));
+  panel && panel.querySelectorAll('a').forEach(a => a.addEventListener('click', () => panel.classList.remove('open')));
+})();
+
+(function () {
+  const LS = 'ps-lang';
+  function apply(lang) {
+    document.querySelectorAll('.ps-scope').forEach(el => el.setAttribute('data-lang', lang));
+    document.querySelectorAll('.ps-lang-btn').forEach(b => b.setAttribute('aria-current', b.dataset.setlang === lang ? 'true' : 'false'));
+    localStorage.setItem(LS, lang);
+  }
+  apply(localStorage.getItem(LS) || 'pt');
+  document.addEventListener('click', e => { const b = e.target.closest('.ps-lang-btn'); if (b) apply(b.dataset.setlang || 'pt'); });
+})();
+</script>
+</body>
+</html>
