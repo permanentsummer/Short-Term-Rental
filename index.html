@@ -345,6 +345,7 @@ footer { background: #0D1615; color: rgba(235,238,230,.55); padding: 64px var(--
   <a href="#reviews">Reviews</a>
   <a href="#instagram">Instagram</a>
   <a href="#contact">Contact</a>
+  <a href="blog.html">Blog</a>
   <a href="#calendar" class="panel-cta">Book Direct</a>
   <div class="ps-lang-bar">
     <button class="ps-lang-btn" data-setlang="pt" aria-current="true">PT</button>
@@ -361,17 +362,19 @@ footer { background: #0D1615; color: rgba(235,238,230,.55); padding: 64px var(--
       <h1 class="hero-title">Altura</h1>
       <p class="hero-sub">Dois apartamentos junto ao mar no Algarve, geridos diretamente por nós.</p>
       <div class="search-bar-wrap">
-        <form class="search-bar" id="search-bar-pt">
-          <div class="search-field"><label>Apartamento</label><select><option>Ambos</option><option>Ocean Side</option><option>Beachside</option></select></div>
+        <form class="search-bar" id="search-bar-pt" method="get" action="search.html">
+          <input type="hidden" name="lang" value="pt">
+          <div class="search-field"><label>Apartamento</label><select name="apt"><option value="all">Ambos</option><option value="ocean">Ocean Side</option><option value="beach">Beachside</option></select></div>
           <div class="search-field date-field">
             <label>Datas</label>
             <button type="button" class="date-trigger">Selecionar datas</button>
+            <input type="hidden" name="checkin"><input type="hidden" name="checkout">
             <div class="date-panel">
               <div class="date-panel-months"></div>
               <div class="date-panel-footer"><button type="button" class="date-clear">Limpar datas</button></div>
             </div>
           </div>
-          <div class="search-field"><label>Hóspedes</label><select><option>1</option><option selected>2</option><option>3</option><option>4</option></select></div>
+          <div class="search-field"><label>Hóspedes</label><select name="guests"><option>1</option><option selected>2</option><option>3</option><option>4</option></select></div>
           <button type="submit" class="search-go">Pesquisar</button>
         </form>
         <p class="hero-trust">Avaliações <strong>excelentes</strong> · Booking.com &amp; Airbnb</p>
@@ -382,17 +385,19 @@ footer { background: #0D1615; color: rgba(235,238,230,.55); padding: 64px var(--
       <h1 class="hero-title">Altura</h1>
       <p class="hero-sub">Two seaside apartments in the Algarve, run directly by us.</p>
       <div class="search-bar-wrap">
-        <form class="search-bar" id="search-bar-en">
-          <div class="search-field"><label>Apartment</label><select><option>Either</option><option>Ocean Side</option><option>Beachside</option></select></div>
+        <form class="search-bar" id="search-bar-en" method="get" action="search.html">
+          <input type="hidden" name="lang" value="en">
+          <div class="search-field"><label>Apartment</label><select name="apt"><option value="all">Either</option><option value="ocean">Ocean Side</option><option value="beach">Beachside</option></select></div>
           <div class="search-field date-field">
             <label>Dates</label>
             <button type="button" class="date-trigger">Select dates</button>
+            <input type="hidden" name="checkin"><input type="hidden" name="checkout">
             <div class="date-panel">
               <div class="date-panel-months"></div>
               <div class="date-panel-footer"><button type="button" class="date-clear">Clear dates</button></div>
             </div>
           </div>
-          <div class="search-field"><label>Guests</label><select><option>1</option><option selected>2</option><option>3</option><option>4</option></select></div>
+          <div class="search-field"><label>Guests</label><select name="guests"><option>1</option><option selected>2</option><option>3</option><option>4</option></select></div>
           <button type="submit" class="search-go">Search</button>
         </form>
         <p class="hero-trust"><strong>Excellent</strong> reviews · Booking.com &amp; Airbnb</p>
@@ -403,67 +408,23 @@ footer { background: #0D1615; color: rgba(235,238,230,.55); padding: 64px var(--
       <h1 class="hero-title">Altura</h1>
       <p class="hero-sub">Deux appartements en bord de mer en Algarve, gérés directement par nous.</p>
       <div class="search-bar-wrap">
-        <form class="search-bar" id="search-bar-fr">
-          <div class="search-field"><label>Appartement</label><select><option>Les deux</option><option>Ocean Side</option><option>Beachside</option></select></div>
+        <form class="search-bar" id="search-bar-fr" method="get" action="search.html">
+          <input type="hidden" name="lang" value="fr">
+          <div class="search-field"><label>Appartement</label><select name="apt"><option value="all">Les deux</option><option value="ocean">Ocean Side</option><option value="beach">Beachside</option></select></div>
           <div class="search-field date-field">
             <label>Dates</label>
             <button type="button" class="date-trigger">Sélectionner les dates</button>
+            <input type="hidden" name="checkin"><input type="hidden" name="checkout">
             <div class="date-panel">
               <div class="date-panel-months"></div>
               <div class="date-panel-footer"><button type="button" class="date-clear">Effacer les dates</button></div>
             </div>
           </div>
-          <div class="search-field"><label>Voyageurs</label><select><option>1</option><option selected>2</option><option>3</option><option>4</option></select></div>
+          <div class="search-field"><label>Voyageurs</label><select name="guests"><option>1</option><option selected>2</option><option>3</option><option>4</option></select></div>
           <button type="submit" class="search-go">Rechercher</button>
         </form>
         <p class="hero-trust">Avis <strong>excellents</strong> · Booking.com &amp; Airbnb</p>
       </div>
-    </div>
-  </div>
-</section>
-
-<section class="section" id="search-results" style="display:none; padding-top:150px; padding-bottom:80px;">
-  <div class="section-inner ps-scope" data-lang="pt">
-    <div class="results-head">
-      <div data-i18n-block="pt"><span class="results-count">2 apartamentos</span></div>
-      <div data-i18n-block="en"><span class="results-count">2 apartments</span></div>
-      <div data-i18n-block="fr"><span class="results-count">2 appartements</span></div>
-      <button type="button" class="results-close" id="results-close">
-        <span data-i18n-block="pt">Fechar pesquisa</span><span data-i18n-block="en">Close search</span><span data-i18n-block="fr">Fermer la recherche</span> &times;
-      </button>
-    </div>
-    <div class="results-grid">
-      <div class="results-list">
-        <a class="results-card" href="#oceanside">
-          <div class="results-photo"><div class="dest-placeholder">Photos coming soon</div></div>
-          <div class="results-body">
-            <div class="results-name">Ocean Side</div>
-            <div class="results-loc">Altura, Algarve</div>
-            <div class="results-specs" data-i18n-block="pt">4 hóspedes · 1 quarto · varanda vista mar</div>
-            <div class="results-specs" data-i18n-block="en">4 guests · 1 bedroom · sea-view balcony</div>
-            <div class="results-specs" data-i18n-block="fr">4 pers. · 1 chambre · balcon vue mer</div>
-            <div class="results-tags">
-              <span class="results-tag" data-i18n-block="pt">800m da praia</span><span class="results-tag" data-i18n-block="en">800m from the beach</span><span class="results-tag" data-i18n-block="fr">à 800m de la plage</span>
-              <span class="results-tag" data-i18n-block="pt">Acesso por elevador</span><span class="results-tag" data-i18n-block="en">Elevator access</span><span class="results-tag" data-i18n-block="fr">Accès par ascenseur</span>
-            </div>
-          </div>
-        </a>
-        <a class="results-card" href="#beachside">
-          <div class="results-photo"><img src="assets/images/beachside/IMG_3681.jpg" alt="Beachside" loading="lazy"></div>
-          <div class="results-body">
-            <div class="results-name">Beachside</div>
-            <div class="results-loc">Altura, Algarve</div>
-            <div class="results-specs" data-i18n-block="pt">4 hóspedes · 1 quarto · varanda vista mar</div>
-            <div class="results-specs" data-i18n-block="en">4 guests · 1 bedroom · sea-view balcony</div>
-            <div class="results-specs" data-i18n-block="fr">4 pers. · 1 chambre · balcon vue mer</div>
-            <div class="results-tags">
-              <span class="results-tag" data-i18n-block="pt">300m da praia</span><span class="results-tag" data-i18n-block="en">300m from the beach</span><span class="results-tag" data-i18n-block="fr">à 300m de la plage</span>
-              <span class="results-tag" data-i18n-block="pt">Localização central</span><span class="results-tag" data-i18n-block="en">Central location</span><span class="results-tag" data-i18n-block="fr">Emplacement central</span>
-            </div>
-          </div>
-        </a>
-      </div>
-      <div class="results-map-wrap"><div id="results-map"></div></div>
     </div>
   </div>
 </section>
@@ -925,38 +886,10 @@ footer { background: #0D1615; color: rgba(235,238,230,.55); padding: 64px var(--
   panel && panel.querySelectorAll('a').forEach(a => a.addEventListener('click', () => panel.classList.remove('open')));
 })();
 
-/* ─── SEARCH → SHOW RESULTS PANEL (not the bottom calendar) ─────── */
-document.querySelectorAll('.search-bar').forEach(f => f.addEventListener('submit', e => {
-  e.preventDefault();
-  const panel = document.getElementById('search-results');
-  panel.style.display = 'block';
-  panel.scrollIntoView({ behavior: 'smooth' });
-  initResultsMap();
-}));
-document.getElementById('results-close') && document.getElementById('results-close').addEventListener('click', () => {
-  document.getElementById('search-results').style.display = 'none';
-  document.getElementById('top').scrollIntoView({ behavior: 'smooth' });
-});
-
 (function () {
   const trigger = document.getElementById('book-direct-trigger');
   if (trigger) trigger.addEventListener('click', e => e.preventDefault());
 })();
-
-let resultsMapInited = false;
-function initResultsMap() {
-  if (resultsMapInited) return;
-  resultsMapInited = true;
-  const OS = [37.174878, -7.504644];
-  const BS = [37.173125, -7.498954];
-  const m = L.map('results-map', { zoomControl: true, scrollWheelZoom: false }).setView([(OS[0]+BS[0])/2, (OS[1]+BS[1])/2], 15);
-  m.attributionControl.setPrefix(false);
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '© OpenStreetMap contributors' }).addTo(m);
-  const pin = c => L.icon({ iconUrl: 'data:image/svg+xml;utf8,' + encodeURIComponent(`<svg width="26" height="36" viewBox="0 0 26 36" xmlns="http://www.w3.org/2000/svg"><path d="M13 0C6.37 0 1 5.37 1 12c0 8.9 10.6 20.9 11.15 21.55.5.58 1.3.58 1.8 0C14.4 32.9 25 20.9 25 12 25 5.37 19.63 0 13 0z" fill="${c}"/><circle cx="13" cy="12" r="4.8" fill="#fff"/></svg>`), iconSize:[26,36], iconAnchor:[13,36], popupAnchor:[0,-32] });
-  L.marker(OS, { icon: pin('#B9B36A') }).addTo(m).bindPopup('<div class="popup-title">Ocean Side</div>');
-  L.marker(BS, { icon: pin('#B9B36A') }).addTo(m).bindPopup('<div class="popup-title">Beachside</div>');
-  setTimeout(() => m.invalidateSize(), 200);
-}
 
 /* ─── DATE-RANGE PICKER (two-month calendar) ─────────────────────── */
 (function () {
@@ -973,6 +906,7 @@ function initResultsMap() {
   const CLEAR_LABEL = { pt: 'Selecionar datas', en: 'Select dates', fr: 'Sélectionner les dates' };
 
   function fmt(d) { return String(d.getDate()).padStart(2,'0') + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + d.getFullYear(); }
+  function iso(d) { return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0'); }
   function sameDay(a,b) { return a && b && a.getFullYear()===b.getFullYear() && a.getMonth()===b.getMonth() && a.getDate()===b.getDate(); }
   function startOfToday() { const d = new Date(); d.setHours(0,0,0,0); return d; }
 
@@ -981,6 +915,8 @@ function initResultsMap() {
     const lang = form.id.split('-').pop(); // search-bar-pt -> pt
     const trigger = field.querySelector('.date-trigger');
     const panel = field.querySelector('.date-panel');
+    const checkinInput = field.querySelector('input[name="checkin"]');
+    const checkoutInput = field.querySelector('input[name="checkout"]');
     const monthsWrap = panel.querySelector('.date-panel-months');
     const clearBtn = panel.querySelector('.date-clear');
     const state = { baseOffset: 0, checkIn: null, checkOut: null };
@@ -1041,6 +977,8 @@ function initResultsMap() {
               render();
               if (state.checkIn && state.checkOut) {
                 trigger.textContent = fmt(state.checkIn) + ' → ' + fmt(state.checkOut);
+                if (checkinInput) checkinInput.value = iso(state.checkIn);
+                if (checkoutInput) checkoutInput.value = iso(state.checkOut);
               }
             });
           }
@@ -1059,9 +997,11 @@ function initResultsMap() {
     clearBtn.addEventListener('click', () => {
       state.checkIn = null; state.checkOut = null;
       trigger.textContent = CLEAR_LABEL[lang] || CLEAR_LABEL.en;
+      if (checkinInput) checkinInput.value = '';
+      if (checkoutInput) checkoutInput.value = '';
       render();
     });
-    document.addEventListener('click', e => { if (!field.contains(e.target)) panel.classList.remove('open'); });
+    document.addEventListener('mousedown', e => { if (!field.contains(e.target)) panel.classList.remove('open'); });
 
     render();
   });
