@@ -155,6 +155,15 @@ p.lede { font-size: 1.02rem; line-height: 1.75; color: var(--ink-soft); max-widt
 .intro-link { display: inline-block; margin-top: 22px; font: 500 .82rem var(--body); text-transform: uppercase; letter-spacing: .08em; border-bottom: 1px solid var(--ink); padding-bottom: 3px; }
 
 .accordion { margin-top: 34px; border-top: 1px solid var(--line); }
+
+.booking-card {
+  margin-top: 44px; background: var(--paper); border: 1px solid var(--line);
+  padding: 64px 40px; display: flex; flex-direction: column; align-items: center; gap: 26px;
+}
+.booking-icon {
+  width: 68px; height: 68px; border-radius: 50%; background: var(--stone);
+  display: flex; align-items: center; justify-content: center; color: var(--azulejo);
+}
 .accordion details { border-bottom: 1px solid var(--line); }
 .accordion summary {
   list-style: none; cursor: pointer; padding: 20px 0;
@@ -247,10 +256,6 @@ p.lede { font-size: 1.02rem; line-height: 1.75; color: var(--ink-soft); max-widt
 .btn-solid { display: inline-block; font: 600 .76rem var(--body); text-transform: uppercase; letter-spacing: .1em; background: var(--ink); color: var(--paper); padding: 15px 28px; transition: background .2s; }
 .btn-solid:hover { background: var(--azulejo); }
 
-.trust-strip { padding: 46px var(--gut); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
-.trust-inner { max-width: var(--max); margin: 0 auto; display: flex; align-items: center; justify-content: center; gap: 48px; flex-wrap: wrap; text-align: center; }
-.trust-item { font: 500 .82rem var(--body); color: var(--ink-soft); letter-spacing: .02em; }
-.trust-item strong { color: var(--ink); font-family: var(--disp); font-size: 1rem; }
 
 .map-card { position: relative; border: 1px solid var(--line); margin-top: 40px; }
 #so-map { height: 560px; width: 100%; }
@@ -728,26 +733,6 @@ footer { background: #0D1615; color: rgba(235,238,230,.55); padding: 64px var(--
   </div>
 </section>
 
-<div class="trust-strip">
-  <div class="trust-inner ps-scope" data-lang="pt">
-    <div data-i18n-block="pt" style="display:flex;gap:48px;flex-wrap:wrap;justify-content:center;">
-      <span class="trust-item"><strong>Booking.com</strong><br>Genius partner</span>
-      <span class="trust-item"><strong>Airbnb</strong><br>Superhost</span>
-      <span class="trust-item"><strong>Alojamento Local</strong><br>Licenciado 162327 &amp; 170254</span>
-    </div>
-    <div data-i18n-block="en" style="display:flex;gap:48px;flex-wrap:wrap;justify-content:center;">
-      <span class="trust-item"><strong>Booking.com</strong><br>Genius partner</span>
-      <span class="trust-item"><strong>Airbnb</strong><br>Superhost</span>
-      <span class="trust-item"><strong>Alojamento Local</strong><br>Licensed 162327 &amp; 170254</span>
-    </div>
-    <div data-i18n-block="fr" style="display:flex;gap:48px;flex-wrap:wrap;justify-content:center;">
-      <span class="trust-item"><strong>Booking.com</strong><br>Partenaire Genius</span>
-      <span class="trust-item"><strong>Airbnb</strong><br>Superhôte</span>
-      <span class="trust-item"><strong>Alojamento Local</strong><br>Licence 162327 &amp; 170254</span>
-    </div>
-  </div>
-</div>
-
 <section class="section" id="region">
   <div class="section-inner intro-grid ps-scope" data-lang="pt">
     <div data-i18n-block="pt">
@@ -868,7 +853,10 @@ footer { background: #0D1615; color: rgba(235,238,230,.55); padding: 64px var(--
     <div data-i18n-block="pt"><h2 class="head">Disponibilidade &amp; reserva</h2><p class="lede" style="margin-top:14px;">Reserve diretamente connosco através do nosso sistema de reservas — sem comissões de plataformas.</p></div>
     <div data-i18n-block="en"><h2 class="head">Availability &amp; booking</h2><p class="lede" style="margin-top:14px;">Book directly with us through our own booking system — no platform commissions.</p></div>
     <div data-i18n-block="fr"><h2 class="head">Disponibilité &amp; réservation</h2><p class="lede" style="margin-top:14px;">Réservez directement avec nous via notre propre système — sans commission de plateforme.</p></div>
-    <div class="map-card" style="min-height:220px; background:var(--paper); display:flex; align-items:center; justify-content:center; padding:40px;">
+    <div class="booking-card">
+      <div class="booking-icon">
+        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/><path d="M8 14h2m4 0h2M8 17h2"/></svg>
+      </div>
       <a class="btn-solid" href="#" id="book-direct-trigger">Book Direct</a>
     </div>
   </div>
@@ -941,9 +929,10 @@ footer { background: #0D1615; color: rgba(235,238,230,.55); padding: 64px var(--
 </footer>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+<!-- Permanent Summer Direct Booking Widget -->
 <script src="https://permanentsummer.github.io/direct-booking/widget.js"
   data-workspace="7c5d4583-de11-43f1-bb71-658aaf591f4e"
-  data-color="#2C5164"
+  data-color="#6366f1"
   data-label="Book Direct">
 </script>
 
