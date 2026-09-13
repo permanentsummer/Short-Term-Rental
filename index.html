@@ -537,7 +537,7 @@ footer { background: #0D1615; color: rgba(235,238,230,.55); padding: 64px var(--
     </div>
     <div class="dest-track">
       <a class="dest-card" href="#oceanside">
-        <div class="dest-photo"><div class="dest-placeholder">Photos coming soon</div></div>
+        <div class="dest-photo"><img src="assets/images/oceanside/bedroom-1.jpg" alt="Ocean Side" loading="lazy"></div>
         <div class="dest-name">Ocean Side</div>
         <div class="dest-loc">Altura, Algarve</div>
         <div class="dest-specs" data-i18n-block="pt">4 hóspedes · 1 quarto · varanda vista mar</div>
@@ -565,10 +565,31 @@ footer { background: #0D1615; color: rgba(235,238,230,.55); padding: 64px var(--
 <section class="section apt-detail" id="oceanside">
   <div class="section-inner apt-detail-grid ps-scope" data-lang="pt">
     <div class="carousel" id="carousel-ocean">
-      <div class="carousel-placeholder">
-        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
-        <span data-i18n-block="pt">Fotos brevemente</span><span data-i18n-block="en">Photos coming soon</span><span data-i18n-block="fr">Photos bientôt disponibles</span>
+      <div class="carousel-track" id="ocean-track">
+        <div class="carousel-slide"><img src="assets/images/oceanside/bedroom-1.jpg" alt="Ocean Side bedroom" loading="lazy"></div>
+        <div class="carousel-slide"><img src="assets/images/oceanside/bedroom-2.jpg" alt="Ocean Side bed detail" loading="lazy"></div>
+        <div class="carousel-slide"><img src="assets/images/oceanside/bedroom-balcony.jpg" alt="Ocean Side bedroom with balcony access" loading="lazy"></div>
+        <div class="carousel-slide"><img src="assets/images/oceanside/living-room-1.jpg" alt="Ocean Side living room" loading="lazy"></div>
+        <div class="carousel-slide"><img src="assets/images/oceanside/living-room-2.jpg" alt="Ocean Side living room corner" loading="lazy"></div>
+        <div class="carousel-slide"><img src="assets/images/oceanside/dining.jpg" alt="Ocean Side dining table" loading="lazy"></div>
+        <div class="carousel-slide"><img src="assets/images/oceanside/balcony-view.jpg" alt="Ocean Side balcony with sea glimpse" loading="lazy"></div>
+        <div class="carousel-slide"><img src="assets/images/oceanside/balcony-nook.jpg" alt="Ocean Side balcony seating nook" loading="lazy"></div>
+        <div class="carousel-slide"><img src="assets/images/oceanside/balcony-bbq.jpg" alt="Ocean Side balcony grill" loading="lazy"></div>
+        <div class="carousel-slide"><img src="assets/images/oceanside/kitchen.jpg" alt="Ocean Side kitchen" loading="lazy"></div>
+        <div class="carousel-slide"><img src="assets/images/oceanside/bathroom-1.jpg" alt="Ocean Side bathroom" loading="lazy"></div>
+        <div class="carousel-slide"><img src="assets/images/oceanside/bathroom-2.jpg" alt="Ocean Side bathroom sink" loading="lazy"></div>
+        <div class="carousel-slide"><img src="assets/images/oceanside/bathroom-detail.jpg" alt="Ocean Side bathroom detail" loading="lazy"></div>
+        <div class="carousel-slide"><img src="assets/images/oceanside/desk-nook.jpg" alt="Ocean Side desk nook and closet" loading="lazy"></div>
+        <div class="carousel-slide"><img src="assets/images/oceanside/desk-detail.jpg" alt="Ocean Side desk detail" loading="lazy"></div>
+        <div class="carousel-slide"><img src="assets/images/oceanside/towels.jpg" alt="Ocean Side towels" loading="lazy"></div>
+        <div class="carousel-slide"><img src="assets/images/oceanside/coffee-tray.jpg" alt="Ocean Side coffee and tea tray" loading="lazy"></div>
+        <div class="carousel-slide"><img src="assets/images/oceanside/decor-1.jpg" alt="Ocean Side decor detail" loading="lazy"></div>
+        <div class="carousel-slide"><img src="assets/images/oceanside/decor-2.jpg" alt="Ocean Side decor detail" loading="lazy"></div>
+        <div class="carousel-slide"><img src="assets/images/oceanside/archway.jpg" alt="Ocean Side entryway" loading="lazy"></div>
       </div>
+      <button class="carousel-btn prev" aria-label="Previous">&#8249;</button>
+      <button class="carousel-btn next" aria-label="Next">&#8250;</button>
+      <div class="carousel-dots" id="ocean-dots"></div>
     </div>
     <div>
       <div data-i18n-block="pt">
@@ -1068,6 +1089,7 @@ function initCarousel(trackId, dotsId, autoMs) {
   resetAuto();
 }
 initCarousel('beach-track', 'beach-dots', 4500);
+initCarousel('ocean-track', 'ocean-dots', 4500);
 
 (function () {
   const OS = [37.174878, -7.504644];
