@@ -153,6 +153,19 @@ p.lede { font-size: 1.02rem; line-height: 1.75; color: var(--ink-soft); max-widt
 .intro-copy { border-left: 2px solid var(--khaki); padding-left: 32px; }
 .intro-copy p.lede { margin-top: 18px; }
 .intro-link { display: inline-block; margin-top: 22px; font: 500 .82rem var(--body); text-transform: uppercase; letter-spacing: .08em; border-bottom: 1px solid var(--ink); padding-bottom: 3px; }
+
+.accordion { margin-top: 34px; border-top: 1px solid var(--line); }
+.accordion details { border-bottom: 1px solid var(--line); }
+.accordion summary {
+  list-style: none; cursor: pointer; padding: 20px 0;
+  display: flex; align-items: center; justify-content: space-between; gap: 20px;
+  font: 500 .82rem var(--body); text-transform: uppercase; letter-spacing: .08em; color: var(--ink);
+}
+.accordion summary::-webkit-details-marker { display: none; }
+.acc-icon { font: 400 1.1rem var(--disp); color: var(--khaki-d); transition: transform .25s; flex-shrink: 0; }
+.accordion details[open] .acc-icon { transform: rotate(45deg); }
+.accordion details p { padding-bottom: 20px; color: var(--ink-soft); font-size: .96rem; line-height: 1.7; max-width: 56ch; }
+.accordion details .intro-link { margin-top: 0; margin-bottom: 20px; display: inline-block; }
 .intro-photo { aspect-ratio: 5/4; overflow: hidden; }
 .intro-photo img { width: 100%; height: 100%; object-fit: cover; }
 .photo-pending {
@@ -253,14 +266,14 @@ p.lede { font-size: 1.02rem; line-height: 1.75; color: var(--ink-soft); max-widt
 .popup-title { font: 500 .86rem var(--body); color: var(--ink); }
 .popup-meta { font-size: .74rem; color: var(--ink-soft); margin-top: 2px; }
 
-.video-inner { position: relative; width: 100%; padding-top: 56.25%; border: 1px solid var(--line); }
-.video-inner iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
-
-.review-wall { columns: 2 260px; column-gap: 48px; margin-top: 48px; }
-.review { break-inside: avoid; margin-bottom: 40px; }
-.review-quote { font: 500 1.08rem/1.6 var(--disp); font-style: italic; }
-.review-meta { margin-top: 14px; display: flex; align-items: center; gap: 10px; font-size: .84rem; color: var(--ink-soft); }
+.review-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 52px 64px; margin-top: 56px; }
+.review { border-top: 1px solid var(--line); padding-top: 26px; }
+.review-quote-mark { display: block; font: 400 2.8rem var(--disp); color: var(--khaki); line-height: .5; margin-bottom: 10px; }
+.review-quote { font: 500 1.12rem/1.65 var(--disp); font-style: italic; color: var(--ink); }
+.review-meta { margin-top: 18px; display: flex; align-items: center; gap: 9px; font: 500 .72rem var(--body); text-transform: uppercase; letter-spacing: .08em; color: var(--ink-soft); }
 .review-meta .plat { color: var(--azulejo); }
+.review-meta .dot { width: 3px; height: 3px; border-radius: 50%; background: var(--line); flex-shrink: 0; }
+@media (max-width: 700px) { .review-grid { grid-template-columns: 1fr; } }
 
 .ig-head { display: flex; align-items: baseline; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
 .ig-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-top: 40px; }
@@ -442,29 +455,59 @@ footer { background: #0D1615; color: rgba(235,238,230,.55); padding: 64px var(--
   <div class="section-inner intro-grid ps-scope" data-lang="pt">
     <div data-i18n-block="pt">
       <div class="intro-copy">
-        <p class="eyebrow-italic">os nossos</p>
-        <h2 class="head">Apartamentos</h2>
-        <p class="lede">Dois apartamentos independentes em Altura, geridos diretamente por nós — sem intermediários, sem surpresas. Cada um pensado para até 4 hóspedes, a poucos passos do mar.</p>
-        <a class="intro-link" href="#apartments">Ver os dois apartamentos</a>
+        <p class="eyebrow-italic">um algarve</p>
+        <h2 class="head">Genuíno e por descobrir</h2>
+        <p class="lede">No coração do Algarve oriental, entre a Ria Formosa e o rio Guadiana, encontra-se um Algarve que os guias turísticos esquecem — vilas que nunca se vestiram para turistas, praias sem filas de espreguiçadeiras, sabores que vêm diretamente do mar e da terra. Menos multidões, mais carácter.</p>
+        <div class="accordion">
+          <details>
+            <summary><span>Porquê o Algarve oriental?</span><span class="acc-icon">+</span></summary>
+            <p>Longe da azáfama do Algarve central, o Sotavento guarda vilas piscatórias, sapais e fronteiras tranquilas. Cacela Velha, Castro Marim e Vila Real de Santo António continuam a viver ao seu próprio ritmo — não ao da época alta.</p>
+          </details>
+          <details>
+            <summary><span>Dois apartamentos, sempre diretos</span><span class="acc-icon">+</span></summary>
+            <p>Dois apartamentos independentes em Altura, geridos diretamente por nós — sem intermediários, sem surpresas. Cada um pensado para até 4 hóspedes, a poucos passos do mar.</p>
+            <a class="intro-link" href="#apartments">Ver os dois apartamentos</a>
+          </details>
+        </div>
       </div>
     </div>
     <div data-i18n-block="en">
       <div class="intro-copy">
-        <p class="eyebrow-italic">our</p>
-        <h2 class="head">Apartments</h2>
-        <p class="lede">Two independent apartments in Altura, run directly by us — no intermediaries, no surprises. Each set up for up to 4 guests, a short walk from the sea.</p>
-        <a class="intro-link" href="#apartments">See both apartments</a>
+        <p class="eyebrow-italic">an algarve</p>
+        <h2 class="head">Genuine and undiscovered</h2>
+        <p class="lede">At the heart of the Eastern Algarve, between the Ria Formosa lagoon and the Guadiana river, sits an Algarve the guidebooks tend to skip — villages that never dressed up for tourists, beaches without rows of loungers, flavours pulled straight from the sea and the land. Fewer crowds, more character.</p>
+        <div class="accordion">
+          <details>
+            <summary><span>Why the Eastern Algarve?</span><span class="acc-icon">+</span></summary>
+            <p>Away from the bustle of the central Algarve, the Sotavento holds onto fishing villages, salt marshes, and quiet borders. Cacela Velha, Castro Marim, and Vila Real de Santo António still move at their own pace — not the season's.</p>
+          </details>
+          <details>
+            <summary><span>Two apartments, always direct</span><span class="acc-icon">+</span></summary>
+            <p>Two independent apartments in Altura, run directly by us — no intermediaries, no surprises. Each set up for up to 4 guests, a short walk from the sea.</p>
+            <a class="intro-link" href="#apartments">See both apartments</a>
+          </details>
+        </div>
       </div>
     </div>
     <div data-i18n-block="fr">
       <div class="intro-copy">
-        <p class="eyebrow-italic">nos</p>
-        <h2 class="head">Appartements</h2>
-        <p class="lede">Deux appartements indépendants à Altura, gérés directement par nous — sans intermédiaire, sans surprise. Chacun pensé pour 4 personnes, à deux pas de la mer.</p>
-        <a class="intro-link" href="#apartments">Voir les deux appartements</a>
+        <p class="eyebrow-italic">un algarve</p>
+        <h2 class="head">Authentique et méconnu</h2>
+        <p class="lede">Au cœur de l'Algarve oriental, entre la lagune de la Ria Formosa et le fleuve Guadiana, se trouve un Algarve que les guides touristiques oublient — des villages qui ne se sont jamais parés pour les touristes, des plages sans rangées de transats, des saveurs venues directement de la mer et de la terre. Moins de monde, plus de caractère.</p>
+        <div class="accordion">
+          <details>
+            <summary><span>Pourquoi l'Algarve oriental ?</span><span class="acc-icon">+</span></summary>
+            <p>Loin de l'agitation de l'Algarve central, le Sotavento conserve villages de pêcheurs, marais salants et frontières tranquilles. Cacela Velha, Castro Marim et Vila Real de Santo António vivent encore à leur propre rythme — pas celui de la haute saison.</p>
+          </details>
+          <details>
+            <summary><span>Deux appartements, toujours en direct</span><span class="acc-icon">+</span></summary>
+            <p>Deux appartements indépendants à Altura, gérés directement par nous — sans intermédiaire, sans surprise. Chacun pensé pour 4 personnes, à deux pas de la mer.</p>
+            <a class="intro-link" href="#apartments">Voir les deux appartements</a>
+          </details>
+        </div>
       </div>
     </div>
-    <div class="intro-photo"><div class="photo-pending">Photo coming soon</div></div>
+    <div class="intro-photo"><img src="assets/images/region/village-street.jpg" alt="A village street in the Eastern Algarve" loading="lazy"></div>
   </div>
 </section>
 
@@ -771,44 +814,36 @@ footer { background: #0D1615; color: rgba(235,238,230,.55); padding: 64px var(--
   </div>
 </section>
 
-<section class="section">
-  <div class="section-inner">
-    <div class="video-inner">
-      <iframe src="https://www.youtube.com/embed/CwSCYQrg_f8?rel=0&modestbranding=1" title="Permanent Summer — Algarve" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-    </div>
-  </div>
-</section>
-
 <section class="section section--stone" id="reviews">
   <div class="section-inner ps-scope" data-lang="pt">
     <div data-i18n-block="pt"><h2 class="head">O que dizem os hóspedes</h2>
-      <div class="review-wall">
-        <div class="review"><p class="review-quote">"Local muito tranquilo e bem equipado. Perto de tudo. Comunicação excelente com os anfitriões, sempre atentos. Estava tudo perfeito."</p><div class="review-meta"><span>Guadalupe 🇪🇸</span><span class="plat">Booking.com</span></div></div>
-        <div class="review"><p class="review-quote">"Fiquei muito satisfeita com a estadia. Anfitriões simpáticos e rápidos a repor o que faltava. Varanda muito acolhedora — recomendo!"</p><div class="review-meta"><span>Maria 🇵🇹</span><span class="plat">Booking.com</span></div></div>
-        <div class="review"><p class="review-quote">"Apartamento bonito perto da praia — impecável, tranquilo e relaxante. Perto de tudo o que precisámos. Voltaremos em família."</p><div class="review-meta"><span>Carlotta 🇩🇪</span><span class="plat">Airbnb</span></div></div>
-        <div class="review"><p class="review-quote">"Casa muito organizada, ideal para alguns dias de férias na praia."</p><div class="review-meta"><span>Elizabeth 🇵🇹</span><span class="plat">Booking.com</span></div></div>
-        <div class="review"><p class="review-quote">"Apartamento espaçoso, muito limpo, zona tranquila e estacionamento fácil."</p><div class="review-meta"><span>Juan 🇪🇸</span><span class="plat">Booking.com</span></div></div>
-        <div class="review"><p class="review-quote">"Experiência cinco estrelas — adorámos a estadia e o ambiente. Voltaremos, sem dúvida."</p><div class="review-meta"><span>Lénia 🇵🇹</span><span class="plat">Airbnb</span></div></div>
+      <div class="review-grid">
+        <div class="review"><span class="review-quote-mark">&ldquo;</span><p class="review-quote">Local muito tranquilo e bem equipado. Perto de tudo. Comunicação excelente com os anfitriões, sempre atentos. Estava tudo perfeito.</p><div class="review-meta"><span>Guadalupe 🇪🇸</span><span class="dot"></span><span class="plat">Booking.com</span></div></div>
+        <div class="review"><span class="review-quote-mark">&ldquo;</span><p class="review-quote">Fiquei muito satisfeita com a estadia. Anfitriões simpáticos e rápidos a repor o que faltava. Varanda muito acolhedora — recomendo!</p><div class="review-meta"><span>Maria 🇵🇹</span><span class="dot"></span><span class="plat">Booking.com</span></div></div>
+        <div class="review"><span class="review-quote-mark">&ldquo;</span><p class="review-quote">Apartamento bonito perto da praia — impecável, tranquilo e relaxante. Perto de tudo o que precisámos. Voltaremos em família.</p><div class="review-meta"><span>Carlotta 🇩🇪</span><span class="dot"></span><span class="plat">Airbnb</span></div></div>
+        <div class="review"><span class="review-quote-mark">&ldquo;</span><p class="review-quote">Casa muito organizada, ideal para alguns dias de férias na praia.</p><div class="review-meta"><span>Elizabeth 🇵🇹</span><span class="dot"></span><span class="plat">Booking.com</span></div></div>
+        <div class="review"><span class="review-quote-mark">&ldquo;</span><p class="review-quote">Apartamento espaçoso, muito limpo, zona tranquila e estacionamento fácil.</p><div class="review-meta"><span>Juan 🇪🇸</span><span class="dot"></span><span class="plat">Booking.com</span></div></div>
+        <div class="review"><span class="review-quote-mark">&ldquo;</span><p class="review-quote">Experiência cinco estrelas — adorámos a estadia e o ambiente. Voltaremos, sem dúvida.</p><div class="review-meta"><span>Lénia 🇵🇹</span><span class="dot"></span><span class="plat">Airbnb</span></div></div>
       </div>
     </div>
     <div data-i18n-block="en"><h2 class="head">What guests are saying</h2>
-      <div class="review-wall">
-        <div class="review"><p class="review-quote">"A very quiet and well-equipped place. Close to everything. Excellent communication with the hosts, always attentive. Everything was perfect."</p><div class="review-meta"><span>Guadalupe 🇪🇸</span><span class="plat">Booking.com</span></div></div>
-        <div class="review"><p class="review-quote">"Very pleased with my stay. Kind, responsive hosts who quickly replaced a few missing items. Very cosy balcony — highly recommend!"</p><div class="review-meta"><span>Maria 🇵🇹</span><span class="plat">Booking.com</span></div></div>
-        <div class="review"><p class="review-quote">"Beautiful apartment close to the beach — spotless, quiet, and relaxing. Close to everything we needed. We'd happily come back as a family."</p><div class="review-meta"><span>Carlotta 🇩🇪</span><span class="plat">Airbnb</span></div></div>
-        <div class="review"><p class="review-quote">"Very organized house, ideal for a few days of beach vacation."</p><div class="review-meta"><span>Elizabeth 🇵🇹</span><span class="plat">Booking.com</span></div></div>
-        <div class="review"><p class="review-quote">"The apartment is spacious, very clean, in a quiet area, and easy for parking."</p><div class="review-meta"><span>Juan 🇪🇸</span><span class="plat">Booking.com</span></div></div>
-        <div class="review"><p class="review-quote">"Five-star experience — loved the stay and the vibe. We'd definitely return."</p><div class="review-meta"><span>Lénia 🇵🇹</span><span class="plat">Airbnb</span></div></div>
+      <div class="review-grid">
+        <div class="review"><span class="review-quote-mark">&ldquo;</span><p class="review-quote">A very quiet and well-equipped place. Close to everything. Excellent communication with the hosts, always attentive. Everything was perfect.</p><div class="review-meta"><span>Guadalupe 🇪🇸</span><span class="dot"></span><span class="plat">Booking.com</span></div></div>
+        <div class="review"><span class="review-quote-mark">&ldquo;</span><p class="review-quote">Very pleased with my stay. Kind, responsive hosts who quickly replaced a few missing items. Very cosy balcony — highly recommend!</p><div class="review-meta"><span>Maria 🇵🇹</span><span class="dot"></span><span class="plat">Booking.com</span></div></div>
+        <div class="review"><span class="review-quote-mark">&ldquo;</span><p class="review-quote">Beautiful apartment close to the beach — spotless, quiet, and relaxing. Close to everything we needed. We'd happily come back as a family.</p><div class="review-meta"><span>Carlotta 🇩🇪</span><span class="dot"></span><span class="plat">Airbnb</span></div></div>
+        <div class="review"><span class="review-quote-mark">&ldquo;</span><p class="review-quote">Very organized house, ideal for a few days of beach vacation.</p><div class="review-meta"><span>Elizabeth 🇵🇹</span><span class="dot"></span><span class="plat">Booking.com</span></div></div>
+        <div class="review"><span class="review-quote-mark">&ldquo;</span><p class="review-quote">The apartment is spacious, very clean, in a quiet area, and easy for parking.</p><div class="review-meta"><span>Juan 🇪🇸</span><span class="dot"></span><span class="plat">Booking.com</span></div></div>
+        <div class="review"><span class="review-quote-mark">&ldquo;</span><p class="review-quote">Five-star experience — loved the stay and the vibe. We'd definitely return.</p><div class="review-meta"><span>Lénia 🇵🇹</span><span class="dot"></span><span class="plat">Airbnb</span></div></div>
       </div>
     </div>
     <div data-i18n-block="fr"><h2 class="head">Ce que disent nos hôtes</h2>
-      <div class="review-wall">
-        <div class="review"><p class="review-quote">« Endroit très calme et bien équipé. Proche de tout. Excellente communication avec les hôtes, toujours attentifs. Tout était parfait. »</p><div class="review-meta"><span>Guadalupe 🇪🇸</span><span class="plat">Booking.com</span></div></div>
-        <div class="review"><p class="review-quote">« Très satisfaite du séjour. Hôtes aimables et réactifs. Balcon très cosy — je recommande ! »</p><div class="review-meta"><span>Maria 🇵🇹</span><span class="plat">Booking.com</span></div></div>
-        <div class="review"><p class="review-quote">« Bel appartement proche de la plage — impeccable, calme et reposant. Nous reviendrons en famille. »</p><div class="review-meta"><span>Carlotta 🇩🇪</span><span class="plat">Airbnb</span></div></div>
-        <div class="review"><p class="review-quote">« Logement très bien organisé, idéal pour quelques jours à la plage. »</p><div class="review-meta"><span>Elizabeth 🇵🇹</span><span class="plat">Booking.com</span></div></div>
-        <div class="review"><p class="review-quote">« Appartement spacieux, très propre, quartier calme et stationnement facile. »</p><div class="review-meta"><span>Juan 🇪🇸</span><span class="plat">Booking.com</span></div></div>
-        <div class="review"><p class="review-quote">« Expérience cinq étoiles — nous avons adoré le séjour. Nous reviendrons sans hésiter. »</p><div class="review-meta"><span>Lénia 🇵🇹</span><span class="plat">Airbnb</span></div></div>
+      <div class="review-grid">
+        <div class="review"><span class="review-quote-mark">&ldquo;</span><p class="review-quote">Endroit très calme et bien équipé. Proche de tout. Excellente communication avec les hôtes, toujours attentifs. Tout était parfait.</p><div class="review-meta"><span>Guadalupe 🇪🇸</span><span class="dot"></span><span class="plat">Booking.com</span></div></div>
+        <div class="review"><span class="review-quote-mark">&ldquo;</span><p class="review-quote">Très satisfaite du séjour. Hôtes aimables et réactifs. Balcon très cosy — je recommande !</p><div class="review-meta"><span>Maria 🇵🇹</span><span class="dot"></span><span class="plat">Booking.com</span></div></div>
+        <div class="review"><span class="review-quote-mark">&ldquo;</span><p class="review-quote">Bel appartement proche de la plage — impeccable, calme et reposant. Nous reviendrons en famille.</p><div class="review-meta"><span>Carlotta 🇩🇪</span><span class="dot"></span><span class="plat">Airbnb</span></div></div>
+        <div class="review"><span class="review-quote-mark">&ldquo;</span><p class="review-quote">Logement très bien organisé, idéal pour quelques jours à la plage.</p><div class="review-meta"><span>Elizabeth 🇵🇹</span><span class="dot"></span><span class="plat">Booking.com</span></div></div>
+        <div class="review"><span class="review-quote-mark">&ldquo;</span><p class="review-quote">Appartement spacieux, très propre, quartier calme et stationnement facile.</p><div class="review-meta"><span>Juan 🇪🇸</span><span class="dot"></span><span class="plat">Booking.com</span></div></div>
+        <div class="review"><span class="review-quote-mark">&ldquo;</span><p class="review-quote">Expérience cinq étoiles — nous avons adoré le séjour. Nous reviendrons sans hésiter.</p><div class="review-meta"><span>Lénia 🇵🇹</span><span class="dot"></span><span class="plat">Airbnb</span></div></div>
       </div>
     </div>
   </div>
