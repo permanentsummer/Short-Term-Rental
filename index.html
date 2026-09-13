@@ -156,14 +156,6 @@ p.lede { font-size: 1.02rem; line-height: 1.75; color: var(--ink-soft); max-widt
 
 .accordion { margin-top: 34px; border-top: 1px solid var(--line); }
 
-.booking-card {
-  margin-top: 44px; background: var(--paper); border: 1px solid var(--line);
-  padding: 64px 40px; display: flex; flex-direction: column; align-items: center; gap: 26px;
-}
-.booking-icon {
-  width: 68px; height: 68px; border-radius: 50%; background: var(--stone);
-  display: flex; align-items: center; justify-content: center; color: var(--azulejo);
-}
 .accordion details { border-bottom: 1px solid var(--line); }
 .accordion summary {
   list-style: none; cursor: pointer; padding: 20px 0;
@@ -354,7 +346,7 @@ footer { background: #0D1615; color: rgba(235,238,230,.55); padding: 64px var(--
       <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12c0 1.85.5 3.58 1.37 5.07L2 22l5.09-1.33A9.94 9.94 0 0012 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm5.01 14.16c-.21.58-1.22 1.12-1.67 1.19-.45.07-.99.1-1.59-.1-.37-.12-.84-.28-1.44-.55-2.52-1.09-4.17-3.62-4.3-3.79-.13-.17-1.05-1.39-1.05-2.65s.67-1.88.9-2.14c.24-.26.52-.32.69-.32h.5c.16 0 .38-.06.59.45.21.52.73 1.77.79 1.9.06.13.1.28.02.45-.08.17-.12.27-.24.42-.12.14-.25.32-.36.43-.12.12-.24.25-.1.49.14.24.62 1.02 1.33 1.65.91.81 1.68 1.06 1.92 1.17.24.12.38.1.52-.06.14-.16.59-.69.75-.93.16-.24.32-.2.54-.12.22.08 1.4.66 1.64.78.24.12.4.17.46.27.06.1.06.58-.15 1.16z"/></svg>
     </a>
     <span class="nav-divider"></span>
-    <a class="nav-cta" href="#calendar">Book Direct</a>
+    <a class="nav-cta" href="book.html">Book Direct</a>
     <div class="ps-lang-bar" aria-label="Language">
       <button class="ps-lang-btn" data-setlang="pt" aria-current="true">PT</button>
       <button class="ps-lang-btn" data-setlang="en">EN</button>
@@ -373,7 +365,7 @@ footer { background: #0D1615; color: rgba(235,238,230,.55); padding: 64px var(--
   <a href="#instagram">Instagram</a>
   <a href="#contact">Contact</a>
   <a href="blog.html">Blog</a>
-  <a href="#calendar" class="panel-cta">Book Direct</a>
+  <a href="book.html" class="panel-cta">Book Direct</a>
   <div class="ps-lang-bar">
     <button class="ps-lang-btn" data-setlang="pt" aria-current="true">PT</button>
     <button class="ps-lang-btn" data-setlang="en">EN</button>
@@ -389,7 +381,7 @@ footer { background: #0D1615; color: rgba(235,238,230,.55); padding: 64px var(--
       <h1 class="hero-title">Altura</h1>
       <p class="hero-sub">Dois apartamentos junto ao mar no Algarve, geridos diretamente por nós.</p>
       <div class="search-bar-wrap">
-        <form class="search-bar" id="search-bar-pt" method="get" action="search.html">
+        <form class="search-bar" id="search-bar-pt" method="get" action="book.html">
           <input type="hidden" name="lang" value="pt">
           <div class="search-field"><label>Apartamento</label><select name="apt"><option value="all">Ambos</option><option value="ocean">Ocean Side</option><option value="beach">Beachside</option></select></div>
           <div class="search-field date-field">
@@ -412,7 +404,7 @@ footer { background: #0D1615; color: rgba(235,238,230,.55); padding: 64px var(--
       <h1 class="hero-title">Altura</h1>
       <p class="hero-sub">Two seaside apartments in the Algarve, run directly by us.</p>
       <div class="search-bar-wrap">
-        <form class="search-bar" id="search-bar-en" method="get" action="search.html">
+        <form class="search-bar" id="search-bar-en" method="get" action="book.html">
           <input type="hidden" name="lang" value="en">
           <div class="search-field"><label>Apartment</label><select name="apt"><option value="all">Either</option><option value="ocean">Ocean Side</option><option value="beach">Beachside</option></select></div>
           <div class="search-field date-field">
@@ -435,7 +427,7 @@ footer { background: #0D1615; color: rgba(235,238,230,.55); padding: 64px var(--
       <h1 class="hero-title">Altura</h1>
       <p class="hero-sub">Deux appartements en bord de mer en Algarve, gérés directement par nous.</p>
       <div class="search-bar-wrap">
-        <form class="search-bar" id="search-bar-fr" method="get" action="search.html">
+        <form class="search-bar" id="search-bar-fr" method="get" action="book.html">
           <input type="hidden" name="lang" value="fr">
           <div class="search-field"><label>Appartement</label><select name="apt"><option value="all">Les deux</option><option value="ocean">Ocean Side</option><option value="beach">Beachside</option></select></div>
           <div class="search-field date-field">
@@ -649,7 +641,7 @@ footer { background: #0D1615; color: rgba(235,238,230,.55); padding: 64px var(--
           <li>Micro-ondas</li><li>Máquina de café expresso</li><li>Máquina de lavar roupa e loiça</li><li>Varanda com vista de mar</li>
           <li>Acesso por elevador</li><li>Estacionamento gratuito próximo</li>
         </ul>
-        <div class="apt-actions"><a class="btn-solid" href="#calendar">Reservar agora</a></div>
+        <div class="apt-actions"><a class="btn-solid" href="book.html">Reservar agora</a></div>
       </div>
       <div data-i18n-block="en">
         <h3 class="apt-title">Ocean Side</h3>
@@ -660,7 +652,7 @@ footer { background: #0D1615; color: rgba(235,238,230,.55); padding: 64px var(--
           <li>Microwave</li><li>Espresso machine</li><li>Washing machine &amp; dishwasher</li><li>Balcony with sea view</li>
           <li>Elevator access</li><li>Free parking nearby</li>
         </ul>
-        <div class="apt-actions"><a class="btn-solid" href="#calendar">Reserve now</a></div>
+        <div class="apt-actions"><a class="btn-solid" href="book.html">Reserve now</a></div>
       </div>
       <div data-i18n-block="fr">
         <h3 class="apt-title">Ocean Side</h3>
@@ -671,7 +663,7 @@ footer { background: #0D1615; color: rgba(235,238,230,.55); padding: 64px var(--
           <li>Micro-ondes</li><li>Machine à expresso</li><li>Lave-linge &amp; lave-vaisselle</li><li>Balcon avec vue mer</li>
           <li>Accès par ascenseur</li><li>Parking gratuit à proximité</li>
         </ul>
-        <div class="apt-actions"><a class="btn-solid" href="#calendar">Réserver maintenant</a></div>
+        <div class="apt-actions"><a class="btn-solid" href="book.html">Réserver maintenant</a></div>
       </div>
     </div>
   </div>
@@ -705,7 +697,7 @@ footer { background: #0D1615; color: rgba(235,238,230,.55); padding: 64px var(--
           <li>Micro-ondas</li><li>Máquina de café expresso</li><li>Máquina de lavar roupa e loiça</li><li>Varanda com vista de mar</li>
           <li>Estacionamento gratuito próximo</li><li>3.º andar — sem elevador</li>
         </ul>
-        <div class="apt-actions"><a class="btn-solid" href="#calendar">Reservar agora</a></div>
+        <div class="apt-actions"><a class="btn-solid" href="book.html">Reservar agora</a></div>
       </div>
       <div data-i18n-block="en">
         <h3 class="apt-title">Beachside</h3>
@@ -716,7 +708,7 @@ footer { background: #0D1615; color: rgba(235,238,230,.55); padding: 64px var(--
           <li>Microwave</li><li>Espresso machine</li><li>Washing machine &amp; dishwasher</li><li>Balcony with sea view</li>
           <li>Free parking nearby</li><li>3rd floor — no elevator</li>
         </ul>
-        <div class="apt-actions"><a class="btn-solid" href="#calendar">Reserve now</a></div>
+        <div class="apt-actions"><a class="btn-solid" href="book.html">Reserve now</a></div>
       </div>
       <div data-i18n-block="fr">
         <h3 class="apt-title">Beachside</h3>
@@ -727,7 +719,7 @@ footer { background: #0D1615; color: rgba(235,238,230,.55); padding: 64px var(--
           <li>Micro-ondes</li><li>Machine à expresso</li><li>Lave-linge &amp; lave-vaisselle</li><li>Balcon avec vue mer</li>
           <li>Parking gratuit à proximité</li><li>3ᵉ étage — sans ascenseur</li>
         </ul>
-        <div class="apt-actions"><a class="btn-solid" href="#calendar">Réserver maintenant</a></div>
+        <div class="apt-actions"><a class="btn-solid" href="book.html">Réserver maintenant</a></div>
       </div>
     </div>
   </div>
@@ -848,20 +840,6 @@ footer { background: #0D1615; color: rgba(235,238,230,.55); padding: 64px var(--
   </div>
 </section>
 
-<section class="section section--stone" id="calendar">
-  <div class="section-inner ps-scope" data-lang="pt">
-    <div data-i18n-block="pt"><h2 class="head">Disponibilidade &amp; reserva</h2><p class="lede" style="margin-top:14px;">Reserve diretamente connosco através do nosso sistema de reservas — sem comissões de plataformas.</p></div>
-    <div data-i18n-block="en"><h2 class="head">Availability &amp; booking</h2><p class="lede" style="margin-top:14px;">Book directly with us through our own booking system — no platform commissions.</p></div>
-    <div data-i18n-block="fr"><h2 class="head">Disponibilité &amp; réservation</h2><p class="lede" style="margin-top:14px;">Réservez directement avec nous via notre propre système — sans commission de plateforme.</p></div>
-    <div class="booking-card">
-      <div class="booking-icon">
-        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/><path d="M8 14h2m4 0h2M8 17h2"/></svg>
-      </div>
-      <a class="btn-solid" href="#" id="book-direct-trigger">Book Direct</a>
-    </div>
-  </div>
-</section>
-
 <section class="section section--ink" id="contact">
   <div class="section-inner contact-grid ps-scope" data-lang="pt">
     <div>
@@ -914,7 +892,7 @@ footer { background: #0D1615; color: rgba(235,238,230,.55); padding: 64px var(--
     </div>
     <div class="footer-col">
       <h4>Apartments</h4>
-      <a href="#oceanside">Ocean Side</a><a href="#beachside">Beachside</a><a href="#calendar">Availability</a>
+      <a href="#oceanside">Ocean Side</a><a href="#beachside">Beachside</a><a href="book.html">Availability</a>
     </div>
     <div class="footer-col">
       <h4>Get in touch</h4>
@@ -929,12 +907,6 @@ footer { background: #0D1615; color: rgba(235,238,230,.55); padding: 64px var(--
 </footer>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
-<!-- Permanent Summer Direct Booking Widget -->
-<script src="https://permanentsummer.github.io/direct-booking/widget.js"
-  data-workspace="7c5d4583-de11-43f1-bb71-658aaf591f4e"
-  data-color="#6366f1"
-  data-label="Book Direct">
-</script>
 
 <script>
 (function () {
@@ -951,11 +923,6 @@ footer { background: #0D1615; color: rgba(235,238,230,.55); padding: 64px var(--
   open && open.addEventListener('click', () => panel.classList.add('open'));
   close && close.addEventListener('click', () => panel.classList.remove('open'));
   panel && panel.querySelectorAll('a').forEach(a => a.addEventListener('click', () => panel.classList.remove('open')));
-})();
-
-(function () {
-  const trigger = document.getElementById('book-direct-trigger');
-  if (trigger) trigger.addEventListener('click', e => e.preventDefault());
 })();
 
 /* ─── DATE-RANGE PICKER (two-month calendar) ─────────────────────── */
