@@ -84,11 +84,11 @@ p.lede { font-size: 1.02rem; line-height: 1.75; color: var(--ink-soft); max-widt
 .journal-hero p { margin: 18px auto 0; color: var(--ink-soft); max-width: 46ch; font-size: 1.05rem; }
 
 .article-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; margin-top: 10px; }
-.article-card { display: block; }
-.article-photo { aspect-ratio: 4/3; overflow: hidden; }
+.article-card { display: block; padding-top: 18px; border-top: 3px solid var(--khaki); }
+.article-photo { aspect-ratio: 4/3; overflow: hidden; margin-bottom: 16px; }
 .article-photo img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s; }
 .article-card:hover .article-photo img { transform: scale(1.05); }
-.article-tag { display: inline-block; margin-top: 18px; font: 500 .7rem var(--body); text-transform: uppercase; letter-spacing: .1em; color: var(--azulejo); }
+.article-tag { display: inline-block; margin-top: 0; font: 500 .7rem var(--body); text-transform: uppercase; letter-spacing: .1em; color: var(--azulejo); }
 .article-title { margin-top: 8px; font: 600 1.25rem var(--disp); line-height: 1.25; }
 .article-excerpt { margin-top: 8px; color: var(--ink-soft); font-size: .9rem; line-height: 1.6; }
 .article-more { display: inline-block; margin-top: 12px; font: 500 .76rem var(--body); text-transform: uppercase; letter-spacing: .08em; border-bottom: 1px solid var(--ink); padding-bottom: 2px; }
@@ -174,7 +174,7 @@ footer { background: #0D1615; color: rgba(235,238,230,.55); padding: 64px var(--
     <div class="article-grid">
 
       <a class="article-card" href="#eastern-algarve">
-        <div class="article-photo"><img src="assets/images/beachside/IMG_0713.jpg" alt="" loading="lazy"></div>
+        <div class="article-photo"><img src="assets/images/region/wetland-bird.jpg" alt="" loading="lazy"></div>
         <span class="article-tag" data-i18n-block="pt">A Região</span><span class="article-tag" data-i18n-block="en">The Region</span><span class="article-tag" data-i18n-block="fr">La Région</span>
         <div class="article-title" data-i18n-block="pt">Descobrir o Sotavento Algarvio</div>
         <div class="article-title" data-i18n-block="en">Discovering the Eastern Algarve</div>
@@ -186,7 +186,7 @@ footer { background: #0D1615; color: rgba(235,238,230,.55); padding: 64px var(--
       </a>
 
       <a class="article-card" href="#portuguese-dishes">
-        <div class="article-photo"><img src="assets/images/beachside/IMG_0716.jpg" alt="" loading="lazy"></div>
+        <div class="article-photo"><img src="assets/images/region/cataplana.jpg" alt="" loading="lazy"></div>
         <span class="article-tag" data-i18n-block="pt">Gastronomia</span><span class="article-tag" data-i18n-block="en">Food</span><span class="article-tag" data-i18n-block="fr">Gastronomie</span>
         <div class="article-title" data-i18n-block="pt">Cinco pratos portugueses para provar</div>
         <div class="article-title" data-i18n-block="en">Five Portuguese Dishes to Try</div>
@@ -198,7 +198,6 @@ footer { background: #0D1615; color: rgba(235,238,230,.55); padding: 64px var(--
       </a>
 
       <a class="article-card" href="#direct-vs-airbnb">
-        <div class="article-photo"><img src="assets/images/beachside/livingroom.jpg" alt="" loading="lazy"></div>
         <span class="article-tag" data-i18n-block="pt">Alojamento</span><span class="article-tag" data-i18n-block="en">Booking</span><span class="article-tag" data-i18n-block="fr">Réservation</span>
         <div class="article-title" data-i18n-block="pt">Reserva direta vs. Airbnb: o que muda para si</div>
         <div class="article-title" data-i18n-block="en">Direct Booking vs. Airbnb: What Changes for You</div>
@@ -210,7 +209,7 @@ footer { background: #0D1615; color: rgba(235,238,230,.55); padding: 64px var(--
       </a>
 
       <a class="article-card" href="#portuguese-culture">
-        <div class="article-photo"><img src="assets/images/beachside/bedroom2.jpg" alt="" loading="lazy"></div>
+        <div class="article-photo"><img src="assets/images/region/vases.jpg" alt="" loading="lazy"></div>
         <span class="article-tag" data-i18n-block="pt">Cultura</span><span class="article-tag" data-i18n-block="en">Culture</span><span class="article-tag" data-i18n-block="fr">Culture</span>
         <div class="article-title" data-i18n-block="pt">Cultura e hábitos portugueses: um pequeno guia</div>
         <div class="article-title" data-i18n-block="en">Portuguese Culture and Etiquette: A Short Guide</div>
@@ -222,7 +221,7 @@ footer { background: #0D1615; color: rgba(235,238,230,.55); padding: 64px var(--
       </a>
 
       <a class="article-card" href="#best-beaches">
-        <div class="article-photo"><img src="assets/images/beachside/IMG_0716.jpg" alt="" loading="lazy"></div>
+        <div class="article-photo"><img src="assets/images/region/cacela-velha.jpg" alt="" loading="lazy"></div>
         <span class="article-tag" data-i18n-block="pt">Praias</span><span class="article-tag" data-i18n-block="en">Beaches</span><span class="article-tag" data-i18n-block="fr">Plages</span>
         <div class="article-title" data-i18n-block="pt">As melhores praias perto de Altura</div>
         <div class="article-title" data-i18n-block="en">The Best Beaches Near Altura</div>
@@ -234,7 +233,7 @@ footer { background: #0D1615; color: rgba(235,238,230,.55); padding: 64px var(--
       </a>
 
       <a class="article-card" href="#vila-real">
-        <div class="article-photo"><img src="assets/images/beachside/IMG_9397.jpg" alt="" loading="lazy"></div>
+        <div class="article-photo"><img src="assets/images/region/boat.jpg" alt="" loading="lazy"></div>
         <span class="article-tag" data-i18n-block="pt">Escapadinhas</span><span class="article-tag" data-i18n-block="en">Day Trips</span><span class="article-tag" data-i18n-block="fr">Excursions</span>
         <div class="article-title" data-i18n-block="pt">Um dia em Vila Real de Santo António</div>
         <div class="article-title" data-i18n-block="en">A Day in Vila Real de Santo António</div>
@@ -242,6 +241,17 @@ footer { background: #0D1615; color: rgba(235,238,230,.55); padding: 64px var(--
         <p class="article-excerpt" data-i18n-block="pt">Ruas em quadrícula, um rio e Espanha à vista — a poucos minutos de Altura.</p>
         <p class="article-excerpt" data-i18n-block="en">Grid-plan streets, a river, and Spain in view — just minutes from Altura.</p>
         <p class="article-excerpt" data-i18n-block="fr">Rues en damier, un fleuve et l'Espagne en vue — à quelques minutes d'Altura.</p>
+        <div class="article-more" data-i18n-block="pt">Ler mais</div><div class="article-more" data-i18n-block="en">Read more</div><div class="article-more" data-i18n-block="fr">Lire la suite</div>
+      </a>
+
+      <a class="article-card" href="#eastern-algarve-golf">
+        <span class="article-tag" data-i18n-block="pt">Golfe</span><span class="article-tag" data-i18n-block="en">Golf</span><span class="article-tag" data-i18n-block="fr">Golf</span>
+        <div class="article-title" data-i18n-block="pt">Golfe no Algarve oriental</div>
+        <div class="article-title" data-i18n-block="en">Golf in the Eastern Algarve</div>
+        <div class="article-title" data-i18n-block="fr">Le golf en Algarve oriental</div>
+        <p class="article-excerpt" data-i18n-block="pt">Longe da agitação de Vilamoura, o Sotavento tem alguns dos melhores campos de Portugal — e muito menos multidões.</p>
+        <p class="article-excerpt" data-i18n-block="en">Away from the bustle of Vilamoura, the Eastern Algarve holds some of Portugal's finest courses — with far fewer crowds.</p>
+        <p class="article-excerpt" data-i18n-block="fr">Loin de l'agitation de Vilamoura, l'Algarve oriental compte certains des meilleurs parcours du Portugal — avec bien moins de monde.</p>
         <div class="article-more" data-i18n-block="pt">Ler mais</div><div class="article-more" data-i18n-block="en">Read more</div><div class="article-more" data-i18n-block="fr">Lire la suite</div>
       </a>
 
@@ -253,7 +263,7 @@ footer { background: #0D1615; color: rgba(235,238,230,.55); padding: 64px var(--
   <div data-i18n-block="pt">
     <span class="article-tag">A Região</span>
     <h2>Descobrir o Sotavento Algarvio</h2>
-    <div class="article-photo-full"><img src="assets/images/beachside/IMG_0713.jpg" alt=""></div>
+    <div class="article-photo-full"><img src="assets/images/region/wetland-bird.jpg" alt=""></div>
     <p>A maioria das imagens do Algarve mostra falésias douradas e praias movimentadas perto de Lagos ou Albufeira. Mas a região oriental — o Sotavento — é diferente: mais plana, mais tranquila, e ainda profundamente ligada à pesca e ao sal.</p>
     <p>Altura fica no coração desta zona, entre Tavira e a fronteira espanhola. Cacela Velha, uma pequena aldeia sobre uma falésia baixa com vista para a Ria Formosa, é um dos pontos mais fotografados — e mais silenciosos — da região. Castro Marim, mais para o interior, tem um castelo medieval com vista sobre o rio Guadiana e as salinas onde ainda se produz sal artesanalmente.</p>
     <p>Esta é uma zona para explorar devagar: mercados locais, cafés à beira-mar, e vilas onde a vida continua com o seu próprio ritmo, independentemente da época alta.</p>
@@ -262,7 +272,7 @@ footer { background: #0D1615; color: rgba(235,238,230,.55); padding: 64px var(--
   <div data-i18n-block="en">
     <span class="article-tag">The Region</span>
     <h2>Discovering the Eastern Algarve</h2>
-    <div class="article-photo-full"><img src="assets/images/beachside/IMG_0713.jpg" alt=""></div>
+    <div class="article-photo-full"><img src="assets/images/region/wetland-bird.jpg" alt=""></div>
     <p>Most postcards of the Algarve show golden cliffs and busy beaches near Lagos or Albufeira. The eastern region — the Sotavento — is different: flatter, quieter, and still deeply tied to fishing and salt.</p>
     <p>Altura sits at the heart of this area, between Tavira and the Spanish border. Cacela Velha, a small village perched on a low cliff overlooking the Ria Formosa lagoon, is one of the most photographed — and quietest — spots in the region. Castro Marim, further inland, has a medieval castle overlooking the Guadiana river and the salt pans where salt is still harvested by hand.</p>
     <p>This is a region for slow exploring: local markets, seaside cafés, and villages where life carries on at its own pace, regardless of the season.</p>
@@ -271,7 +281,7 @@ footer { background: #0D1615; color: rgba(235,238,230,.55); padding: 64px var(--
   <div data-i18n-block="fr">
     <span class="article-tag">La Région</span>
     <h2>Découvrir l'Algarve oriental</h2>
-    <div class="article-photo-full"><img src="assets/images/beachside/IMG_0713.jpg" alt=""></div>
+    <div class="article-photo-full"><img src="assets/images/region/wetland-bird.jpg" alt=""></div>
     <p>La plupart des cartes postales de l'Algarve montrent des falaises dorées et des plages animées près de Lagos ou d'Albufeira. La région orientale — le Sotavento — est différente : plus plate, plus calme, et toujours profondément liée à la pêche et au sel.</p>
     <p>Altura se trouve au cœur de cette zone, entre Tavira et la frontière espagnole. Cacela Velha, un petit village perché sur une falaise basse avec vue sur la lagune de la Ria Formosa, est l'un des endroits les plus photographiés — et les plus silencieux — de la région. Castro Marim, plus à l'intérieur des terres, possède un château médiéval surplombant le fleuve Guadiana et les marais salants où le sel est encore récolté à la main.</p>
     <p>C'est une région à explorer lentement : marchés locaux, cafés en bord de mer, et villages où la vie suit son propre rythme, quelle que soit la saison.</p>
@@ -283,7 +293,7 @@ footer { background: #0D1615; color: rgba(235,238,230,.55); padding: 64px var(--
   <div data-i18n-block="pt">
     <span class="article-tag">Gastronomia</span>
     <h2>Cinco pratos portugueses para provar</h2>
-    <div class="article-photo-full"><img src="assets/images/beachside/IMG_0716.jpg" alt=""></div>
+    <div class="article-photo-full"><img src="assets/images/region/cataplana.jpg" alt=""></div>
     <p><strong>Cataplana</strong> — um guisado de marisco ou peixe cozinhado no recipiente de cobre com o mesmo nome, típico do Algarve. Cada tasca tem a sua versão.</p>
     <p><strong>Frango piri-piri</strong> — frango grelhado marinado em piri-piri, um dos pratos mais exportados de Portugal e ainda um clássico local.</p>
     <p><strong>Sardinhas assadas</strong> — grelhadas sobre brasas, sobretudo populares nos meses quentes de verão, servidas simplesmente com pão e salada.</p>
@@ -294,7 +304,7 @@ footer { background: #0D1615; color: rgba(235,238,230,.55); padding: 64px var(--
   <div data-i18n-block="en">
     <span class="article-tag">Food</span>
     <h2>Five Portuguese Dishes to Try</h2>
-    <div class="article-photo-full"><img src="assets/images/beachside/IMG_0716.jpg" alt=""></div>
+    <div class="article-photo-full"><img src="assets/images/region/cataplana.jpg" alt=""></div>
     <p><strong>Cataplana</strong> — a seafood or fish stew cooked in the copper vessel it's named after, a signature Algarve dish. Every local restaurant has its own version.</p>
     <p><strong>Piri-piri chicken</strong> — grilled chicken marinated in piri-piri, one of Portugal's most exported dishes and still a local staple.</p>
     <p><strong>Grilled sardines</strong> — cooked over open coals, especially popular in the warm summer months, served simply with bread and salad.</p>
@@ -305,7 +315,7 @@ footer { background: #0D1615; color: rgba(235,238,230,.55); padding: 64px var(--
   <div data-i18n-block="fr">
     <span class="article-tag">Gastronomie</span>
     <h2>Cinq plats portugais à goûter</h2>
-    <div class="article-photo-full"><img src="assets/images/beachside/IMG_0716.jpg" alt=""></div>
+    <div class="article-photo-full"><img src="assets/images/region/cataplana.jpg" alt=""></div>
     <p><strong>Cataplana</strong> — un ragoût de fruits de mer ou de poisson cuit dans le récipient en cuivre qui lui donne son nom, plat emblématique de l'Algarve. Chaque restaurant a sa propre version.</p>
     <p><strong>Poulet piri-piri</strong> — poulet grillé mariné au piri-piri, l'un des plats portugais les plus exportés et toujours un classique local.</p>
     <p><strong>Sardines grillées</strong> — cuites sur des braises, particulièrement populaires pendant les mois chauds d'été, servies simplement avec du pain et de la salade.</p>
@@ -319,7 +329,6 @@ footer { background: #0D1615; color: rgba(235,238,230,.55); padding: 64px var(--
   <div data-i18n-block="pt">
     <span class="article-tag">Alojamento</span>
     <h2>Reserva direta vs. Airbnb: o que muda para si</h2>
-    <div class="article-photo-full"><img src="assets/images/beachside/livingroom.jpg" alt=""></div>
     <p>Plataformas como o Airbnb e o Booking.com facilitam a descoberta de alojamentos e oferecem proteções úteis, sobretudo para quem reserva pela primeira vez num destino desconhecido. Isso tem valor.</p>
     <p>Mas reservar diretamente com o anfitrião também traz vantagens: comunicação mais rápida e pessoal, maior flexibilidade para pedidos especiais, e, muitas vezes, melhores condições — já que o anfitrião não paga comissão à plataforma.</p>
     <p>Na prática, muitos hóspedes usam as plataformas para descobrir um alojamento e, em estadias seguintes, contactam o anfitrião diretamente. Não há uma resposta certa para todos — apenas vale a pena saber que a opção existe.</p>
@@ -328,7 +337,6 @@ footer { background: #0D1615; color: rgba(235,238,230,.55); padding: 64px var(--
   <div data-i18n-block="en">
     <span class="article-tag">Booking</span>
     <h2>Direct Booking vs. Airbnb: What Changes for You</h2>
-    <div class="article-photo-full"><img src="assets/images/beachside/livingroom.jpg" alt=""></div>
     <p>Platforms like Airbnb and Booking.com make it easy to discover places to stay and offer useful protections, especially for first-time bookings in an unfamiliar destination. That has real value.</p>
     <p>But booking directly with a host has its own advantages: faster, more personal communication, more flexibility for special requests, and often better rates — since the host isn't paying a platform commission.</p>
     <p>In practice, many guests use platforms to discover a place and then contact the host directly for future stays. There's no single right answer for everyone — it's just worth knowing the option exists.</p>
@@ -337,7 +345,6 @@ footer { background: #0D1615; color: rgba(235,238,230,.55); padding: 64px var(--
   <div data-i18n-block="fr">
     <span class="article-tag">Réservation</span>
     <h2>Réservation directe vs. Airbnb : ce qui change</h2>
-    <div class="article-photo-full"><img src="assets/images/beachside/livingroom.jpg" alt=""></div>
     <p>Des plateformes comme Airbnb et Booking.com facilitent la découverte de logements et offrent des protections utiles, surtout pour une première réservation dans une destination inconnue. Cela a une vraie valeur.</p>
     <p>Mais réserver directement avec l'hôte présente aussi des avantages : une communication plus rapide et plus personnelle, plus de flexibilité pour les demandes particulières, et souvent de meilleures conditions — puisque l'hôte ne paie pas de commission à la plateforme.</p>
     <p>En pratique, beaucoup de voyageurs utilisent les plateformes pour découvrir un logement, puis contactent l'hôte directement pour les séjours suivants. Il n'y a pas de bonne réponse unique — il est simplement utile de savoir que l'option existe.</p>
@@ -349,7 +356,7 @@ footer { background: #0D1615; color: rgba(235,238,230,.55); padding: 64px var(--
   <div data-i18n-block="pt">
     <span class="article-tag">Cultura</span>
     <h2>Cultura e hábitos portugueses: um pequeno guia</h2>
-    <div class="article-photo-full"><img src="assets/images/beachside/bedroom2.jpg" alt=""></div>
+    <div class="article-photo-full"><img src="assets/images/region/vases.jpg" alt=""></div>
     <p>Os portugueses cumprimentam-se, entre pessoas que já se conhecem, geralmente com dois beijos na face (entre mulheres, ou entre homem e mulher) ou um aperto de mão (entre homens). Entre desconhecidos, um aperto de mão simples é o mais comum.</p>
     <p>Os horários das refeições são mais tardios do que no norte da Europa: o almoço costuma ser por volta do meio-dia às 14h, e o jantar raramente começa antes das 19h30. Ao contrário da vizinha Espanha, Portugal não tem uma sesta formalmente instituída, embora algumas lojas familiares mais pequenas possam fechar uma ou duas horas ao almoço.</p>
     <p>Quanto a gorjetas, não são obrigatórias, mas é comum arredondar a conta ou deixar entre 5% a 10% num restaurante, se o serviço foi bom.</p>
@@ -358,7 +365,7 @@ footer { background: #0D1615; color: rgba(235,238,230,.55); padding: 64px var(--
   <div data-i18n-block="en">
     <span class="article-tag">Culture</span>
     <h2>Portuguese Culture and Etiquette: A Short Guide</h2>
-    <div class="article-photo-full"><img src="assets/images/beachside/bedroom2.jpg" alt=""></div>
+    <div class="article-photo-full"><img src="assets/images/region/vases.jpg" alt=""></div>
     <p>Among people who already know each other, Portuguese greetings are usually two kisses on the cheek (between women, or between a man and a woman) or a handshake (between men). Among strangers, a simple handshake is most common.</p>
     <p>Mealtimes run later than in northern Europe: lunch is typically between noon and 2pm, and dinner rarely starts before 7:30pm. Unlike neighbouring Spain, Portugal doesn't have a formally observed siesta, though smaller family-run shops may close for an hour or two at lunchtime.</p>
     <p>Tipping isn't obligatory, but it's common to round up the bill or leave 5–10% at a restaurant if the service was good.</p>
@@ -367,7 +374,7 @@ footer { background: #0D1615; color: rgba(235,238,230,.55); padding: 64px var(--
   <div data-i18n-block="fr">
     <span class="article-tag">Culture</span>
     <h2>Culture et usages portugais : petit guide</h2>
-    <div class="article-photo-full"><img src="assets/images/beachside/bedroom2.jpg" alt=""></div>
+    <div class="article-photo-full"><img src="assets/images/region/vases.jpg" alt=""></div>
     <p>Entre personnes qui se connaissent déjà, les Portugais se saluent généralement par deux baisers sur la joue (entre femmes, ou entre un homme et une femme) ou une poignée de main (entre hommes). Entre inconnus, une simple poignée de main est la norme.</p>
     <p>Les horaires des repas sont plus tardifs qu'en Europe du Nord : le déjeuner a lieu généralement entre midi et 14h, et le dîner commence rarement avant 19h30. Contrairement à l'Espagne voisine, le Portugal n'a pas de sieste formellement instituée, bien que certains petits commerces familiaux puissent fermer une heure ou deux à midi.</p>
     <p>Le pourboire n'est pas obligatoire, mais il est courant d'arrondir l'addition ou de laisser 5 à 10 % au restaurant si le service était bon.</p>
@@ -379,7 +386,7 @@ footer { background: #0D1615; color: rgba(235,238,230,.55); padding: 64px var(--
   <div data-i18n-block="pt">
     <span class="article-tag">Praias</span>
     <h2>As melhores praias perto de Altura</h2>
-    <div class="article-photo-full"><img src="assets/images/beachside/IMG_0716.jpg" alt=""></div>
+    <div class="article-photo-full"><img src="assets/images/region/cacela-velha.jpg" alt=""></div>
     <p><strong>Praia da Alagoa</strong> — a praia de Altura propriamente dita, ampla, com areia dourada e apoios de praia, a poucos minutos a pé dos nossos apartamentos.</p>
     <p><strong>Praia Verde</strong> — mais tranquila, rodeada por pinhal, ligeiramente a oeste de Altura.</p>
     <p><strong>Praia de Monte Gordo</strong> — mais movimentada, com um passeio marítimo e boa oferta de restaurantes junto à areia.</p>
@@ -389,7 +396,7 @@ footer { background: #0D1615; color: rgba(235,238,230,.55); padding: 64px var(--
   <div data-i18n-block="en">
     <span class="article-tag">Beaches</span>
     <h2>The Best Beaches Near Altura</h2>
-    <div class="article-photo-full"><img src="assets/images/beachside/IMG_0716.jpg" alt=""></div>
+    <div class="article-photo-full"><img src="assets/images/region/cacela-velha.jpg" alt=""></div>
     <p><strong>Praia da Alagoa</strong> — Altura's own beach, wide and golden with beach bars, just a short walk from our apartments.</p>
     <p><strong>Praia Verde</strong> — quieter, backed by pine trees, a little to the west of Altura.</p>
     <p><strong>Praia de Monte Gordo</strong> — busier, with a proper seafront promenade and plenty of restaurants right on the sand.</p>
@@ -399,7 +406,7 @@ footer { background: #0D1615; color: rgba(235,238,230,.55); padding: 64px var(--
   <div data-i18n-block="fr">
     <span class="article-tag">Plages</span>
     <h2>Les plus belles plages près d'Altura</h2>
-    <div class="article-photo-full"><img src="assets/images/beachside/IMG_0716.jpg" alt=""></div>
+    <div class="article-photo-full"><img src="assets/images/region/cacela-velha.jpg" alt=""></div>
     <p><strong>Praia da Alagoa</strong> — la plage d'Altura elle-même, large et dorée, avec des bars de plage, à quelques minutes à pied de nos appartements.</p>
     <p><strong>Praia Verde</strong> — plus tranquille, bordée de pins, un peu à l'ouest d'Altura.</p>
     <p><strong>Praia de Monte Gordo</strong> — plus animée, avec une vraie promenade en bord de mer et de nombreux restaurants sur le sable.</p>
@@ -412,7 +419,7 @@ footer { background: #0D1615; color: rgba(235,238,230,.55); padding: 64px var(--
   <div data-i18n-block="pt">
     <span class="article-tag">Escapadinhas</span>
     <h2>Um dia em Vila Real de Santo António</h2>
-    <div class="article-photo-full"><img src="assets/images/beachside/IMG_9397.jpg" alt=""></div>
+    <div class="article-photo-full"><img src="assets/images/region/boat.jpg" alt=""></div>
     <p>A poucos minutos de Altura, Vila Real de Santo António é uma das cidades mais singulares do Algarve. Reconstruída no século XVIII segundo um plano urbanístico pombalino, tem um centro histórico em quadrícula, com ruas perfeitamente organizadas em torno de uma praça central.</p>
     <p>Junto ao rio Guadiana, é possível ver a fronteira com Espanha do outro lado da água — e apanhar o pequeno ferry até Ayamonte para uma tarde de duas culturas num só dia.</p>
     <p>Vale a pena reservar tempo para passear sem pressa pelas ruas, tomar um café na praça central e explorar as lojas locais antes de voltar para Altura.</p>
@@ -421,7 +428,7 @@ footer { background: #0D1615; color: rgba(235,238,230,.55); padding: 64px var(--
   <div data-i18n-block="en">
     <span class="article-tag">Day Trips</span>
     <h2>A Day in Vila Real de Santo António</h2>
-    <div class="article-photo-full"><img src="assets/images/beachside/IMG_9397.jpg" alt=""></div>
+    <div class="article-photo-full"><img src="assets/images/region/boat.jpg" alt=""></div>
     <p>Just minutes from Altura, Vila Real de Santo António is one of the most distinctive towns in the Algarve. Rebuilt in the 18th century under a Pombaline urban plan, its historic centre follows a neat grid of streets organised around a central square.</p>
     <p>Right on the Guadiana river, you can see the Spanish border on the far bank — and hop on the small ferry across to Ayamonte for an afternoon spanning two countries in one day.</p>
     <p>It's worth setting aside time to wander the streets unhurried, have a coffee in the main square, and browse the local shops before heading back to Altura.</p>
@@ -430,10 +437,37 @@ footer { background: #0D1615; color: rgba(235,238,230,.55); padding: 64px var(--
   <div data-i18n-block="fr">
     <span class="article-tag">Excursions</span>
     <h2>Une journée à Vila Real de Santo António</h2>
-    <div class="article-photo-full"><img src="assets/images/beachside/IMG_9397.jpg" alt=""></div>
+    <div class="article-photo-full"><img src="assets/images/region/boat.jpg" alt=""></div>
     <p>À quelques minutes d'Altura, Vila Real de Santo António est l'une des villes les plus singulières de l'Algarve. Reconstruite au XVIIIe siècle selon un plan urbain pombalin, son centre historique suit une grille de rues parfaitement organisée autour d'une place centrale.</p>
     <p>Au bord du fleuve Guadiana, on aperçoit la frontière espagnole sur l'autre rive — et l'on peut prendre le petit ferry jusqu'à Ayamonte pour un après-midi à cheval sur deux pays.</p>
     <p>Il vaut la peine de prendre le temps de flâner dans les rues, de prendre un café sur la place centrale et de parcourir les boutiques locales avant de rentrer à Altura.</p>
+    <a class="back-top" href="#top">↑ Retour en haut</a>
+  </div>
+</article>
+
+<article class="article-full ps-scope" data-lang="pt" id="eastern-algarve-golf">
+  <div data-i18n-block="pt">
+    <span class="article-tag">Golfe</span>
+    <h2>Golfe no Algarve oriental</h2>
+    <p>O Algarve é, há décadas, um dos destinos de golfe mais estabelecidos da Europa — mas a maior parte da atenção vai para a zona central, à volta de Vilamoura. O Sotavento, mais a leste, oferece uma alternativa bem mais tranquila, sem abdicar da qualidade dos campos.</p>
+    <p>O nome maior da região é o Monte Rei Golf &amp; Country Club, perto de Vila Nova de Cacela: um percurso assinado por Jack Nicklaus, frequentemente apontado como o melhor de Portugal. Perto de Tavira, a Quinta da Ria e a Quinta de Cima formam uma dupla de campos com estilos diferentes — um mais próximo da Ria Formosa, o outro em terreno ondulado no interior. Já perto da fronteira, o Castro Marim Golf &amp; Country Club junta três percursos de nove buracos com vista sobre o rio Guadiana e Espanha, e a Quinta do Vale, desenhada por Seve Ballesteros, atravessa colinas com um traçado mais clássico. O Benamor Golf, mais simples e descontraído, completa o conjunto.</p>
+    <p>Todos estes campos ficam a uma distância curta de carro de Altura, o que torna fácil combinar dias de praia com uma ou duas rondas, sem necessidade de mudar de base.</p>
+    <a class="back-top" href="#top">↑ Voltar ao topo</a>
+  </div>
+  <div data-i18n-block="en">
+    <span class="article-tag">Golf</span>
+    <h2>Golf in the Eastern Algarve</h2>
+    <p>The Algarve has been one of Europe's most established golf destinations for decades — but most of the attention goes to the central region around Vilamoura. The Eastern Algarve, further along the coast, offers a far quieter alternative without giving up quality.</p>
+    <p>The region's headline course is Monte Rei Golf &amp; Country Club, near Vila Nova de Cacela: a Jack Nicklaus design frequently rated the best in Portugal. Near Tavira, Quinta da Ria and Quinta de Cima form a pair of contrasting layouts — one closer to the Ria Formosa lagoon, the other rolling through inland terrain. Toward the Spanish border, Castro Marim Golf &amp; Country Club combines three nine-hole loops with views over the Guadiana river and into Spain, while Quinta do Vale, designed by Seve Ballesteros, runs through more classically sculpted hill country. Benamor Golf, simpler and more relaxed, rounds out the group.</p>
+    <p>All of these courses are a short drive from Altura, making it easy to pair beach days with a round or two without changing base.</p>
+    <a class="back-top" href="#top">↑ Back to top</a>
+  </div>
+  <div data-i18n-block="fr">
+    <span class="article-tag">Golf</span>
+    <h2>Le golf en Algarve oriental</h2>
+    <p>L'Algarve est depuis des décennies l'une des destinations de golf les plus établies d'Europe — mais l'essentiel de l'attention va à la région centrale, autour de Vilamoura. Le Sotavento, plus à l'est, offre une alternative bien plus tranquille, sans renoncer à la qualité des parcours.</p>
+    <p>Le nom phare de la région est le Monte Rei Golf &amp; Country Club, près de Vila Nova de Cacela : un parcours signé Jack Nicklaus, souvent considéré comme le meilleur du Portugal. Près de Tavira, Quinta da Ria et Quinta de Cima forment un duo de parcours aux styles différents — l'un proche de la lagune de la Ria Formosa, l'autre en terrain vallonné à l'intérieur des terres. Vers la frontière espagnole, le Castro Marim Golf &amp; Country Club combine trois boucles de neuf trous avec vue sur le fleuve Guadiana et l'Espagne, tandis que Quinta do Vale, dessiné par Seve Ballesteros, traverse des collines au tracé plus classique. Le Benamor Golf, plus simple et détendu, complète l'ensemble.</p>
+    <p>Tous ces parcours se trouvent à courte distance en voiture d'Altura, ce qui permet de combiner facilement des journées de plage avec une ou deux parties, sans changer de camp de base.</p>
     <a class="back-top" href="#top">↑ Retour en haut</a>
   </div>
 </article>
