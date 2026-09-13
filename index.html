@@ -313,6 +313,10 @@ footer { background: #0D1615; color: rgba(235,238,230,.55); padding: 64px var(--
   .search-field { border-right: 0; border-bottom: 1px solid var(--line); }
 }
 
+.gallery-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 6px; }
+@media (max-width: 900px) { .gallery-grid { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 480px) { .gallery-grid { grid-template-columns: repeat(2, 1fr); } }
+
 @media (max-width: 640px) {
   .nav-cta, .nav-right .ps-lang-bar { display: none; }
 }
@@ -707,6 +711,19 @@ footer { background: #0D1615; color: rgba(235,238,230,.55); padding: 64px var(--
       </div>
     </div>
     <div class="intro-photo"><img src="assets/images/region/boat.jpg" alt="Traditional fishing boat, Eastern Algarve" loading="lazy"></div>
+  </div>
+</section>
+
+<section class="section" style="padding-top:0;">
+  <div class="section-inner">
+    <div class="gallery-grid">
+      <div class="ig-tile" style="cursor:default;"><img src="assets/images/region/boardwalk-aerial.jpg" alt="" loading="lazy"></div>
+      <div class="ig-tile" style="cursor:default;"><img src="assets/images/region/boardwalk-path.jpg" alt="" loading="lazy"></div>
+      <div class="ig-tile" style="cursor:default;"><img src="assets/images/region/village-street.jpg" alt="" loading="lazy"></div>
+      <div class="ig-tile" style="cursor:default;"><img src="assets/images/region/lagoon.jpg" alt="" loading="lazy"></div>
+      <div class="ig-tile" style="cursor:default;"><img src="assets/images/region/marsh.jpg" alt="" loading="lazy"></div>
+      <div class="ig-tile" style="cursor:default;"><img src="assets/images/region/forest-boardwalk.jpg" alt="" loading="lazy"></div>
+    </div>
   </div>
 </section>
 
