@@ -104,9 +104,11 @@ img { display: block; max-width: 100%; }
   background: var(--paper); display: flex; align-items: stretch; box-shadow: 0 18px 40px rgba(20,33,31,.28);
   max-width: 760px; width: 100%; flex-wrap: wrap;
 }
-.search-field { flex: 1; min-width: 150px; padding: 20px 24px; border-right: 1px solid var(--line); position: relative; }
+.search-field { flex: 1; min-width: 150px; padding: 18px 22px; border-right: 1px solid var(--line); position: relative; display: flex; align-items: center; gap: 14px; }
 .search-field:last-of-type { border-right: 0; }
-.search-field label { display: block; font: 500 .66rem var(--body); text-transform: uppercase; letter-spacing: .1em; color: var(--ink-soft); margin-bottom: 6px; }
+.field-icon { flex-shrink: 0; color: var(--ink-soft); }
+.field-text { flex: 1; min-width: 0; }
+.search-field label { display: block; font: 500 .66rem var(--body); text-transform: uppercase; letter-spacing: .1em; color: var(--ink-soft); margin-bottom: 4px; }
 .search-field select, .search-field input {
   border: 0; outline: 0; font: 400 .95rem var(--body); color: var(--ink); width: 100%; background: transparent;
 }
@@ -251,11 +253,6 @@ p.lede { font-size: 1.02rem; line-height: 1.75; color: var(--ink-soft); max-widt
 
 .map-card { position: relative; border: 1px solid var(--line); margin-top: 40px; }
 #so-map { height: 560px; width: 100%; }
-.so-search { position: absolute; right: 14px; top: 14px; z-index: 500; background: var(--paper); border: 1px solid var(--line); display: flex; gap: 8px; align-items: center; padding: 9px 11px; }
-.so-search input { border: 0; outline: 0; font: 400 .88rem var(--body); min-width: 190px; color: var(--ink); background: transparent; }
-.so-search button { border: 0; padding: 7px 12px; cursor: pointer; font: 500 .76rem var(--body); }
-.so-search .go  { background: var(--azulejo); color: #fff; }
-.so-search .clr { background: var(--stone); color: var(--ink); }
 .so-legend { position: absolute; left: 14px; bottom: 14px; z-index: 400; min-width: 210px; background: var(--paper); border: 1px solid var(--line); padding: 12px 14px; font: 400 .78rem var(--body); color: var(--ink); }
 .so-legend .row { display: flex; align-items: center; gap: 9px; margin: 5px 0; }
 .swatch { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
@@ -263,14 +260,20 @@ p.lede { font-size: 1.02rem; line-height: 1.75; color: var(--ink-soft); max-widt
 .popup-title { font: 500 .86rem var(--body); color: var(--ink); }
 .popup-meta { font-size: .74rem; color: var(--ink-soft); margin-top: 2px; }
 
-.review-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 52px 64px; margin-top: 56px; }
-.review { border-top: 1px solid var(--line); padding-top: 26px; }
-.review-quote-mark { display: block; font: 400 2.8rem var(--disp); color: var(--khaki); line-height: .5; margin-bottom: 10px; }
-.review-quote { font: 500 1.12rem/1.65 var(--disp); font-style: italic; color: var(--ink); }
-.review-meta { margin-top: 18px; display: flex; align-items: center; gap: 9px; font: 500 .72rem var(--body); text-transform: uppercase; letter-spacing: .08em; color: var(--ink-soft); }
-.review-meta .plat { color: var(--azulejo); }
-.review-meta .dot { width: 3px; height: 3px; border-radius: 50%; background: var(--line); flex-shrink: 0; }
-@media (max-width: 700px) { .review-grid { grid-template-columns: 1fr; } }
+.review-grid { display: none; }
+
+.review-slideshow { position: relative; max-width: 780px; margin: 40px auto 0; min-height: 3.4em; text-align: center; }
+.review-slide {
+  position: absolute; inset: 0; opacity: 0; visibility: hidden; transition: opacity .6s ease;
+  display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 10px;
+  font: 500 1.1rem/1.6 var(--disp); font-style: italic; color: var(--ink); padding: 0 20px;
+}
+.review-slide.active { opacity: 1; visibility: visible; }
+.review-slide-name { font: 500 .74rem var(--body); font-style: normal; text-transform: uppercase; letter-spacing: .06em; color: var(--ink-soft); }
+.review-dots { display: flex; justify-content: center; gap: 7px; margin-top: 30px; }
+.review-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--line); border: none; cursor: pointer; padding: 0; }
+.review-dot.active { background: var(--khaki-d); }
+@media (max-width: 600px) { .review-slide { font-size: .98rem; } }
 
 .ig-head { display: flex; align-items: baseline; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
 .ig-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-top: 40px; }
@@ -303,6 +306,8 @@ footer { background: #0D1615; color: rgba(235,238,230,.55); padding: 64px var(--
 .mobile-panel { display: none; position: fixed; inset: 0; z-index: 950; background: var(--paper); padding: 100px var(--gut) 40px; flex-direction: column; gap: 20px; overflow-y: auto; }
 .mobile-panel.open { display: flex; }
 .mobile-panel a { font: 600 1.5rem var(--disp); color: var(--ink); }
+.mobile-panel .nav-group { display: flex; flex-direction: column; gap: 10px; }
+.mobile-panel .nav-sub { font: 500 1.05rem var(--body); font-style: italic; opacity: .6; padding-left: 20px; }
 .mobile-panel .panel-cta {
   display: inline-block; margin-top: 8px; font: 600 .78rem var(--body); text-transform: uppercase; letter-spacing: .1em;
   background: var(--khaki); color: var(--ink); padding: 14px 24px; width: fit-content;
@@ -342,7 +347,7 @@ footer { background: #0D1615; color: rgba(235,238,230,.55); padding: 64px var(--
     <a class="wordmark" href="#top">Permanent Summer</a>
   </div>
   <div class="nav-right">
-    <a class="nav-icon" href="https://whatsapp.com/dl/" target="_blank" rel="noopener" aria-label="WhatsApp">
+    <a class="nav-icon" href="https://wa.me/351924477353" target="_blank" rel="noopener" aria-label="WhatsApp">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12c0 1.85.5 3.58 1.37 5.07L2 22l5.09-1.33A9.94 9.94 0 0012 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm5.01 14.16c-.21.58-1.22 1.12-1.67 1.19-.45.07-.99.1-1.59-.1-.37-.12-.84-.28-1.44-.55-2.52-1.09-4.17-3.62-4.3-3.79-.13-.17-1.05-1.39-1.05-2.65s.67-1.88.9-2.14c.24-.26.52-.32.69-.32h.5c.16 0 .38-.06.59.45.21.52.73 1.77.79 1.9.06.13.1.28.02.45-.08.17-.12.27-.24.42-.12.14-.25.32-.36.43-.12.12-.24.25-.1.49.14.24.62 1.02 1.33 1.65.91.81 1.68 1.06 1.92 1.17.24.12.38.1.52-.06.14-.16.59-.69.75-.93.16-.24.32-.2.54-.12.22.08 1.4.66 1.64.78.24.12.4.17.46.27.06.1.06.58-.15 1.16z"/></svg>
     </a>
     <span class="nav-divider"></span>
@@ -358,9 +363,11 @@ footer { background: #0D1615; color: rgba(235,238,230,.55); padding: 64px var(--
 <div class="mobile-panel" id="mobile-panel">
   <button class="mobile-close" id="mobile-close" aria-label="Close menu">&times;</button>
   <a href="#region">The Region</a>
-  <a href="#apartments">Apartments</a>
-  <a href="#oceanside">Ocean Side</a>
-  <a href="#beachside">Beachside</a>
+  <div class="nav-group">
+    <a href="#apartments">Apartments</a>
+    <a href="#oceanside" class="nav-sub">Ocean Side</a>
+    <a href="#beachside" class="nav-sub">Beachside</a>
+  </div>
   <a href="#reviews">Reviews</a>
   <a href="#instagram">Instagram</a>
   <a href="#contact">Contact</a>
@@ -383,17 +390,16 @@ footer { background: #0D1615; color: rgba(235,238,230,.55); padding: 64px var(--
       <div class="search-bar-wrap">
         <form class="search-bar" id="search-bar-pt" method="get" action="book.html">
           <input type="hidden" name="lang" value="pt">
-          <div class="search-field"><label>Apartamento</label><select name="apt"><option value="all">Ambos</option><option value="ocean">Ocean Side</option><option value="beach">Beachside</option></select></div>
+          <div class="search-field"><svg class="field-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 21s-7-6.1-7-11a7 7 0 0 1 14 0c0 4.9-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg><div class="field-text"><label>Apartamento</label><select name="apt"><option value="all">Ambos</option><option value="ocean">Ocean Side</option><option value="beach">Beachside</option></select></div></div>
           <div class="search-field date-field">
-            <label>Datas</label>
-            <button type="button" class="date-trigger">Selecionar datas</button>
-            <input type="hidden" name="checkin"><input type="hidden" name="checkout">
+            <svg class="field-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg><div class="field-text"><label>Datas</label>
+            <button type="button" class="date-trigger">Selecionar datas</button></div><input type="hidden" name="checkin"><input type="hidden" name="checkout">
             <div class="date-panel">
               <div class="date-panel-months"></div>
               <div class="date-panel-footer"><button type="button" class="date-clear">Limpar datas</button></div>
             </div>
           </div>
-          <div class="search-field"><label>Hóspedes</label><select name="guests"><option>1</option><option selected>2</option><option>3</option><option>4</option></select></div>
+          <div class="search-field"><svg class="field-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="9" cy="8" r="3"/><path d="M2 20c0-3.3 3.1-6 7-6s7 2.7 7 6"/><circle cx="17" cy="9" r="2.3"/><path d="M16 14.2c2.6.5 4.5 2.5 5 5.8"/></svg><div class="field-text"><label>Hóspedes</label><select name="guests"><option>1</option><option selected>2</option><option>3</option><option>4</option></select></div></div>
           <button type="submit" class="search-go">Pesquisar</button>
         </form>
         <p class="hero-trust">Avaliações <strong>excelentes</strong> · Booking.com &amp; Airbnb</p>
@@ -406,17 +412,16 @@ footer { background: #0D1615; color: rgba(235,238,230,.55); padding: 64px var(--
       <div class="search-bar-wrap">
         <form class="search-bar" id="search-bar-en" method="get" action="book.html">
           <input type="hidden" name="lang" value="en">
-          <div class="search-field"><label>Apartment</label><select name="apt"><option value="all">Either</option><option value="ocean">Ocean Side</option><option value="beach">Beachside</option></select></div>
+          <div class="search-field"><svg class="field-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 21s-7-6.1-7-11a7 7 0 0 1 14 0c0 4.9-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg><div class="field-text"><label>Apartment</label><select name="apt"><option value="all">Either</option><option value="ocean">Ocean Side</option><option value="beach">Beachside</option></select></div></div>
           <div class="search-field date-field">
-            <label>Dates</label>
-            <button type="button" class="date-trigger">Select dates</button>
-            <input type="hidden" name="checkin"><input type="hidden" name="checkout">
+            <svg class="field-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg><div class="field-text"><label>Dates</label>
+            <button type="button" class="date-trigger">Select dates</button></div><input type="hidden" name="checkin"><input type="hidden" name="checkout">
             <div class="date-panel">
               <div class="date-panel-months"></div>
               <div class="date-panel-footer"><button type="button" class="date-clear">Clear dates</button></div>
             </div>
           </div>
-          <div class="search-field"><label>Guests</label><select name="guests"><option>1</option><option selected>2</option><option>3</option><option>4</option></select></div>
+          <div class="search-field"><svg class="field-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="9" cy="8" r="3"/><path d="M2 20c0-3.3 3.1-6 7-6s7 2.7 7 6"/><circle cx="17" cy="9" r="2.3"/><path d="M16 14.2c2.6.5 4.5 2.5 5 5.8"/></svg><div class="field-text"><label>Guests</label><select name="guests"><option>1</option><option selected>2</option><option>3</option><option>4</option></select></div></div>
           <button type="submit" class="search-go">Search</button>
         </form>
         <p class="hero-trust"><strong>Excellent</strong> reviews · Booking.com &amp; Airbnb</p>
@@ -429,17 +434,16 @@ footer { background: #0D1615; color: rgba(235,238,230,.55); padding: 64px var(--
       <div class="search-bar-wrap">
         <form class="search-bar" id="search-bar-fr" method="get" action="book.html">
           <input type="hidden" name="lang" value="fr">
-          <div class="search-field"><label>Appartement</label><select name="apt"><option value="all">Les deux</option><option value="ocean">Ocean Side</option><option value="beach">Beachside</option></select></div>
+          <div class="search-field"><svg class="field-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 21s-7-6.1-7-11a7 7 0 0 1 14 0c0 4.9-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg><div class="field-text"><label>Appartement</label><select name="apt"><option value="all">Les deux</option><option value="ocean">Ocean Side</option><option value="beach">Beachside</option></select></div></div>
           <div class="search-field date-field">
-            <label>Dates</label>
-            <button type="button" class="date-trigger">Sélectionner les dates</button>
-            <input type="hidden" name="checkin"><input type="hidden" name="checkout">
+            <svg class="field-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg><div class="field-text"><label>Dates</label>
+            <button type="button" class="date-trigger">Sélectionner les dates</button></div><input type="hidden" name="checkin"><input type="hidden" name="checkout">
             <div class="date-panel">
               <div class="date-panel-months"></div>
               <div class="date-panel-footer"><button type="button" class="date-clear">Effacer les dates</button></div>
             </div>
           </div>
-          <div class="search-field"><label>Voyageurs</label><select name="guests"><option>1</option><option selected>2</option><option>3</option><option>4</option></select></div>
+          <div class="search-field"><svg class="field-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="9" cy="8" r="3"/><path d="M2 20c0-3.3 3.1-6 7-6s7 2.7 7 6"/><circle cx="17" cy="9" r="2.3"/><path d="M16 14.2c2.6.5 4.5 2.5 5 5.8"/></svg><div class="field-text"><label>Voyageurs</label><select name="guests"><option>1</option><option selected>2</option><option>3</option><option>4</option></select></div></div>
           <button type="submit" class="search-go">Rechercher</button>
         </form>
         <p class="hero-trust">Avis <strong>excellents</strong> · Booking.com &amp; Airbnb</p>
@@ -770,58 +774,57 @@ footer { background: #0D1615; color: rgba(235,238,230,.55); padding: 64px var(--
 
 <section class="section section--stone" id="map">
   <div class="section-inner ps-scope" data-lang="pt">
-    <div data-i18n-block="pt"><h2 class="head">Onde vai ficar</h2></div>
-    <div data-i18n-block="en"><h2 class="head">Where you'll stay</h2></div>
-    <div data-i18n-block="fr"><h2 class="head">Où vous logerez</h2></div>
+    <div data-i18n-block="pt"><h2 class="head">Explore o Algarve</h2><p class="lede" style="margin-top:10px;">Uma seleção de praias, miradouros, trilhos e locais de interesse — do Sotavento ao Barlavento.</p></div>
+    <div data-i18n-block="en"><h2 class="head">Explore the Algarve</h2><p class="lede" style="margin-top:10px;">A curated selection of beaches, viewpoints, trails, and places of interest — from the Sotavento to the Barlavento.</p></div>
+    <div data-i18n-block="fr"><h2 class="head">Explorez l'Algarve</h2><p class="lede" style="margin-top:10px;">Une sélection de plages, points de vue, sentiers et lieux d'intérêt — du Sotavento au Barlavento.</p></div>
     <div class="map-card">
       <div id="so-map"></div>
-      <form class="so-search" id="so-search">
-        <input id="so-q" type="text" placeholder="Search nearby (pharmacy, ATM…)" aria-label="Search services">
-        <button type="submit" class="go">Search</button>
-        <button type="button" class="clr" id="so-clear">Clear</button>
-      </form>
       <div class="so-legend">
-        <div class="row"><span class="swatch" style="background:#B9B36A"></span><span class="legend-label">Apartments</span><input type="checkbox" checked disabled></div>
-        <div class="row"><span class="swatch" style="background:#2C5164"></span><label class="legend-label" for="chk-food">Restaurants &amp; bars</label><input id="chk-food" type="checkbox" checked></div>
-        <div class="row"><span class="swatch" style="background:#C9A66B"></span><label class="legend-label" for="chk-sup">Supermarkets</label><input id="chk-sup" type="checkbox" checked></div>
-        <div class="row"><span class="swatch" style="background:#5B7A6E"></span><label class="legend-label" for="chk-views">Viewpoints &amp; activities</label><input id="chk-views" type="checkbox" checked></div>
-        <div class="row"><span class="swatch" style="background:#7A6B4F"></span><label class="legend-label" for="chk-search">Search results</label><input id="chk-search" type="checkbox" checked></div>
+        <div class="row"><span class="swatch" style="background:#B9B36A"></span><span class="legend-label" data-i18n-block="pt">Apartamentos</span><span class="legend-label" data-i18n-block="en">Apartments</span><span class="legend-label" data-i18n-block="fr">Appartements</span></div>
+        <div class="row"><span class="swatch" style="background:#2C5164"></span><span class="legend-label" data-i18n-block="pt">Praias &amp; falésias</span><span class="legend-label" data-i18n-block="en">Beaches &amp; cliffs</span><span class="legend-label" data-i18n-block="fr">Plages &amp; falaises</span></div>
+        <div class="row"><span class="swatch" style="background:#5B7A6E"></span><span class="legend-label" data-i18n-block="pt">Miradouros &amp; trilhos</span><span class="legend-label" data-i18n-block="en">Viewpoints &amp; trails</span><span class="legend-label" data-i18n-block="fr">Points de vue &amp; sentiers</span></div>
+        <div class="row"><span class="swatch" style="background:#A6512E"></span><span class="legend-label" data-i18n-block="pt">Vilas &amp; história</span><span class="legend-label" data-i18n-block="en">Towns &amp; history</span><span class="legend-label" data-i18n-block="fr">Villages &amp; histoire</span></div>
+        <div class="row"><span class="swatch" style="background:#7A6B4F"></span><span class="legend-label" data-i18n-block="pt">Aeroporto</span><span class="legend-label" data-i18n-block="en">Airport</span><span class="legend-label" data-i18n-block="fr">Aéroport</span></div>
       </div>
     </div>
   </div>
 </section>
 
+
 <section class="section section--stone" id="reviews">
   <div class="section-inner ps-scope" data-lang="pt">
-    <div data-i18n-block="pt"><h2 class="head">O que dizem os hóspedes</h2>
-      <div class="review-grid">
-        <div class="review"><span class="review-quote-mark">&ldquo;</span><p class="review-quote">Local muito tranquilo e bem equipado. Perto de tudo. Comunicação excelente com os anfitriões, sempre atentos. Estava tudo perfeito.</p><div class="review-meta"><span>Guadalupe 🇪🇸</span><span class="dot"></span><span class="plat">Booking.com</span></div></div>
-        <div class="review"><span class="review-quote-mark">&ldquo;</span><p class="review-quote">Fiquei muito satisfeita com a estadia. Anfitriões simpáticos e rápidos a repor o que faltava. Varanda muito acolhedora — recomendo!</p><div class="review-meta"><span>Maria 🇵🇹</span><span class="dot"></span><span class="plat">Booking.com</span></div></div>
-        <div class="review"><span class="review-quote-mark">&ldquo;</span><p class="review-quote">Apartamento bonito perto da praia — impecável, tranquilo e relaxante. Perto de tudo o que precisámos. Voltaremos em família.</p><div class="review-meta"><span>Carlotta 🇩🇪</span><span class="dot"></span><span class="plat">Airbnb</span></div></div>
-        <div class="review"><span class="review-quote-mark">&ldquo;</span><p class="review-quote">Casa muito organizada, ideal para alguns dias de férias na praia.</p><div class="review-meta"><span>Elizabeth 🇵🇹</span><span class="dot"></span><span class="plat">Booking.com</span></div></div>
-        <div class="review"><span class="review-quote-mark">&ldquo;</span><p class="review-quote">Apartamento espaçoso, muito limpo, zona tranquila e estacionamento fácil.</p><div class="review-meta"><span>Juan 🇪🇸</span><span class="dot"></span><span class="plat">Booking.com</span></div></div>
-        <div class="review"><span class="review-quote-mark">&ldquo;</span><p class="review-quote">Experiência cinco estrelas — adorámos a estadia e o ambiente. Voltaremos, sem dúvida.</p><div class="review-meta"><span>Lénia 🇵🇹</span><span class="dot"></span><span class="plat">Airbnb</span></div></div>
+    <div data-i18n-block="pt"><h2 class="head" style="text-align:center;">O que dizem os hóspedes</h2>
+      <div class="review-slideshow" id="review-slideshow-pt">
+        <div class="review-slide">"Local muito tranquilo e bem equipado — estava tudo perfeito." <span class="review-slide-name">Guadalupe 🇪🇸 · Booking.com</span></div>
+        <div class="review-slide">"Anfitriões simpáticos, varanda muito acolhedora — recomendo!" <span class="review-slide-name">Maria 🇵🇹 · Booking.com</span></div>
+        <div class="review-slide">"Apartamento impecável, tranquilo e relaxante." <span class="review-slide-name">Carlotta 🇩🇪 · Airbnb</span></div>
+        <div class="review-slide">"Casa muito organizada, ideal para uns dias de praia." <span class="review-slide-name">Elizabeth 🇵🇹 · Booking.com</span></div>
+        <div class="review-slide">"Espaçoso, muito limpo, estacionamento fácil." <span class="review-slide-name">Juan 🇪🇸 · Booking.com</span></div>
+        <div class="review-slide">"Experiência cinco estrelas — voltaremos, sem dúvida." <span class="review-slide-name">Lénia 🇵🇹 · Airbnb</span></div>
       </div>
+      <div class="review-dots" data-for="review-slideshow-pt"></div>
     </div>
-    <div data-i18n-block="en"><h2 class="head">What guests are saying</h2>
-      <div class="review-grid">
-        <div class="review"><span class="review-quote-mark">&ldquo;</span><p class="review-quote">A very quiet and well-equipped place. Close to everything. Excellent communication with the hosts, always attentive. Everything was perfect.</p><div class="review-meta"><span>Guadalupe 🇪🇸</span><span class="dot"></span><span class="plat">Booking.com</span></div></div>
-        <div class="review"><span class="review-quote-mark">&ldquo;</span><p class="review-quote">Very pleased with my stay. Kind, responsive hosts who quickly replaced a few missing items. Very cosy balcony — highly recommend!</p><div class="review-meta"><span>Maria 🇵🇹</span><span class="dot"></span><span class="plat">Booking.com</span></div></div>
-        <div class="review"><span class="review-quote-mark">&ldquo;</span><p class="review-quote">Beautiful apartment close to the beach — spotless, quiet, and relaxing. Close to everything we needed. We'd happily come back as a family.</p><div class="review-meta"><span>Carlotta 🇩🇪</span><span class="dot"></span><span class="plat">Airbnb</span></div></div>
-        <div class="review"><span class="review-quote-mark">&ldquo;</span><p class="review-quote">Very organized house, ideal for a few days of beach vacation.</p><div class="review-meta"><span>Elizabeth 🇵🇹</span><span class="dot"></span><span class="plat">Booking.com</span></div></div>
-        <div class="review"><span class="review-quote-mark">&ldquo;</span><p class="review-quote">The apartment is spacious, very clean, in a quiet area, and easy for parking.</p><div class="review-meta"><span>Juan 🇪🇸</span><span class="dot"></span><span class="plat">Booking.com</span></div></div>
-        <div class="review"><span class="review-quote-mark">&ldquo;</span><p class="review-quote">Five-star experience — loved the stay and the vibe. We'd definitely return.</p><div class="review-meta"><span>Lénia 🇵🇹</span><span class="dot"></span><span class="plat">Airbnb</span></div></div>
+    <div data-i18n-block="en"><h2 class="head" style="text-align:center;">What guests are saying</h2>
+      <div class="review-slideshow" id="review-slideshow-en">
+        <div class="review-slide">"A very quiet, well-equipped place — everything was perfect." <span class="review-slide-name">Guadalupe 🇪🇸 · Booking.com</span></div>
+        <div class="review-slide">"Kind hosts, a very cosy balcony — highly recommend!" <span class="review-slide-name">Maria 🇵🇹 · Booking.com</span></div>
+        <div class="review-slide">"Spotless, quiet, and relaxing." <span class="review-slide-name">Carlotta 🇩🇪 · Airbnb</span></div>
+        <div class="review-slide">"Very organized house, ideal for a beach getaway." <span class="review-slide-name">Elizabeth 🇵🇹 · Booking.com</span></div>
+        <div class="review-slide">"Spacious, very clean, easy parking." <span class="review-slide-name">Juan 🇪🇸 · Booking.com</span></div>
+        <div class="review-slide">"Five-star experience — we'd definitely return." <span class="review-slide-name">Lénia 🇵🇹 · Airbnb</span></div>
       </div>
+      <div class="review-dots" data-for="review-slideshow-en"></div>
     </div>
-    <div data-i18n-block="fr"><h2 class="head">Ce que disent nos hôtes</h2>
-      <div class="review-grid">
-        <div class="review"><span class="review-quote-mark">&ldquo;</span><p class="review-quote">Endroit très calme et bien équipé. Proche de tout. Excellente communication avec les hôtes, toujours attentifs. Tout était parfait.</p><div class="review-meta"><span>Guadalupe 🇪🇸</span><span class="dot"></span><span class="plat">Booking.com</span></div></div>
-        <div class="review"><span class="review-quote-mark">&ldquo;</span><p class="review-quote">Très satisfaite du séjour. Hôtes aimables et réactifs. Balcon très cosy — je recommande !</p><div class="review-meta"><span>Maria 🇵🇹</span><span class="dot"></span><span class="plat">Booking.com</span></div></div>
-        <div class="review"><span class="review-quote-mark">&ldquo;</span><p class="review-quote">Bel appartement proche de la plage — impeccable, calme et reposant. Nous reviendrons en famille.</p><div class="review-meta"><span>Carlotta 🇩🇪</span><span class="dot"></span><span class="plat">Airbnb</span></div></div>
-        <div class="review"><span class="review-quote-mark">&ldquo;</span><p class="review-quote">Logement très bien organisé, idéal pour quelques jours à la plage.</p><div class="review-meta"><span>Elizabeth 🇵🇹</span><span class="dot"></span><span class="plat">Booking.com</span></div></div>
-        <div class="review"><span class="review-quote-mark">&ldquo;</span><p class="review-quote">Appartement spacieux, très propre, quartier calme et stationnement facile.</p><div class="review-meta"><span>Juan 🇪🇸</span><span class="dot"></span><span class="plat">Booking.com</span></div></div>
-        <div class="review"><span class="review-quote-mark">&ldquo;</span><p class="review-quote">Expérience cinq étoiles — nous avons adoré le séjour. Nous reviendrons sans hésiter.</p><div class="review-meta"><span>Lénia 🇵🇹</span><span class="dot"></span><span class="plat">Airbnb</span></div></div>
+    <div data-i18n-block="fr"><h2 class="head" style="text-align:center;">Ce que disent nos hôtes</h2>
+      <div class="review-slideshow" id="review-slideshow-fr">
+        <div class="review-slide">« Endroit très calme et bien équipé — tout était parfait. » <span class="review-slide-name">Guadalupe 🇪🇸 · Booking.com</span></div>
+        <div class="review-slide">« Hôtes aimables, balcon très cosy — je recommande ! » <span class="review-slide-name">Maria 🇵🇹 · Booking.com</span></div>
+        <div class="review-slide">« Impeccable, calme et reposant. » <span class="review-slide-name">Carlotta 🇩🇪 · Airbnb</span></div>
+        <div class="review-slide">« Logement très bien organisé, idéal pour la plage. » <span class="review-slide-name">Elizabeth 🇵🇹 · Booking.com</span></div>
+        <div class="review-slide">« Spacieux, très propre, stationnement facile. » <span class="review-slide-name">Juan 🇪🇸 · Booking.com</span></div>
+        <div class="review-slide">« Expérience cinq étoiles — nous reviendrons sans hésiter. » <span class="review-slide-name">Lénia 🇵🇹 · Airbnb</span></div>
       </div>
+      <div class="review-dots" data-for="review-slideshow-fr"></div>
     </div>
   </div>
 </section>
@@ -872,7 +875,7 @@ footer { background: #0D1615; color: rgba(235,238,230,.55); padding: 64px var(--
       <a class="contact-link" href="https://youtu.be/CwSCYQrg_f8" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M21.8 8s-.2-1.4-.8-2c-.8-.8-1.6-.8-2-.9C16.8 5 12 5 12 5s-4.8 0-7 .1c-.4.1-1.2.1-2 .9-.6.6-.8 2-.8 2S2 9.6 2 11.2v1.5c0 1.6.2 3.2.2 3.2s.2 1.4.8 2c.8.8 1.8.8 2.3.8C6.8 19 12 19 12 19s4.8 0 7-.1c.4-.1 1.2-.1 2-.9.6-.6.8-2 .8-2s.2-1.6.2-3.2v-1.5C22 9.6 21.8 8 21.8 8zM10 15V9l5.5 3-5.5 3z"/></svg>YouTube</a>
       <a class="contact-link" href="mailto:christopher@permanentsummer.co"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 7L2 7"/></svg>christopher@permanentsummer.co</a>
       <a class="contact-link" href="https://instagram.com/permanentsummer.co" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="12" cy="12" r="3.5"/><circle cx="17.2" cy="6.8" r="1"/></svg>@permanentsummer.co</a>
-      <a class="contact-link" href="https://whatsapp.com/dl/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12c0 1.85.5 3.58 1.37 5.07L2 22l5.09-1.33A9.94 9.94 0 0012 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm5.01 14.16c-.21.58-1.22 1.12-1.67 1.19-.45.07-.99.1-1.59-.1-.37-.12-.84-.28-1.44-.55-2.52-1.09-4.17-3.62-4.3-3.79-.13-.17-1.05-1.39-1.05-2.65s.67-1.88.9-2.14c.24-.26.52-.32.69-.32h.5c.16 0 .38-.06.59.45.21.52.73 1.77.79 1.9.06.13.1.28.02.45-.08.17-.12.27-.24.42-.12.14-.25.32-.36.43-.12.12-.24.25-.1.49.14.24.62 1.02 1.33 1.65.91.81 1.68 1.06 1.92 1.17.24.12.38.1.52-.06.14-.16.59-.69.75-.93.16-.24.32-.2.54-.12.22.08 1.4.66 1.64.78.24.12.4.17.46.27.06.1.06.58-.15 1.16z"/></svg>WhatsApp</a>
+      <a class="contact-link" href="https://wa.me/351924477353" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12c0 1.85.5 3.58 1.37 5.07L2 22l5.09-1.33A9.94 9.94 0 0012 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm5.01 14.16c-.21.58-1.22 1.12-1.67 1.19-.45.07-.99.1-1.59-.1-.37-.12-.84-.28-1.44-.55-2.52-1.09-4.17-3.62-4.3-3.79-.13-.17-1.05-1.39-1.05-2.65s.67-1.88.9-2.14c.24-.26.52-.32.69-.32h.5c.16 0 .38-.06.59.45.21.52.73 1.77.79 1.9.06.13.1.28.02.45-.08.17-.12.27-.24.42-.12.14-.25.32-.36.43-.12.12-.24.25-.1.49.14.24.62 1.02 1.33 1.65.91.81 1.68 1.06 1.92 1.17.24.12.38.1.52-.06.14-.16.59-.69.75-.93.16-.24.32-.2.54-.12.22.08 1.4.66 1.64.78.24.12.4.17.46.27.06.1.06.58-.15 1.16z"/></svg>WhatsApp</a>
     </div>
   </div>
 </section>
@@ -1082,82 +1085,91 @@ function initCarousel(trackId, dotsId, autoMs) {
 initCarousel('beach-track', 'beach-dots', 4500);
 initCarousel('ocean-track', 'ocean-dots', 4500);
 
-(function () {
-  const OS = [37.174878, -7.504644];
-  const BS = [37.173125, -7.498954];
-  const map = L.map('so-map', { zoomControl: true }).setView([(OS[0]+BS[0])/2, (OS[1]+BS[1])/2], 15);
-  map.attributionControl.setPrefix(false);
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '© OpenStreetMap contributors' }).addTo(map);
+/* ─── REVIEW SLIDESHOW (one line at a time) ───────────────────────── */
+function initReviewSlideshow(id) {
+  const wrap = document.getElementById(id);
+  if (!wrap) return;
+  const slides = wrap.querySelectorAll('.review-slide');
+  const dotsWrap = document.querySelector(`.review-dots[data-for="${id}"]`);
+  let current = 0, timer = null;
+  slides[0] && slides[0].classList.add('active');
+  if (dotsWrap) {
+    slides.forEach((_, i) => {
+      const d = document.createElement('button');
+      d.className = 'review-dot' + (i === 0 ? ' active' : '');
+      d.setAttribute('aria-label', 'Review ' + (i + 1));
+      d.addEventListener('click', () => goTo(i));
+      dotsWrap.appendChild(d);
+    });
+  }
+  function goTo(n) {
+    slides[current].classList.remove('active');
+    current = ((n % slides.length) + slides.length) % slides.length;
+    slides[current].classList.add('active');
+    if (dotsWrap) dotsWrap.querySelectorAll('.review-dot').forEach((d, i) => d.classList.toggle('active', i === current));
+    resetAuto();
+  }
+  function resetAuto() {
+    clearInterval(timer);
+    timer = setInterval(() => goTo(current + 1), 5000);
+  }
+  resetAuto();
+}
+initReviewSlideshow('review-slideshow-pt');
+initReviewSlideshow('review-slideshow-en');
+initReviewSlideshow('review-slideshow-fr');
 
-  const pin = c => L.icon({ iconUrl: 'data:image/svg+xml;utf8,' + encodeURIComponent(`<svg width="26" height="36" viewBox="0 0 26 36" xmlns="http://www.w3.org/2000/svg"><path d="M13 0C6.37 0 1 5.37 1 12c0 8.9 10.6 20.9 11.15 21.55.5.58 1.3.58 1.8 0C14.4 32.9 25 20.9 25 12 25 5.37 19.63 0 13 0z" fill="${c}"/><circle cx="13" cy="12" r="4.8" fill="#fff"/></svg>`), iconSize:[26,36], iconAnchor:[13,36], popupAnchor:[0,-32] });
-  const lay = { apts: L.layerGroup().addTo(map), food: L.layerGroup().addTo(map), sup: L.layerGroup().addTo(map), views: L.layerGroup().addTo(map), search: L.layerGroup().addTo(map) };
-  [['Oceanside Apartment', OS], ['Beachside Apartment', BS]].forEach(([n, ll]) => {
-    const m = L.marker(ll, { icon: pin('#B9B36A'), zIndexOffset: 1000 }).bindPopup(`<div class="popup-title">${n}</div>`, { closeButton: false });
-    m.on('mouseover', () => { m.setIcon(pin('#9C9656')); m.openPopup(); });
-    m.on('mouseout', () => m.setIcon(pin('#B9B36A')));
-    lay.apts.addLayer(m);
+(function () {
+  const map = L.map('so-map', { zoomControl: true }).setView([37.14, -8.15], 10);
+  map.attributionControl.setPrefix(false);
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+    maxZoom: 19,
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>'
+  }).addTo(map);
+
+  const pin = c => L.icon({
+    iconUrl: 'data:image/svg+xml;utf8,' + encodeURIComponent(`<svg width="24" height="33" viewBox="0 0 24 33" xmlns="http://www.w3.org/2000/svg"><path d="M12 0C5.9 0 1 4.9 1 11c0 8.2 9.7 19.2 10.2 19.8.4.5 1.2.5 1.6 0C13.3 30.2 23 19.2 23 11c0-6.1-4.9-11-11-11z" fill="${c}"/><circle cx="12" cy="11" r="4.3" fill="#fff"/></svg>`),
+    iconSize: [24, 33], iconAnchor: [12, 33], popupAnchor: [0, -30]
   });
 
-  const ovp = q => fetch('https://overpass-api.de/api/interpreter?data=' + encodeURIComponent(q)).then(r => { if (!r.ok) throw 0; return r.json(); });
-  const nm = (t, c) => { let n = (t && (t.name || t['name:en'])) || (t && t.description) || ''; if (!n) { n = (c||'POI').replace(/_/g,' '); n = n[0].toUpperCase() + n.slice(1); } return n; };
-  const pStyle = (c, big) => ({ radius: big?6:5, color: c, weight: 2, fillColor: c, fillOpacity: .9 });
-  const hov = (m, c) => { m.on('mouseover', () => { m.setStyle({ color:'#B9B36A', fillColor:'#B9B36A' }); m.openPopup(); }); m.on('mouseout', () => m.setStyle({ color:c, fillColor:c })); };
+  const COLORS = { apt: '#B9B36A', beach: '#2C5164', trail: '#5B7A6E', town: '#A6512E', airport: '#7A6B4F' };
 
-  async function loadPOIs() {
-    const b = map.getBounds(), bb = `${b.getSouth()},${b.getWest()},${b.getNorth()},${b.getEast()}`, lim = map.getZoom()>=14?1400:900;
-    try {
-      const brd = "Pingo Doce|Intermarché|Intermarche|ALDI|Lidl|Continente";
-      const [fD, sD, vD] = await Promise.all([
-        ovp(`[out:json][timeout:30][bbox:${bb}];node["amenity"~"^(restaurant|cafe|bar|fast_food|pub)$"];out tags center ${lim};`),
-        ovp(`[out:json][timeout:30][bbox:${bb}];(node["shop"="supermarket"]["brand"~"${brd}",i];way["shop"="supermarket"]["brand"~"${brd}",i];);out tags center ${lim};`),
-        ovp(`[out:json][timeout:30][bbox:${bb}];(node["tourism"="viewpoint"];node["tourism"="attraction"];node["leisure"~"^(water_park|sports_centre|park|playground)$"];);out tags center ${lim};`)
-      ]);
-      lay.food.clearLayers(); lay.sup.clearLayers(); lay.views.clearLayers();
-      const rend = (data, layer, c, big) => (data.elements||[]).forEach(el => {
-        const lat = el.lat||(el.center&&el.center.lat), lon = el.lon||(el.center&&el.center.lon);
-        if (!lat) return;
-        const t = el.tags||{}, cat = t.amenity||t.shop||t.tourism||t.leisure||'poi';
-        const m = L.circleMarker([lat,lon], pStyle(c,big)).addTo(layer);
-        m.bindPopup(`<div class="popup-title">${nm(t,cat)}</div><div class="popup-meta">${cat}</div>`, { closeButton:false });
-        hov(m, c);
-      });
-      rend(fD, lay.food, '#2C5164'); rend(sD, lay.sup, '#C9A66B'); rend(vD, lay.views, '#5B7A6E', true);
-      syncT();
-    } catch(e) { console.warn('POI error', e); }
-  }
+  const points = [
+    // Apartments
+    { ll: [37.174878, -7.504644], name: 'Ocean Side', cat: 'apt' },
+    { ll: [37.173125, -7.498954], name: 'Beachside', cat: 'apt' },
 
-  async function search(term) {
-    term = (term||'').trim(); lay.search.clearLayers(); if (!term) return;
-    const esc = term.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'), pat = `.*${esc}.*`;
-    const b = map.getBounds(), bb = `${b.getSouth()},${b.getWest()},${b.getNorth()},${b.getEast()}`;
-    try {
-      let d = await ovp(`[out:json][timeout:30][bbox:${bb}];(node["name"~"${pat}",i];node["amenity"~"${pat}",i];node["shop"~"${pat}",i];way["name"~"${pat}",i];);out tags center;`);
-      if (!(d.elements||[]).length) { const c = map.getCenter(); d = await ovp(`[out:json][timeout:30];(node(around:20000,${c.lat},${c.lng})["name"~"${pat}",i];node(around:20000,${c.lat},${c.lng})["amenity"~"${pat}",i];);out tags center;`); }
-      svT(); setT(false,false,false,true); syncT();
-      const pts = [];
-      (d.elements||[]).forEach(el => {
-        const lat = el.lat||(el.center&&el.center.lat), lon = el.lon||(el.center&&el.center.lon); if (!lat) return;
-        const t = el.tags||{}, cat = t.amenity||t.shop||'service';
-        const m = L.circleMarker([lat,lon], pStyle('#7A6B4F')).addTo(lay.search);
-        m.bindPopup(`<div class="popup-title">${nm(t,cat)}</div><div class="popup-meta">${cat}</div>`, { closeButton:false });
-        hov(m,'#7A6B4F'); pts.push([lat,lon]);
-      });
-      if (pts.length) map.fitBounds(L.featureGroup(pts.map(ll=>L.marker(ll))).getBounds().pad(.2));
-    } catch(e) { console.warn('Search error', e); }
-  }
+    // Eastern Algarve (Sotavento)
+    { ll: [37.1743, -7.5030], name: 'Praia da Alagoa', cat: 'beach' },
+    { ll: [37.1660, -7.5450], name: 'Cacela Velha', cat: 'town' },
+    { ll: [37.2200, -7.4430], name: 'Castro Marim Castle', cat: 'town' },
+    { ll: [37.1257, -7.6494], name: 'Tavira', cat: 'town' },
+    { ll: [37.1936, -7.4177], name: 'Vila Real de Santo António', cat: 'town' },
+    { ll: [37.0144, -7.9659], name: 'Faro Airport', cat: 'airport' },
 
-  const chk = { food: document.getElementById('chk-food'), sup: document.getElementById('chk-sup'), views: document.getElementById('chk-views'), search: document.getElementById('chk-search') };
-  function syncT() { Object.entries(chk).forEach(([k,el]) => el && (el.checked ? map.addLayer(lay[k]) : map.removeLayer(lay[k]))); }
-  let prev = { food:true, sup:true, views:true, search:true };
-  function svT() { prev = { food:chk.food.checked, sup:chk.sup.checked, views:chk.views.checked, search:chk.search.checked }; }
-  function setT(f,s,v,sr) { chk.food.checked=f; chk.sup.checked=s; chk.views.checked=v; chk.search.checked=sr; }
-  Object.values(chk).forEach(el => el && el.addEventListener('change', syncT));
-  const inp = document.getElementById('so-q');
-  document.getElementById('so-search').addEventListener('submit', e => { e.preventDefault(); search(inp.value); });
-  document.getElementById('so-clear').addEventListener('click', () => { inp.value=''; lay.search.clearLayers(); setT(prev.food,prev.sup,prev.views,prev.search); syncT(); });
-  let dt; map.on('moveend', () => { clearTimeout(dt); dt=setTimeout(loadPOIs,450); });
-  map.on('zoomend', () => { clearTimeout(dt); dt=setTimeout(loadPOIs,450); });
-  loadPOIs();
+    // Central Algarve
+    { ll: [37.0194, -7.9304], name: 'Ria Formosa, Faro', cat: 'trail' },
+    { ll: [37.0891, -8.2482], name: 'Albufeira', cat: 'town' },
+    { ll: [37.0894, -8.4126], name: 'Praia da Marinha', cat: 'beach' },
+    { ll: [37.0889, -8.4269], name: 'Benagil Cave', cat: 'beach' },
+    { ll: [37.1908, -8.4384], name: 'Silves Castle', cat: 'town' },
+    { ll: [37.2167, -8.1500], name: 'Alte', cat: 'town' },
+    { ll: [37.3208, -8.5875], name: 'Fóia, Monchique', cat: 'trail' },
+
+    // Western Algarve (Barlavento)
+    { ll: [37.1020, -8.6746], name: 'Lagos', cat: 'town' },
+    { ll: [37.0847, -8.6693], name: 'Ponta da Piedade', cat: 'beach' },
+    { ll: [37.0056, -8.9394], name: 'Sagres Fortress', cat: 'town' },
+    { ll: [37.0206, -8.9767], name: 'Cabo de São Vicente', cat: 'trail' }
+  ];
+
+  points.forEach(p => {
+    const big = p.cat === 'apt';
+    const m = L.marker(p.ll, { icon: pin(COLORS[p.cat]), zIndexOffset: big ? 1000 : 0 })
+      .bindPopup(`<div class="popup-title">${p.name}</div>`, { closeButton: false });
+    m.on('mouseover', () => m.openPopup());
+    map.addLayer(m);
+  });
 })();
 
 (function () {
