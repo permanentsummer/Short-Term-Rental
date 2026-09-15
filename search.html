@@ -293,6 +293,8 @@ footer { background: #0D1615; color: rgba(235,238,230,.55); padding: 64px var(--
 .mobile-panel { display: none; position: fixed; inset: 0; z-index: 950; background: var(--paper); padding: 100px var(--gut) 40px; flex-direction: column; gap: 20px; overflow-y: auto; }
 .mobile-panel.open { display: flex; }
 .mobile-panel a { font: 600 1.5rem var(--disp); color: var(--ink); }
+.mobile-panel .nav-group { display: flex; flex-direction: column; gap: 10px; }
+.mobile-panel .nav-sub { font: 500 1.05rem var(--body); font-style: italic; opacity: .6; padding-left: 20px; }
 .mobile-panel .panel-cta {
   display: inline-block; margin-top: 8px; font: 600 .78rem var(--body); text-transform: uppercase; letter-spacing: .1em;
   background: var(--khaki); color: var(--ink); padding: 14px 24px; width: fit-content;
@@ -328,7 +330,7 @@ footer { background: #0D1615; color: rgba(235,238,230,.55); padding: 64px var(--
     <a class="wordmark" href="index.html">Permanent Summer</a>
   </div>
   <div class="nav-right">
-    <a class="nav-icon" href="https://whatsapp.com/dl/" target="_blank" rel="noopener" aria-label="WhatsApp">
+    <a class="nav-icon" href="https://wa.me/351924477353" target="_blank" rel="noopener" aria-label="WhatsApp">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12c0 1.85.5 3.58 1.37 5.07L2 22l5.09-1.33A9.94 9.94 0 0012 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm5.01 14.16c-.21.58-1.22 1.12-1.67 1.19-.45.07-.99.1-1.59-.1-.37-.12-.84-.28-1.44-.55-2.52-1.09-4.17-3.62-4.3-3.79-.13-.17-1.05-1.39-1.05-2.65s.67-1.88.9-2.14c.24-.26.52-.32.69-.32h.5c.16 0 .38-.06.59.45.21.52.73 1.77.79 1.9.06.13.1.28.02.45-.08.17-.12.27-.24.42-.12.14-.25.32-.36.43-.12.12-.24.25-.1.49.14.24.62 1.02 1.33 1.65.91.81 1.68 1.06 1.92 1.17.24.12.38.1.52-.06.14-.16.59-.69.75-.93.16-.24.32-.2.54-.12.22.08 1.4.66 1.64.78.24.12.4.17.46.27.06.1.06.58-.15 1.16z"/></svg>
     </a>
     <span class="nav-divider"></span>
@@ -344,9 +346,11 @@ footer { background: #0D1615; color: rgba(235,238,230,.55); padding: 64px var(--
 <div class="mobile-panel" id="mobile-panel">
   <button class="mobile-close" id="mobile-close" aria-label="Close menu">&times;</button>
   <a href="index.html#region">The Region</a>
-  <a href="index.html#apartments">Apartments</a>
-  <a href="index.html#oceanside">Ocean Side</a>
-  <a href="index.html#beachside">Beachside</a>
+  <div class="nav-group">
+    <a href="index.html#apartments">Apartments</a>
+    <a href="index.html#oceanside" class="nav-sub">Ocean Side</a>
+    <a href="index.html#beachside" class="nav-sub">Beachside</a>
+  </div>
   <a href="index.html#reviews">Reviews</a>
   <a href="index.html#instagram">Instagram</a>
   <a href="index.html#contact">Contact</a>
@@ -365,51 +369,48 @@ footer { background: #0D1615; color: rgba(235,238,230,.55); padding: 64px var(--
       <div data-i18n-block="pt">
         <form class="search-bar" id="search-bar-pt" method="get" action="search.html">
           <input type="hidden" name="lang" value="pt">
-          <div class="search-field"><label>Apartamento</label><select name="apt"><option value="all">Ambos</option><option value="ocean">Ocean Side</option><option value="beach">Beachside</option></select></div>
+          <div class="search-field"><svg class="field-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 21s-7-6.1-7-11a7 7 0 0 1 14 0c0 4.9-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg><div class="field-text"><label>Apartamento</label><select name="apt"><option value="all">Ambos</option><option value="ocean">Ocean Side</option><option value="beach">Beachside</option></select></div></div>
           <div class="search-field date-field">
-            <label>Datas</label>
-            <button type="button" class="date-trigger">Selecionar datas</button>
-            <input type="hidden" name="checkin"><input type="hidden" name="checkout">
+            <svg class="field-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg><div class="field-text"><label>Datas</label>
+            <button type="button" class="date-trigger">Selecionar datas</button></div><input type="hidden" name="checkin"><input type="hidden" name="checkout">
             <div class="date-panel">
               <div class="date-panel-months"></div>
               <div class="date-panel-footer"><button type="button" class="date-clear">Limpar datas</button></div>
             </div>
           </div>
-          <div class="search-field"><label>Hóspedes</label><select name="guests"><option>1</option><option selected>2</option><option>3</option><option>4</option></select></div>
+          <div class="search-field"><svg class="field-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="9" cy="8" r="3"/><path d="M2 20c0-3.3 3.1-6 7-6s7 2.7 7 6"/><circle cx="17" cy="9" r="2.3"/><path d="M16 14.2c2.6.5 4.5 2.5 5 5.8"/></svg><div class="field-text"><label>Hóspedes</label><select name="guests"><option>1</option><option selected>2</option><option>3</option><option>4</option></select></div></div>
           <button type="submit" class="search-go">Pesquisar</button>
         </form>
       </div>
       <div data-i18n-block="en">
         <form class="search-bar" id="search-bar-en" method="get" action="search.html">
           <input type="hidden" name="lang" value="en">
-          <div class="search-field"><label>Apartment</label><select name="apt"><option value="all">Either</option><option value="ocean">Ocean Side</option><option value="beach">Beachside</option></select></div>
+          <div class="search-field"><svg class="field-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 21s-7-6.1-7-11a7 7 0 0 1 14 0c0 4.9-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg><div class="field-text"><label>Apartment</label><select name="apt"><option value="all">Either</option><option value="ocean">Ocean Side</option><option value="beach">Beachside</option></select></div></div>
           <div class="search-field date-field">
-            <label>Dates</label>
-            <button type="button" class="date-trigger">Select dates</button>
-            <input type="hidden" name="checkin"><input type="hidden" name="checkout">
+            <svg class="field-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg><div class="field-text"><label>Dates</label>
+            <button type="button" class="date-trigger">Select dates</button></div><input type="hidden" name="checkin"><input type="hidden" name="checkout">
             <div class="date-panel">
               <div class="date-panel-months"></div>
               <div class="date-panel-footer"><button type="button" class="date-clear">Clear dates</button></div>
             </div>
           </div>
-          <div class="search-field"><label>Guests</label><select name="guests"><option>1</option><option selected>2</option><option>3</option><option>4</option></select></div>
+          <div class="search-field"><svg class="field-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="9" cy="8" r="3"/><path d="M2 20c0-3.3 3.1-6 7-6s7 2.7 7 6"/><circle cx="17" cy="9" r="2.3"/><path d="M16 14.2c2.6.5 4.5 2.5 5 5.8"/></svg><div class="field-text"><label>Guests</label><select name="guests"><option>1</option><option selected>2</option><option>3</option><option>4</option></select></div></div>
           <button type="submit" class="search-go">Search</button>
         </form>
       </div>
       <div data-i18n-block="fr">
         <form class="search-bar" id="search-bar-fr" method="get" action="search.html">
           <input type="hidden" name="lang" value="fr">
-          <div class="search-field"><label>Appartement</label><select name="apt"><option value="all">Les deux</option><option value="ocean">Ocean Side</option><option value="beach">Beachside</option></select></div>
+          <div class="search-field"><svg class="field-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 21s-7-6.1-7-11a7 7 0 0 1 14 0c0 4.9-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg><div class="field-text"><label>Appartement</label><select name="apt"><option value="all">Les deux</option><option value="ocean">Ocean Side</option><option value="beach">Beachside</option></select></div></div>
           <div class="search-field date-field">
-            <label>Dates</label>
-            <button type="button" class="date-trigger">Sélectionner les dates</button>
-            <input type="hidden" name="checkin"><input type="hidden" name="checkout">
+            <svg class="field-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg><div class="field-text"><label>Dates</label>
+            <button type="button" class="date-trigger">Sélectionner les dates</button></div><input type="hidden" name="checkin"><input type="hidden" name="checkout">
             <div class="date-panel">
               <div class="date-panel-months"></div>
               <div class="date-panel-footer"><button type="button" class="date-clear">Effacer les dates</button></div>
             </div>
           </div>
-          <div class="search-field"><label>Voyageurs</label><select name="guests"><option>1</option><option selected>2</option><option>3</option><option>4</option></select></div>
+          <div class="search-field"><svg class="field-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="9" cy="8" r="3"/><path d="M2 20c0-3.3 3.1-6 7-6s7 2.7 7 6"/><circle cx="17" cy="9" r="2.3"/><path d="M16 14.2c2.6.5 4.5 2.5 5 5.8"/></svg><div class="field-text"><label>Voyageurs</label><select name="guests"><option>1</option><option selected>2</option><option>3</option><option>4</option></select></div></div>
           <button type="submit" class="search-go">Rechercher</button>
         </form>
       </div>
@@ -428,7 +429,7 @@ footer { background: #0D1615; color: rgba(235,238,230,.55); padding: 64px var(--
     <div class="results-grid">
       <div class="results-list" id="results-list">
         <a class="results-card" href="index.html#oceanside" data-apt="ocean">
-          <div class="results-photo"><div class="dest-placeholder">Photos coming soon</div></div>
+          <div class="results-photo"><img src="assets/images/oceanside/bedroom-1.jpg" alt="Ocean Side" loading="lazy"></div>
           <div class="results-body">
             <div class="results-name">Ocean Side</div>
             <div class="results-loc">Altura, Algarve</div>
@@ -640,7 +641,7 @@ footer { background: #0D1615; color: rgba(235,238,230,.55); padding: 64px var(--
   const BS = [37.173125, -7.498954];
   const m = L.map('results-map', { zoomControl: true }).setView([(OS[0]+BS[0])/2, (OS[1]+BS[1])/2], 15);
   m.attributionControl.setPrefix(false);
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '© OpenStreetMap contributors' }).addTo(m);
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', { maxZoom: 19, attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>' }).addTo(m);
   const pin = c => L.icon({ iconUrl: 'data:image/svg+xml;utf8,' + encodeURIComponent(`<svg width="26" height="36" viewBox="0 0 26 36" xmlns="http://www.w3.org/2000/svg"><path d="M13 0C6.37 0 1 5.37 1 12c0 8.9 10.6 20.9 11.15 21.55.5.58 1.3.58 1.8 0C14.4 32.9 25 20.9 25 12 25 5.37 19.63 0 13 0z" fill="${c}"/><circle cx="13" cy="12" r="4.8" fill="#fff"/></svg>`), iconSize:[26,36], iconAnchor:[13,36], popupAnchor:[0,-32] });
   L.marker(OS, { icon: pin('#B9B36A') }).addTo(m).bindPopup('<div class="popup-title">Ocean Side</div>');
   L.marker(BS, { icon: pin('#B9B36A') }).addTo(m).bindPopup('<div class="popup-title">Beachside</div>');
