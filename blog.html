@@ -68,6 +68,8 @@ img { display: block; max-width: 100%; }
 .mobile-panel { display: none; position: fixed; inset: 0; z-index: 950; background: var(--paper); padding: 100px var(--gut) 40px; flex-direction: column; gap: 20px; overflow-y: auto; }
 .mobile-panel.open { display: flex; }
 .mobile-panel a { font: 600 1.5rem var(--disp); color: var(--ink); }
+.mobile-panel .nav-group { display: flex; flex-direction: column; gap: 10px; }
+.mobile-panel .nav-sub { font: 500 1.05rem var(--body); font-style: italic; opacity: .6; padding-left: 20px; }
 .mobile-panel a.active { color: var(--azulejo); }
 .mobile-panel .panel-cta { display: inline-block; margin-top: 8px; font: 600 .78rem var(--body); text-transform: uppercase; letter-spacing: .1em; background: var(--khaki); color: var(--ink); padding: 14px 24px; width: fit-content; }
 .mobile-panel .ps-lang-bar { display: flex; gap: 14px; margin-top: 18px; }
@@ -132,7 +134,7 @@ footer { background: #0D1615; color: rgba(235,238,230,.55); padding: 64px var(--
     <a class="wordmark" href="index.html">Permanent Summer</a>
   </div>
   <div class="nav-right">
-    <a class="nav-icon" href="https://whatsapp.com/dl/" target="_blank" rel="noopener" aria-label="WhatsApp">
+    <a class="nav-icon" href="https://wa.me/351924477353" target="_blank" rel="noopener" aria-label="WhatsApp">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12c0 1.85.5 3.58 1.37 5.07L2 22l5.09-1.33A9.94 9.94 0 0012 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm5.01 14.16c-.21.58-1.22 1.12-1.67 1.19-.45.07-.99.1-1.59-.1-.37-.12-.84-.28-1.44-.55-2.52-1.09-4.17-3.62-4.3-3.79-.13-.17-1.05-1.39-1.05-2.65s.67-1.88.9-2.14c.24-.26.52-.32.69-.32h.5c.16 0 .38-.06.59.45.21.52.73 1.77.79 1.9.06.13.1.28.02.45-.08.17-.12.27-.24.42-.12.14-.25.32-.36.43-.12.12-.24.25-.1.49.14.24.62 1.02 1.33 1.65.91.81 1.68 1.06 1.92 1.17.24.12.38.1.52-.06.14-.16.59-.69.75-.93.16-.24.32-.2.54-.12.22.08 1.4.66 1.64.78.24.12.4.17.46.27.06.1.06.58-.15 1.16z"/></svg>
     </a>
     <span class="nav-divider"></span>
@@ -148,9 +150,11 @@ footer { background: #0D1615; color: rgba(235,238,230,.55); padding: 64px var(--
 <div class="mobile-panel" id="mobile-panel">
   <button class="mobile-close" id="mobile-close" aria-label="Close menu">&times;</button>
   <a href="index.html#region">The Region</a>
-  <a href="index.html#apartments">Apartments</a>
-  <a href="index.html#oceanside">Ocean Side</a>
-  <a href="index.html#beachside">Beachside</a>
+  <div class="nav-group">
+    <a href="index.html#apartments">Apartments</a>
+    <a href="index.html#oceanside" class="nav-sub">Ocean Side</a>
+    <a href="index.html#beachside" class="nav-sub">Beachside</a>
+  </div>
   <a href="index.html#reviews">Reviews</a>
   <a href="index.html#instagram">Instagram</a>
   <a href="index.html#contact">Contact</a>
