@@ -416,6 +416,7 @@ footer { background: #0D1615; color: rgba(235,238,230,.55); padding: 64px var(--
     <div class="widget-frame">
       <iframe
         class="booking-iframe"
+        id="booking-iframe"
         src="https://summerflow.permanentsummer.co/book.html?ws=7c5d4583-de11-43f1-bb71-658aaf591f4e"
         title="Permanent Summer — Book Direct"
         loading="lazy">
@@ -494,6 +495,25 @@ footer { background: #0D1615; color: rgba(235,238,230,.55); padding: 64px var(--
   }
   apply(localStorage.getItem(LS) || 'pt');
   document.addEventListener('click', e => { const b = e.target.closest('.ps-lang-btn'); if (b) apply(b.dataset.setlang || 'pt'); });
+})();
+
+/* ─── FORWARD SEARCH PARAMS INTO THE SUMMERFLOW IFRAME ────────────────
+   If the homepage search bar was used, the dates/guests/apartment chosen
+   there arrive here as query params on book.html itself. We forward them
+   onto the SummerFlow iframe URL so the guest doesn't have to re-enter
+   dates. NOTE: "checkin"/"checkout"/"guests" are best-guess param names —
+   confirm with the SummerFlow app what it actually expects, and adjust
+   here if the names differ. */
+(function () {
+  const iframe = document.getElementById('booking-iframe');
+  if (!iframe) return;
+  const incoming = new URLSearchParams(window.location.search);
+  const base = new URL(iframe.src);
+  ['checkin', 'checkout', 'guests', 'apt'].forEach(key => {
+    const val = incoming.get(key);
+    if (val) base.searchParams.set(key, val);
+  });
+  iframe.src = base.toString();
 })();
 </script>
 </body>
