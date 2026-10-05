@@ -292,14 +292,21 @@ p.lede { font-size: 1.02rem; line-height: 1.75; color: var(--ink-soft); max-widt
 .contact-listings-label { font: 500 .7rem var(--body); text-transform: uppercase; letter-spacing: .1em; color: rgba(235,238,230,.5); }
 .listing-group { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
 .listing-group-name { font: 600 .85rem var(--disp); font-style: italic; color: var(--khaki); min-width: 78px; }
-.listing-link { display: inline-flex; align-items: center; gap: 10px; padding: 11px 16px; border: 1px solid rgba(235,238,230,.26); color: var(--stone); transition: border-color .25s, background .25s, color .25s; }
-.listing-link:hover { border-color: var(--khaki); background: rgba(255,255,255,.04); color: #fff; }
-.ll-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
-.ll-word { font: 600 .92rem var(--body); letter-spacing: -.01em; }
+.listing-link {
+  position: relative; z-index: 2; cursor: pointer; text-decoration: none; -webkit-tap-highlight-color: transparent;
+  display: inline-flex; align-items: center; gap: 11px; padding: 13px 22px; min-height: 46px;
+  border: 1px solid rgba(235,238,230,.3); border-radius: 999px; background: rgba(255,255,255,.05);
+  color: var(--stone); transition: border-color .25s, background .25s, color .25s, transform .25s;
+}
+.listing-link:hover { border-color: var(--khaki); background: rgba(255,255,255,.1); color: #fff; transform: translateY(-1px); }
+.ll-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.ll-word { font: 600 .94rem var(--body); letter-spacing: -.01em; }
 .ll-booking span { font-weight: 400; opacity: .6; }
-.ll-airbnb { font-weight: 700; letter-spacing: -.02em; font-size: 1rem; }
-.ll-arrow { width: 14px; height: 14px; opacity: .55; transition: opacity .25s, transform .25s; }
+.ll-airbnb { font-weight: 700; letter-spacing: -.02em; font-size: 1.02rem; }
+.ll-arrow { width: 14px; height: 14px; opacity: .55; transition: opacity .25s, transform .25s; pointer-events: none; }
 .listing-link:hover .ll-arrow { opacity: 1; transform: translate(2px,-2px); }
+.listing-link * { pointer-events: none; }
+.listing-group { position: relative; z-index: 2; }
 .contact-link { display: inline-flex; align-items: center; gap: 10px; font-size: .94rem; border-bottom: 1px solid rgba(235,238,230,.3); padding-bottom: 3px; transition: border-color .2s, color .2s; }
 .contact-link:hover { border-color: var(--khaki); color: var(--khaki); }
 .contact-link svg { width: 17px; height: 17px; }
