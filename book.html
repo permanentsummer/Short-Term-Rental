@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Book Direct — Permanent Summer</title>
-<meta name="description" content="Check availability and book directly with Permanent Summer, no platform commissions.">
+<title>Permanent Summer — Altura, Algarve</title>
+<meta name="description" content="Two holiday apartments in Altura, Eastern Algarve. Oceanside & Beachside — steps from the sand, at home in Portugal.">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -104,9 +104,11 @@ img { display: block; max-width: 100%; }
   background: var(--paper); display: flex; align-items: stretch; box-shadow: 0 18px 40px rgba(20,33,31,.28);
   max-width: 760px; width: 100%; flex-wrap: wrap;
 }
-.search-field { flex: 1; min-width: 150px; padding: 20px 24px; border-right: 1px solid var(--line); position: relative; }
+.search-field { flex: 1; min-width: 150px; padding: 18px 22px; border-right: 1px solid var(--line); position: relative; display: flex; align-items: center; gap: 14px; }
 .search-field:last-of-type { border-right: 0; }
-.search-field label { display: block; font: 500 .66rem var(--body); text-transform: uppercase; letter-spacing: .1em; color: var(--ink-soft); margin-bottom: 6px; }
+.field-icon { flex-shrink: 0; color: var(--ink-soft); display: none; }
+.field-text { flex: 1; min-width: 0; }
+.search-field label { display: block; font: 500 .66rem var(--body); text-transform: uppercase; letter-spacing: .1em; color: var(--ink-soft); margin-bottom: 4px; }
 .search-field select, .search-field input {
   border: 0; outline: 0; font: 400 .95rem var(--body); color: var(--ink); width: 100%; background: transparent;
 }
@@ -166,20 +168,6 @@ p.lede { font-size: 1.02rem; line-height: 1.75; color: var(--ink-soft); max-widt
 .acc-icon { font: 400 1.1rem var(--disp); color: var(--khaki-d); transition: transform .25s; flex-shrink: 0; }
 .accordion details[open] .acc-icon { transform: rotate(45deg); }
 .accordion details p { padding-bottom: 20px; color: var(--ink-soft); font-size: .96rem; line-height: 1.7; max-width: 56ch; }
-
-.booking-hero { padding: 160px var(--gut) 20px; }
-.widget-frame { background: var(--paper); border: 1px solid var(--line); padding: 0; overflow: hidden; }
-.booking-iframe { width: 100%; height: 820px; border: 0; display: block; }
-@media (max-width: 600px) { .booking-iframe { height: 900px; } }
-.apt-picker { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
-.apt-picker-card {
-  display: flex; flex-direction: column; gap: 4px; align-items: center; text-align: center;
-  padding: 30px; background: var(--paper); border: 1px solid var(--line); transition: border-color .2s;
-}
-.apt-picker-card:hover { border-color: var(--khaki-d); }
-.apt-picker-name { font: 600 1.2rem var(--disp); }
-.apt-picker-loc { color: var(--ink-soft); font-size: .86rem; }
-@media (max-width: 600px) { .apt-picker { grid-template-columns: 1fr; } }
 .accordion details .intro-link { margin-top: 0; margin-bottom: 20px; display: inline-block; }
 .intro-photo { aspect-ratio: 5/4; overflow: hidden; }
 .intro-photo img { width: 100%; height: 100%; object-fit: cover; }
@@ -265,11 +253,6 @@ p.lede { font-size: 1.02rem; line-height: 1.75; color: var(--ink-soft); max-widt
 
 .map-card { position: relative; border: 1px solid var(--line); margin-top: 40px; }
 #so-map { height: 560px; width: 100%; }
-.so-search { position: absolute; right: 14px; top: 14px; z-index: 500; background: var(--paper); border: 1px solid var(--line); display: flex; gap: 8px; align-items: center; padding: 9px 11px; }
-.so-search input { border: 0; outline: 0; font: 400 .88rem var(--body); min-width: 190px; color: var(--ink); background: transparent; }
-.so-search button { border: 0; padding: 7px 12px; cursor: pointer; font: 500 .76rem var(--body); }
-.so-search .go  { background: var(--azulejo); color: #fff; }
-.so-search .clr { background: var(--stone); color: var(--ink); }
 .so-legend { position: absolute; left: 14px; bottom: 14px; z-index: 400; min-width: 210px; background: var(--paper); border: 1px solid var(--line); padding: 12px 14px; font: 400 .78rem var(--body); color: var(--ink); }
 .so-legend .row { display: flex; align-items: center; gap: 9px; margin: 5px 0; }
 .swatch { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
@@ -277,14 +260,20 @@ p.lede { font-size: 1.02rem; line-height: 1.75; color: var(--ink-soft); max-widt
 .popup-title { font: 500 .86rem var(--body); color: var(--ink); }
 .popup-meta { font-size: .74rem; color: var(--ink-soft); margin-top: 2px; }
 
-.review-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 52px 64px; margin-top: 56px; }
-.review { border-top: 1px solid var(--line); padding-top: 26px; }
-.review-quote-mark { display: block; font: 400 2.8rem var(--disp); color: var(--khaki); line-height: .5; margin-bottom: 10px; }
-.review-quote { font: 500 1.12rem/1.65 var(--disp); font-style: italic; color: var(--ink); }
-.review-meta { margin-top: 18px; display: flex; align-items: center; gap: 9px; font: 500 .72rem var(--body); text-transform: uppercase; letter-spacing: .08em; color: var(--ink-soft); }
-.review-meta .plat { color: var(--azulejo); }
-.review-meta .dot { width: 3px; height: 3px; border-radius: 50%; background: var(--line); flex-shrink: 0; }
-@media (max-width: 700px) { .review-grid { grid-template-columns: 1fr; } }
+.review-grid { display: none; }
+
+.review-slideshow { position: relative; max-width: 780px; margin: 40px auto 0; min-height: 3.4em; text-align: center; }
+.review-slide {
+  position: absolute; inset: 0; opacity: 0; visibility: hidden; transition: opacity .6s ease;
+  display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 10px;
+  font: 500 1.1rem/1.6 var(--disp); font-style: italic; color: var(--ink); padding: 0 20px;
+}
+.review-slide.active { opacity: 1; visibility: visible; }
+.review-slide-name { font: 500 .74rem var(--body); font-style: normal; text-transform: uppercase; letter-spacing: .06em; color: var(--ink-soft); }
+.review-dots { display: flex; justify-content: center; gap: 7px; margin-top: 30px; }
+.review-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--line); border: none; cursor: pointer; padding: 0; }
+.review-dot.active { background: var(--khaki-d); }
+@media (max-width: 600px) { .review-slide { font-size: .98rem; } }
 
 .ig-head { display: flex; align-items: baseline; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
 .ig-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-top: 40px; }
@@ -299,6 +288,15 @@ p.lede { font-size: 1.02rem; line-height: 1.75; color: var(--ink-soft); max-widt
 .addr strong { display: block; font: 600 1.05rem var(--disp); color: var(--khaki); margin-top: 20px; }
 .addr div { font-size: .92rem; color: rgba(235,238,230,.78); line-height: 1.7; }
 .contact-links { display: flex; flex-direction: column; gap: 12px; margin-top: 26px; align-items: flex-start; }
+.contact-listings { margin-top: 22px; padding-top: 22px; border-top: 1px solid rgba(235,238,230,.18); display: flex; flex-direction: column; gap: 12px; align-items: flex-start; }
+.contact-listings-label { font: 500 .7rem var(--body); text-transform: uppercase; letter-spacing: .1em; color: rgba(235,238,230,.5); }
+.listing-group { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.listing-group-name { font: 600 .85rem var(--disp); font-style: italic; color: var(--khaki); min-width: 78px; }
+.platform-badge { display: inline-flex; align-items: center; gap: 7px; padding: 9px 14px; font: 600 .72rem var(--body); color: #fff; transition: opacity .2s; border-bottom: none !important; }
+.platform-badge:hover { opacity: .85; }
+.platform-badge svg { width: 15px; height: 15px; flex-shrink: 0; }
+.platform-badge.booking { background: #003580; }
+.platform-badge.airbnb { background: #FF385C; }
 .contact-link { display: inline-flex; align-items: center; gap: 10px; font-size: .94rem; border-bottom: 1px solid rgba(235,238,230,.3); padding-bottom: 3px; transition: border-color .2s, color .2s; }
 .contact-link:hover { border-color: var(--khaki); color: var(--khaki); }
 .contact-link svg { width: 17px; height: 17px; }
@@ -314,9 +312,26 @@ footer { background: #0D1615; color: rgba(235,238,230,.55); padding: 64px var(--
 .footer-bottom { max-width: var(--max); margin: 48px auto 0; padding-top: 22px; border-top: 1px solid rgba(235,238,230,.12); font-size: .78rem; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
 
 /* nav panel (opened by the hamburger at every width) */
-.mobile-panel { display: none; position: fixed; inset: 0; z-index: 950; background: var(--paper); padding: 100px var(--gut) 40px; flex-direction: column; gap: 20px; overflow-y: auto; }
-.mobile-panel.open { display: flex; }
-.mobile-panel a { font: 600 1.5rem var(--disp); color: var(--ink); }
+.mobile-backdrop {
+  display: none; position: fixed; inset: 0; z-index: 940;
+  background: rgba(20,33,31,.45); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+  opacity: 0; transition: opacity .3s ease;
+}
+.mobile-backdrop.open { display: block; opacity: 1; }
+.mobile-panel {
+  display: flex; flex-direction: column; justify-content: space-between;
+  position: fixed; top: 0; left: 0; bottom: 0; z-index: 950;
+  width: min(380px, 86vw); background: var(--paper);
+  padding: 90px 30px 30px; overflow-y: auto;
+  transform: translateX(-100%); transition: transform .35s ease;
+  box-shadow: 0 0 50px rgba(0,0,0,.18);
+}
+.mobile-panel.open { transform: translateX(0); }
+.mobile-panel-nav { display: flex; flex-direction: column; gap: 20px; }
+.mobile-panel-footer { display: flex; flex-direction: column; gap: 16px; padding-top: 26px; margin-top: 26px; border-top: 1px solid var(--line); }
+.mobile-contact { display: flex; flex-direction: column; gap: 9px; }
+.mobile-contact a { font: 400 .86rem var(--body) !important; color: var(--ink-soft) !important; }
+.mobile-panel a { font: 600 1.4rem var(--disp); color: var(--ink); }
 .mobile-panel .nav-group { display: flex; flex-direction: column; gap: 10px; }
 .mobile-panel .nav-sub { font: 500 1.05rem var(--body); font-style: italic; opacity: .6; padding-left: 20px; }
 .mobile-panel .panel-cta {
@@ -325,7 +340,7 @@ footer { background: #0D1615; color: rgba(235,238,230,.55); padding: 64px var(--
 }
 .mobile-panel .ps-lang-bar { display: flex; gap: 14px; margin-top: 18px; }
 .mobile-panel .ps-lang-btn { color: var(--ink); opacity: .55; font-size: .95rem; }
-.mobile-close { position: absolute; top: 26px; right: var(--gut); background: none; border: 0; font-size: 1.8rem; color: var(--ink); cursor: pointer; }
+.mobile-close { position: absolute; top: 26px; right: 26px; background: none; border: 0; font-size: 1.8rem; color: var(--ink); cursor: pointer; }
 
 @media (max-width: 960px) {
   .intro-grid, .host-grid, .contact-grid, .dest-track { grid-template-columns: 1fr !important; gap: 34px !important; }
@@ -336,12 +351,13 @@ footer { background: #0D1615; color: rgba(235,238,230,.55); padding: 64px var(--
   .ig-grid { grid-template-columns: repeat(2, 1fr); }
   .footer-grid { grid-template-columns: 1fr 1fr; }
   .search-bar { flex-direction: column; }
-  .search-field { border-right: 0; border-bottom: 1px solid var(--line); }
+  .search-field { border-right: 0; border-bottom: 1px solid var(--line); padding: 18px 20px; }
+  .field-icon { display: block; }
+  .search-go { padding: 22px; font-size: .84rem; letter-spacing: .16em; }
 }
 
-.gallery-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 6px; }
-@media (max-width: 900px) { .gallery-grid { grid-template-columns: repeat(3, 1fr); } }
-@media (max-width: 480px) { .gallery-grid { grid-template-columns: repeat(2, 1fr); } }
+.gallery-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
+@media (max-width: 700px) { .gallery-grid { grid-template-columns: repeat(2, 1fr); } }
 
 @media (max-width: 640px) {
   .nav-cta, .nav-right .ps-lang-bar { display: none; }
@@ -350,12 +366,12 @@ footer { background: #0D1615; color: rgba(235,238,230,.55); padding: 64px var(--
 </head>
 <body>
 
-<header id="ps-header" class="scrolled">
+<header id="ps-header">
   <div class="nav-left">
     <button class="nav-toggle" id="mobile-open" aria-label="Open menu">
       <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M2 5h16M2 10h16M2 15h16" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
     </button>
-    <a class="wordmark" href="index.html">Permanent Summer</a>
+    <a class="wordmark" href="#top">Permanent Summer</a>
   </div>
   <div class="nav-right">
     <a class="nav-icon" href="https://wa.me/351924477353" target="_blank" rel="noopener" aria-label="WhatsApp">
@@ -371,71 +387,548 @@ footer { background: #0D1615; color: rgba(235,238,230,.55); padding: 64px var(--
   </div>
 </header>
 
+<div class="mobile-backdrop" id="mobile-backdrop"></div>
 <div class="mobile-panel" id="mobile-panel">
   <button class="mobile-close" id="mobile-close" aria-label="Close menu">&times;</button>
-  <a href="index.html#region">The Region</a>
-  <div class="nav-group">
-    <a href="index.html#apartments">Apartments</a>
-    <a href="index.html#oceanside" class="nav-sub">Ocean Side</a>
-    <a href="index.html#beachside" class="nav-sub">Beachside</a>
-  </div>
-  <a href="index.html#reviews">Reviews</a>
-  <a href="index.html#instagram">Instagram</a>
-  <a href="index.html#contact">Contact</a>
-  <a href="blog.html">Blog</a>
-  <a href="book.html" class="panel-cta">Book Direct</a>
-  <div class="ps-lang-bar">
-    <button class="ps-lang-btn" data-setlang="pt" aria-current="true">PT</button>
-    <button class="ps-lang-btn" data-setlang="en">EN</button>
-    <button class="ps-lang-btn" data-setlang="fr">FR</button>
+  <nav class="mobile-panel-nav">
+    <a href="#region">The Region</a>
+    <div class="nav-group">
+      <a href="#apartments">Apartments</a>
+      <a href="#oceanside" class="nav-sub">Ocean Side</a>
+      <a href="#beachside" class="nav-sub">Beachside</a>
+    </div>
+    <a href="#reviews">Reviews</a>
+    <a href="#instagram">Instagram</a>
+    <a href="#contact">Contact</a>
+    <a href="blog.html">Blog</a>
+    <a href="book.html" class="panel-cta">Book Direct</a>
+  </nav>
+  <div class="mobile-panel-footer">
+    <div class="mobile-contact">
+      <a href="https://wa.me/351924477353" target="_blank" rel="noopener">WhatsApp +351 924 477 353</a>
+      <a href="mailto:christopher@permanentsummer.co">christopher@permanentsummer.co</a>
+    </div>
+    <div class="ps-lang-bar">
+      <button class="ps-lang-btn" data-setlang="pt" aria-current="true">PT</button>
+      <button class="ps-lang-btn" data-setlang="en">EN</button>
+      <button class="ps-lang-btn" data-setlang="fr">FR</button>
+    </div>
   </div>
 </div>
 
-<section class="booking-hero ps-scope" data-lang="pt" id="top">
-  <div class="section-inner">
+<section class="hero" id="top">
+  <div class="hero-bg" aria-hidden="true"></div>
+  <div class="hero-inner ps-scope" data-lang="pt">
     <div data-i18n-block="pt">
-      <p class="eyebrow-italic" style="text-align:center;">Reserva direta</p>
-      <h1 class="head" style="text-align:center; margin:0 auto;">Disponibilidade &amp; reserva</h1>
-      <p class="lede" style="text-align:center; margin:14px auto 0; max-width:52ch;">Verifique datas e reserve diretamente connosco através do nosso próprio sistema — sem comissões de plataformas, sem intermediários.</p>
+      <p class="hero-eyebrow">As suas férias de sonho</p>
+      <h1 class="hero-title">Altura</h1>
+      <p class="hero-sub">Dois apartamentos junto ao mar no Algarve, geridos diretamente por nós.</p>
+      <div class="search-bar-wrap">
+        <form class="search-bar" id="search-bar-pt" method="get" action="book.html">
+          <input type="hidden" name="lang" value="pt">
+          <div class="search-field"><svg class="field-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 21s-7-6.1-7-11a7 7 0 0 1 14 0c0 4.9-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg><div class="field-text"><label>Apartamento</label><select name="apt"><option value="all">Ambos</option><option value="ocean">Ocean Side</option><option value="beach">Beachside</option></select></div></div>
+          <div class="search-field date-field">
+            <svg class="field-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg><div class="field-text"><label>Datas</label>
+            <button type="button" class="date-trigger">Selecionar datas</button></div><input type="hidden" name="checkin"><input type="hidden" name="checkout">
+            <div class="date-panel">
+              <div class="date-panel-months"></div>
+              <div class="date-panel-footer"><button type="button" class="date-clear">Limpar datas</button></div>
+            </div>
+          </div>
+          <div class="search-field"><svg class="field-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="9" cy="8" r="3"/><path d="M2 20c0-3.3 3.1-6 7-6s7 2.7 7 6"/><circle cx="17" cy="9" r="2.3"/><path d="M16 14.2c2.6.5 4.5 2.5 5 5.8"/></svg><div class="field-text"><label>Hóspedes</label><select name="guests"><option>1</option><option selected>2</option><option>3</option><option>4</option></select></div></div>
+          <button type="submit" class="search-go">Pesquisar</button>
+        </form>
+        <p class="hero-trust">Avaliações <strong>excelentes</strong> · Booking.com &amp; Airbnb</p>
+      </div>
     </div>
     <div data-i18n-block="en">
-      <p class="eyebrow-italic" style="text-align:center;">Direct booking</p>
-      <h1 class="head" style="text-align:center; margin:0 auto;">Availability &amp; booking</h1>
-      <p class="lede" style="text-align:center; margin:14px auto 0; max-width:52ch;">Check dates and book directly with us through our own system — no platform commissions, no middlemen.</p>
+      <p class="hero-eyebrow">Your dream getaway</p>
+      <h1 class="hero-title">Altura</h1>
+      <p class="hero-sub">Two seaside apartments in the Algarve, run directly by us.</p>
+      <div class="search-bar-wrap">
+        <form class="search-bar" id="search-bar-en" method="get" action="book.html">
+          <input type="hidden" name="lang" value="en">
+          <div class="search-field"><svg class="field-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 21s-7-6.1-7-11a7 7 0 0 1 14 0c0 4.9-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg><div class="field-text"><label>Apartment</label><select name="apt"><option value="all">Either</option><option value="ocean">Ocean Side</option><option value="beach">Beachside</option></select></div></div>
+          <div class="search-field date-field">
+            <svg class="field-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg><div class="field-text"><label>Dates</label>
+            <button type="button" class="date-trigger">Select dates</button></div><input type="hidden" name="checkin"><input type="hidden" name="checkout">
+            <div class="date-panel">
+              <div class="date-panel-months"></div>
+              <div class="date-panel-footer"><button type="button" class="date-clear">Clear dates</button></div>
+            </div>
+          </div>
+          <div class="search-field"><svg class="field-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="9" cy="8" r="3"/><path d="M2 20c0-3.3 3.1-6 7-6s7 2.7 7 6"/><circle cx="17" cy="9" r="2.3"/><path d="M16 14.2c2.6.5 4.5 2.5 5 5.8"/></svg><div class="field-text"><label>Guests</label><select name="guests"><option>1</option><option selected>2</option><option>3</option><option>4</option></select></div></div>
+          <button type="submit" class="search-go">Search</button>
+        </form>
+        <p class="hero-trust"><strong>Excellent</strong> reviews · Booking.com &amp; Airbnb</p>
+      </div>
     </div>
     <div data-i18n-block="fr">
-      <p class="eyebrow-italic" style="text-align:center;">Réservation directe</p>
-      <h1 class="head" style="text-align:center; margin:0 auto;">Disponibilité &amp; réservation</h1>
-      <p class="lede" style="text-align:center; margin:14px auto 0; max-width:52ch;">Vérifiez les dates et réservez directement avec nous via notre propre système — sans commission de plateforme, sans intermédiaire.</p>
+      <p class="hero-eyebrow">Vos vacances de rêve</p>
+      <h1 class="hero-title">Altura</h1>
+      <p class="hero-sub">Deux appartements en bord de mer en Algarve, gérés directement par nous.</p>
+      <div class="search-bar-wrap">
+        <form class="search-bar" id="search-bar-fr" method="get" action="book.html">
+          <input type="hidden" name="lang" value="fr">
+          <div class="search-field"><svg class="field-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 21s-7-6.1-7-11a7 7 0 0 1 14 0c0 4.9-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg><div class="field-text"><label>Appartement</label><select name="apt"><option value="all">Les deux</option><option value="ocean">Ocean Side</option><option value="beach">Beachside</option></select></div></div>
+          <div class="search-field date-field">
+            <svg class="field-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg><div class="field-text"><label>Dates</label>
+            <button type="button" class="date-trigger">Sélectionner les dates</button></div><input type="hidden" name="checkin"><input type="hidden" name="checkout">
+            <div class="date-panel">
+              <div class="date-panel-months"></div>
+              <div class="date-panel-footer"><button type="button" class="date-clear">Effacer les dates</button></div>
+            </div>
+          </div>
+          <div class="search-field"><svg class="field-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="9" cy="8" r="3"/><path d="M2 20c0-3.3 3.1-6 7-6s7 2.7 7 6"/><circle cx="17" cy="9" r="2.3"/><path d="M16 14.2c2.6.5 4.5 2.5 5 5.8"/></svg><div class="field-text"><label>Voyageurs</label><select name="guests"><option>1</option><option selected>2</option><option>3</option><option>4</option></select></div></div>
+          <button type="submit" class="search-go">Rechercher</button>
+        </form>
+        <p class="hero-trust">Avis <strong>excellents</strong> · Booking.com &amp; Airbnb</p>
+      </div>
     </div>
   </div>
 </section>
 
-<section class="section" style="padding-top:40px; padding-bottom:80px;">
-  <div class="section-inner">
-    <div class="widget-frame">
-      <iframe
-        class="booking-iframe"
-        id="booking-iframe"
-        src="https://summerflow.permanentsummer.co/book.html?ws=7c5d4583-de11-43f1-bb71-658aaf591f4e"
-        title="Permanent Summer — Book Direct"
-        loading="lazy">
-      </iframe>
+<section class="section" style="padding-top:172px;" id="apartments-intro">
+  <div class="section-inner intro-grid ps-scope" data-lang="pt">
+    <div data-i18n-block="pt">
+      <div class="intro-copy">
+        <p class="eyebrow-italic">um algarve</p>
+        <h2 class="head">Genuíno e por descobrir</h2>
+        <p class="lede">No coração do Algarve oriental, entre a Ria Formosa e o rio Guadiana, encontra-se um Algarve que os guias turísticos esquecem — vilas que nunca se vestiram para turistas, praias sem filas de espreguiçadeiras, sabores que vêm diretamente do mar e da terra. Menos multidões, mais carácter.</p>
+        <div class="accordion">
+          <details>
+            <summary><span>Porquê o Algarve oriental?</span><span class="acc-icon">+</span></summary>
+            <p>Longe da azáfama do Algarve central, o Sotavento guarda vilas piscatórias, sapais e fronteiras tranquilas. Cacela Velha, Castro Marim e Vila Real de Santo António continuam a viver ao seu próprio ritmo — não ao da época alta.</p>
+          </details>
+          <details>
+            <summary><span>Dois apartamentos, sempre diretos</span><span class="acc-icon">+</span></summary>
+            <p>Dois apartamentos independentes em Altura, geridos diretamente por nós — sem intermediários, sem surpresas. Cada um pensado para até 4 hóspedes, a poucos passos do mar.</p>
+            <a class="intro-link" href="#apartments">Ver os dois apartamentos</a>
+          </details>
+        </div>
+      </div>
     </div>
+    <div data-i18n-block="en">
+      <div class="intro-copy">
+        <p class="eyebrow-italic">an algarve</p>
+        <h2 class="head">Genuine and undiscovered</h2>
+        <p class="lede">At the heart of the Eastern Algarve, between the Ria Formosa lagoon and the Guadiana river, sits an Algarve the guidebooks tend to skip — villages that never dressed up for tourists, beaches without rows of loungers, flavours pulled straight from the sea and the land. Fewer crowds, more character.</p>
+        <div class="accordion">
+          <details>
+            <summary><span>Why the Eastern Algarve?</span><span class="acc-icon">+</span></summary>
+            <p>Away from the bustle of the central Algarve, the Sotavento holds onto fishing villages, salt marshes, and quiet borders. Cacela Velha, Castro Marim, and Vila Real de Santo António still move at their own pace — not the season's.</p>
+          </details>
+          <details>
+            <summary><span>Two apartments, always direct</span><span class="acc-icon">+</span></summary>
+            <p>Two independent apartments in Altura, run directly by us — no intermediaries, no surprises. Each set up for up to 4 guests, a short walk from the sea.</p>
+            <a class="intro-link" href="#apartments">See both apartments</a>
+          </details>
+        </div>
+      </div>
+    </div>
+    <div data-i18n-block="fr">
+      <div class="intro-copy">
+        <p class="eyebrow-italic">un algarve</p>
+        <h2 class="head">Authentique et méconnu</h2>
+        <p class="lede">Au cœur de l'Algarve oriental, entre la lagune de la Ria Formosa et le fleuve Guadiana, se trouve un Algarve que les guides touristiques oublient — des villages qui ne se sont jamais parés pour les touristes, des plages sans rangées de transats, des saveurs venues directement de la mer et de la terre. Moins de monde, plus de caractère.</p>
+        <div class="accordion">
+          <details>
+            <summary><span>Pourquoi l'Algarve oriental ?</span><span class="acc-icon">+</span></summary>
+            <p>Loin de l'agitation de l'Algarve central, le Sotavento conserve villages de pêcheurs, marais salants et frontières tranquilles. Cacela Velha, Castro Marim et Vila Real de Santo António vivent encore à leur propre rythme — pas celui de la haute saison.</p>
+          </details>
+          <details>
+            <summary><span>Deux appartements, toujours en direct</span><span class="acc-icon">+</span></summary>
+            <p>Deux appartements indépendants à Altura, gérés directement par nous — sans intermédiaire, sans surprise. Chacun pensé pour 4 personnes, à deux pas de la mer.</p>
+            <a class="intro-link" href="#apartments">Voir les deux appartements</a>
+          </details>
+        </div>
+      </div>
+    </div>
+    <div class="intro-photo"><img src="assets/images/region/village-street.jpg" alt="A village street in the Eastern Algarve" loading="lazy"></div>
   </div>
 </section>
 
-<section class="section section--stone" style="padding-top:70px; padding-bottom:80px;">
+<section class="section section--stone">
   <div class="section-inner ps-scope" data-lang="pt">
-    <div class="apt-picker">
-      <a class="apt-picker-card" href="index.html#oceanside">
-        <span class="apt-picker-name">Ocean Side</span>
-        <span class="apt-picker-loc">Altura, Algarve</span>
+    <div data-i18n-block="pt" style="text-align:center;"><h2 class="head">Porquê ficar connosco</h2></div>
+    <div data-i18n-block="en" style="text-align:center;"><h2 class="head">Why stay with us</h2></div>
+    <div data-i18n-block="fr" style="text-align:center;"><h2 class="head">Pourquoi nous choisir</h2></div>
+    <div class="feat-row">
+      <div>
+        <div class="feat-icon"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 18c1.5-2 3-2 4.5 0s3 2 4.5 0 3-2 4.5 0 3 2 4.5 0"/><path d="M2 12c1.5-2 3-2 4.5 0s3 2 4.5 0 3-2 4.5 0 3 2 4.5 0"/></svg></div>
+        <div class="feat-title" data-i18n-block="pt">Junto ao mar</div>
+        <div class="feat-title" data-i18n-block="en">By the sea</div>
+        <div class="feat-title" data-i18n-block="fr">En bord de mer</div>
+        <p class="feat-text" data-i18n-block="pt">800m e 300m da Praia da Alagoa — a pé, sem depender de carro.</p>
+        <p class="feat-text" data-i18n-block="en">800m and 300m from Praia da Alagoa — walkable, no car needed.</p>
+        <p class="feat-text" data-i18n-block="fr">À 800m et 300m de Praia da Alagoa — à pied, sans voiture.</p>
+      </div>
+      <div>
+        <div class="feat-icon"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 21V9l9-6 9 6v12"/><path d="M9 21v-7h6v7"/></svg></div>
+        <div class="feat-title" data-i18n-block="pt">Como em casa</div>
+        <div class="feat-title" data-i18n-block="en">Like home</div>
+        <div class="feat-title" data-i18n-block="fr">Comme à la maison</div>
+        <p class="feat-text" data-i18n-block="pt">Totalmente equipados — cozinha, máquina de café, lavandaria.</p>
+        <p class="feat-text" data-i18n-block="en">Fully equipped — kitchen, espresso machine, laundry.</p>
+        <p class="feat-text" data-i18n-block="fr">Entièrement équipés — cuisine, machine à expresso, buanderie.</p>
+      </div>
+      <div>
+        <div class="feat-icon"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-7 8-7s8 3 8 7"/></svg></div>
+        <div class="feat-title" data-i18n-block="pt">Anfitrião local</div>
+        <div class="feat-title" data-i18n-block="en">Local host</div>
+        <div class="feat-title" data-i18n-block="fr">Hôte local</div>
+        <p class="feat-text" data-i18n-block="pt">Contacto direto connosco — sem plataformas, sem esperas.</p>
+        <p class="feat-text" data-i18n-block="en">Direct contact with us — no platforms, no waiting.</p>
+        <p class="feat-text" data-i18n-block="fr">Contact direct avec nous — pas de plateforme, pas d'attente.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-inner host-grid ps-scope" data-lang="pt">
+    <div class="host-photo"><img src="assets/images/region/vases.jpg" alt="Local Algarve terracotta" loading="lazy"></div>
+    <div>
+      <div data-i18n-block="pt">
+        <p class="eyebrow-italic">no terreno</p>
+        <h2 class="head">Geridos por nós, não por uma plataforma</h2>
+        <p class="lede" style="margin-top:16px;">Vivemos no Algarve e conhecemos cada canto de Altura. Preparamos, limpamos e damos as boas-vindas pessoalmente — as recomendações de restaurantes e praias vêm de quem lá vive, não de um guia genérico.</p>
+      </div>
+      <div data-i18n-block="en">
+        <p class="eyebrow-italic">on the ground</p>
+        <h2 class="head">Run by us, not a platform</h2>
+        <p class="lede" style="margin-top:16px;">We live in the Algarve and know every corner of Altura. We prepare, clean, and welcome guests ourselves — restaurant and beach tips come from people who actually live there, not a generic guide.</p>
+      </div>
+      <div data-i18n-block="fr">
+        <p class="eyebrow-italic">sur le terrain</p>
+        <h2 class="head">Gérés par nous, pas par une plateforme</h2>
+        <p class="lede" style="margin-top:16px;">Nous vivons en Algarve et connaissons chaque recoin d'Altura. Nous préparons, nettoyons et accueillons nous-mêmes — nos conseils viennent de gens qui vivent ici, pas d'un guide générique.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section--stone" id="apartments">
+  <div class="section-inner ps-scope" data-lang="pt">
+    <div class="dest-head">
+      <div data-i18n-block="pt"><h2 class="head">Descubra os apartamentos</h2></div>
+      <div data-i18n-block="en"><h2 class="head">Discover the apartments</h2></div>
+      <div data-i18n-block="fr"><h2 class="head">Découvrez les appartements</h2></div>
+    </div>
+    <div class="dest-track">
+      <a class="dest-card" href="#oceanside">
+        <div class="dest-photo"><img src="assets/images/oceanside/bedroom-1.jpg" alt="Ocean Side" loading="lazy"></div>
+        <div class="dest-name">Ocean Side</div>
+        <div class="dest-loc">Altura, Algarve</div>
+        <div class="dest-specs" data-i18n-block="pt">4 hóspedes · 1 quarto · varanda vista mar</div>
+        <div class="dest-specs" data-i18n-block="en">4 guests · 1 bedroom · sea-view balcony</div>
+        <div class="dest-specs" data-i18n-block="fr">4 pers. · 1 chambre · balcon vue mer</div>
+        <div class="dest-cta" data-i18n-block="pt">Ver detalhes</div>
+        <div class="dest-cta" data-i18n-block="en">See details</div>
+        <div class="dest-cta" data-i18n-block="fr">Voir les détails</div>
       </a>
-      <a class="apt-picker-card" href="index.html#beachside">
-        <span class="apt-picker-name">Beachside</span>
-        <span class="apt-picker-loc">Altura, Algarve</span>
+      <a class="dest-card" href="#beachside">
+        <div class="dest-photo"><img src="assets/images/beachside/IMG_9387_2.jpg" alt="Beachside" loading="lazy"></div>
+        <div class="dest-name">Beachside</div>
+        <div class="dest-loc">Altura, Algarve</div>
+        <div class="dest-specs" data-i18n-block="pt">4 hóspedes · 1 quarto · varanda vista mar</div>
+        <div class="dest-specs" data-i18n-block="en">4 guests · 1 bedroom · sea-view balcony</div>
+        <div class="dest-specs" data-i18n-block="fr">4 pers. · 1 chambre · balcon vue mer</div>
+        <div class="dest-cta" data-i18n-block="pt">Ver detalhes</div>
+        <div class="dest-cta" data-i18n-block="en">See details</div>
+        <div class="dest-cta" data-i18n-block="fr">Voir les détails</div>
       </a>
+    </div>
+  </div>
+</section>
+
+<section class="section apt-detail" id="oceanside">
+  <div class="section-inner apt-detail-grid ps-scope" data-lang="pt">
+    <div class="carousel" id="carousel-ocean">
+      <div class="carousel-track" id="ocean-track">
+        <div class="carousel-slide"><img src="assets/images/oceanside/bedroom-1.jpg" alt="Ocean Side bedroom" loading="lazy"></div>
+        <div class="carousel-slide"><img src="assets/images/oceanside/bedroom-2.jpg" alt="Ocean Side bed detail" loading="lazy"></div>
+        <div class="carousel-slide"><img src="assets/images/oceanside/bedroom-balcony.jpg" alt="Ocean Side bedroom with balcony access" loading="lazy"></div>
+        <div class="carousel-slide"><img src="assets/images/oceanside/living-room-1.jpg" alt="Ocean Side living room" loading="lazy"></div>
+        <div class="carousel-slide"><img src="assets/images/oceanside/living-room-2.jpg" alt="Ocean Side living room corner" loading="lazy"></div>
+        <div class="carousel-slide"><img src="assets/images/oceanside/dining.jpg" alt="Ocean Side dining table" loading="lazy"></div>
+        <div class="carousel-slide"><img src="assets/images/oceanside/balcony-view.jpg" alt="Ocean Side balcony with sea glimpse" loading="lazy"></div>
+        <div class="carousel-slide"><img src="assets/images/oceanside/balcony-nook.jpg" alt="Ocean Side balcony seating nook" loading="lazy"></div>
+        <div class="carousel-slide"><img src="assets/images/oceanside/balcony-bbq.jpg" alt="Ocean Side balcony grill" loading="lazy"></div>
+        <div class="carousel-slide"><img src="assets/images/oceanside/kitchen.jpg" alt="Ocean Side kitchen" loading="lazy"></div>
+        <div class="carousel-slide"><img src="assets/images/oceanside/bathroom-1.jpg" alt="Ocean Side bathroom" loading="lazy"></div>
+        <div class="carousel-slide"><img src="assets/images/oceanside/bathroom-2.jpg" alt="Ocean Side bathroom sink" loading="lazy"></div>
+        <div class="carousel-slide"><img src="assets/images/oceanside/bathroom-detail.jpg" alt="Ocean Side bathroom detail" loading="lazy"></div>
+        <div class="carousel-slide"><img src="assets/images/oceanside/desk-nook.jpg" alt="Ocean Side desk nook and closet" loading="lazy"></div>
+        <div class="carousel-slide"><img src="assets/images/oceanside/desk-detail.jpg" alt="Ocean Side desk detail" loading="lazy"></div>
+        <div class="carousel-slide"><img src="assets/images/oceanside/towels.jpg" alt="Ocean Side towels" loading="lazy"></div>
+        <div class="carousel-slide"><img src="assets/images/oceanside/coffee-tray.jpg" alt="Ocean Side coffee and tea tray" loading="lazy"></div>
+        <div class="carousel-slide"><img src="assets/images/oceanside/decor-1.jpg" alt="Ocean Side decor detail" loading="lazy"></div>
+        <div class="carousel-slide"><img src="assets/images/oceanside/decor-2.jpg" alt="Ocean Side decor detail" loading="lazy"></div>
+        <div class="carousel-slide"><img src="assets/images/oceanside/archway.jpg" alt="Ocean Side entryway" loading="lazy"></div>
+      </div>
+      <button class="carousel-btn prev" aria-label="Previous">&#8249;</button>
+      <button class="carousel-btn next" aria-label="Next">&#8250;</button>
+      <div class="carousel-dots" id="ocean-dots"></div>
+    </div>
+    <div>
+      <div data-i18n-block="pt">
+        <h3 class="apt-title">Ocean Side</h3>
+        <p class="apt-tag">Praceta José Saramago · 800m da praia</p>
+        <p class="apt-desc">Luminoso e acolhedor, com varanda voltada ao mar. Até 4 hóspedes num quarto de casal e sofá-cama, com acesso por elevador.</p>
+        <ul class="apt-amenities">
+          <li>800m da Praia da Alagoa</li><li>Ar condicionado</li><li>TV e Wi-Fi</li><li>Frigorífico e congelador</li>
+          <li>Micro-ondas</li><li>Máquina de café expresso</li><li>Máquina de lavar roupa e loiça</li><li>Varanda com vista de mar</li>
+          <li>Acesso por elevador</li><li>Estacionamento gratuito próximo</li>
+        </ul>
+        <div class="apt-actions"><a class="btn-solid" href="book.html">Reservar agora</a></div>
+      </div>
+      <div data-i18n-block="en">
+        <h3 class="apt-title">Ocean Side</h3>
+        <p class="apt-tag">Praceta José Saramago · 800m from the beach</p>
+        <p class="apt-desc">Bright and welcoming, with a sea-facing balcony. Sleeps up to 4 in one double bedroom plus a sofa bed, with elevator access.</p>
+        <ul class="apt-amenities">
+          <li>800m from Praia da Alagoa</li><li>Air conditioning</li><li>TV &amp; Wi-Fi</li><li>Refrigerator &amp; freezer</li>
+          <li>Microwave</li><li>Espresso machine</li><li>Washing machine &amp; dishwasher</li><li>Balcony with sea view</li>
+          <li>Elevator access</li><li>Free parking nearby</li>
+        </ul>
+        <div class="apt-actions"><a class="btn-solid" href="book.html">Reserve now</a></div>
+      </div>
+      <div data-i18n-block="fr">
+        <h3 class="apt-title">Ocean Side</h3>
+        <p class="apt-tag">Praceta José Saramago · à 800m de la plage</p>
+        <p class="apt-desc">Clair et accueillant, avec balcon vue mer. Jusqu'à 4 personnes en chambre double et canapé-lit, accès par ascenseur.</p>
+        <ul class="apt-amenities">
+          <li>À 800m de Praia da Alagoa</li><li>Climatisation</li><li>TV &amp; Wi-Fi</li><li>Réfrigérateur &amp; congélateur</li>
+          <li>Micro-ondes</li><li>Machine à expresso</li><li>Lave-linge &amp; lave-vaisselle</li><li>Balcon avec vue mer</li>
+          <li>Accès par ascenseur</li><li>Parking gratuit à proximité</li>
+        </ul>
+        <div class="apt-actions"><a class="btn-solid" href="book.html">Réserver maintenant</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section--stone apt-detail reverse" id="beachside">
+  <div class="section-inner apt-detail-grid ps-scope" data-lang="pt">
+    <div class="carousel" id="carousel-beach">
+      <div class="carousel-track" id="beach-track">
+        <div class="carousel-slide"><img src="assets/images/beachside/IMG_9387_2.jpg" alt="Beachside bedroom" loading="lazy"></div>
+        <div class="carousel-slide"><img src="assets/images/beachside/IMG_9398.jpg" alt="Beachside bedroom detail" loading="lazy"></div>
+        <div class="carousel-slide"><img src="assets/images/beachside/IMG_9397.jpg" alt="Beachside bedroom" loading="lazy"></div>
+        <div class="carousel-slide"><img src="assets/images/beachside/livingroom.jpg" alt="Beachside living room" loading="lazy"></div>
+        <div class="carousel-slide"><img src="assets/images/beachside/bedroom2.jpg" alt="Beachside second bedroom" loading="lazy"></div>
+        <div class="carousel-slide"><img src="assets/images/beachside/IMG_3707_2.jpg" alt="Beachside kitchen and dining" loading="lazy"></div>
+        <div class="carousel-slide"><img src="assets/images/beachside/IMG_0704.jpg" alt="Beachside bathroom" loading="lazy"></div>
+        <div class="carousel-slide"><img src="assets/images/beachside/IMG_0713.jpg" alt="Beachside balcony" loading="lazy"></div>
+        <div class="carousel-slide"><img src="assets/images/beachside/IMG_0716.jpg" alt="Beachside sea view from balcony" loading="lazy"></div>
+      </div>
+      <button class="carousel-btn prev" aria-label="Previous">&#8249;</button>
+      <button class="carousel-btn next" aria-label="Next">&#8250;</button>
+      <div class="carousel-dots" id="beach-dots"></div>
+    </div>
+    <div>
+      <div data-i18n-block="pt">
+        <h3 class="apt-title">Beachside</h3>
+        <p class="apt-tag">Rua da Alagoa · 300m da praia</p>
+        <p class="apt-desc">Localização central, a passos de tudo em Altura. Até 4 hóspedes, com varanda voltada ao mar. 3.º andar, sem elevador.</p>
+        <ul class="apt-amenities">
+          <li>300m da Praia da Alagoa</li><li>Ar condicionado</li><li>TV e Wi-Fi</li><li>Frigorífico e congelador</li>
+          <li>Micro-ondas</li><li>Máquina de café expresso</li><li>Máquina de lavar roupa e loiça</li><li>Varanda com vista de mar</li>
+          <li>Estacionamento gratuito próximo</li><li>3.º andar — sem elevador</li>
+        </ul>
+        <div class="apt-actions"><a class="btn-solid" href="book.html">Reservar agora</a></div>
+      </div>
+      <div data-i18n-block="en">
+        <h3 class="apt-title">Beachside</h3>
+        <p class="apt-tag">Rua da Alagoa · 300m from the beach</p>
+        <p class="apt-desc">Centrally located, steps from everything in Altura. Sleeps up to 4, sea-facing balcony. 3rd floor, no elevator.</p>
+        <ul class="apt-amenities">
+          <li>300m from Praia da Alagoa</li><li>Air conditioning</li><li>TV &amp; Wi-Fi</li><li>Refrigerator &amp; freezer</li>
+          <li>Microwave</li><li>Espresso machine</li><li>Washing machine &amp; dishwasher</li><li>Balcony with sea view</li>
+          <li>Free parking nearby</li><li>3rd floor — no elevator</li>
+        </ul>
+        <div class="apt-actions"><a class="btn-solid" href="book.html">Reserve now</a></div>
+      </div>
+      <div data-i18n-block="fr">
+        <h3 class="apt-title">Beachside</h3>
+        <p class="apt-tag">Rua da Alagoa · à 300m de la plage</p>
+        <p class="apt-desc">Emplacement central, tout à pied à Altura. Jusqu'à 4 personnes, balcon vue mer. 3ᵉ étage, sans ascenseur.</p>
+        <ul class="apt-amenities">
+          <li>À 300m de Praia da Alagoa</li><li>Climatisation</li><li>TV &amp; Wi-Fi</li><li>Réfrigérateur &amp; congélateur</li>
+          <li>Micro-ondes</li><li>Machine à expresso</li><li>Lave-linge &amp; lave-vaisselle</li><li>Balcon avec vue mer</li>
+          <li>Parking gratuit à proximité</li><li>3ᵉ étage — sans ascenseur</li>
+        </ul>
+        <div class="apt-actions"><a class="btn-solid" href="book.html">Réserver maintenant</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="region">
+  <div class="section-inner intro-grid ps-scope" data-lang="pt">
+    <div data-i18n-block="pt">
+      <div class="intro-copy">
+        <p class="eyebrow-italic">a região</p>
+        <h2 class="head">Altura, no coração do Sotavento</h2>
+        <p class="lede">Localizado a poucos metros das areias douradas da Praia de Altura, o Permanent Summer é o refúgio perfeito numa das zonas mais autênticas do Algarve.</p>
+        <p class="lede" style="margin-top:14px;">Perto de mercados locais, restaurantes tradicionais e vilas históricas como Castro Marim, Cacela Velha e Vila Real de Santo António — a fronteira com Espanha fica a poucos minutos de carro.</p>
+      </div>
+    </div>
+    <div data-i18n-block="en">
+      <div class="intro-copy">
+        <p class="eyebrow-italic">the region</p>
+        <h2 class="head">Altura, at the heart of the Sotavento</h2>
+        <p class="lede">A few meters from the golden sands of Altura Beach, Permanent Summer sits in one of the most authentic corners of the Algarve.</p>
+        <p class="lede" style="margin-top:14px;">Close to local markets, traditional restaurants and historic towns like Castro Marim, Cacela Velha and Vila Real de Santo António — the Spanish border is a short drive away.</p>
+      </div>
+    </div>
+    <div data-i18n-block="fr">
+      <div class="intro-copy">
+        <p class="eyebrow-italic">la région</p>
+        <h2 class="head">Altura, au cœur du Sotavento</h2>
+        <p class="lede">À quelques mètres des plages dorées d'Altura, Permanent Summer se trouve dans l'un des coins les plus authentiques de l'Algarve.</p>
+        <p class="lede" style="margin-top:14px;">Proche des marchés locaux, restaurants traditionnels et villes historiques comme Castro Marim, Cacela Velha et Vila Real de Santo António — la frontière espagnole à quelques minutes.</p>
+      </div>
+    </div>
+    <div class="intro-photo"><img src="assets/images/region/boat.jpg" alt="Traditional fishing boat, Eastern Algarve" loading="lazy"></div>
+  </div>
+</section>
+
+<section class="section" style="padding-top:0;">
+  <div class="section-inner">
+    <div class="gallery-grid">
+      <div class="ig-tile" style="cursor:default;"><img src="assets/images/region/boardwalk-aerial.jpg" alt="" loading="lazy"></div>
+      <div class="ig-tile" style="cursor:default;"><img src="assets/images/region/boardwalk-path.jpg" alt="" loading="lazy"></div>
+      <div class="ig-tile" style="cursor:default;"><img src="assets/images/region/village-street.jpg" alt="" loading="lazy"></div>
+      <div class="ig-tile" style="cursor:default;"><img src="assets/images/region/lagoon.jpg" alt="" loading="lazy"></div>
+      <div class="ig-tile" style="cursor:default;"><img src="assets/images/region/marsh.jpg" alt="" loading="lazy"></div>
+      <div class="ig-tile" style="cursor:default;"><img src="assets/images/region/forest-boardwalk.jpg" alt="" loading="lazy"></div>
+      <div class="ig-tile" style="cursor:default;"><img src="assets/images/region/forest-path.jpg" alt="" loading="lazy"></div>
+      <div class="ig-tile" style="cursor:default;"><img src="assets/images/region/aerial-swimmer.jpg" alt="" loading="lazy"></div>
+    </div>
+  </div>
+</section>
+
+<section class="section section--stone" id="map">
+  <div class="section-inner ps-scope" data-lang="pt">
+    <div data-i18n-block="pt"><h2 class="head">Explore o Algarve</h2><p class="lede" style="margin-top:10px;">Uma seleção de praias, miradouros, trilhos e locais de interesse — do Sotavento ao Barlavento.</p></div>
+    <div data-i18n-block="en"><h2 class="head">Explore the Algarve</h2><p class="lede" style="margin-top:10px;">A curated selection of beaches, viewpoints, trails, and places of interest — from the Sotavento to the Barlavento.</p></div>
+    <div data-i18n-block="fr"><h2 class="head">Explorez l'Algarve</h2><p class="lede" style="margin-top:10px;">Une sélection de plages, points de vue, sentiers et lieux d'intérêt — du Sotavento au Barlavento.</p></div>
+    <div class="map-card">
+      <div id="so-map"></div>
+      <div class="so-legend">
+        <div class="row"><span class="swatch" style="background:#B9B36A"></span><span class="legend-label" data-i18n-block="pt">Apartamentos</span><span class="legend-label" data-i18n-block="en">Apartments</span><span class="legend-label" data-i18n-block="fr">Appartements</span></div>
+        <div class="row"><span class="swatch" style="background:#2C5164"></span><span class="legend-label" data-i18n-block="pt">Praias &amp; falésias</span><span class="legend-label" data-i18n-block="en">Beaches &amp; cliffs</span><span class="legend-label" data-i18n-block="fr">Plages &amp; falaises</span></div>
+        <div class="row"><span class="swatch" style="background:#5B7A6E"></span><span class="legend-label" data-i18n-block="pt">Miradouros &amp; trilhos</span><span class="legend-label" data-i18n-block="en">Viewpoints &amp; trails</span><span class="legend-label" data-i18n-block="fr">Points de vue &amp; sentiers</span></div>
+        <div class="row"><span class="swatch" style="background:#A6512E"></span><span class="legend-label" data-i18n-block="pt">Vilas &amp; história</span><span class="legend-label" data-i18n-block="en">Towns &amp; history</span><span class="legend-label" data-i18n-block="fr">Villages &amp; histoire</span></div>
+        <div class="row"><span class="swatch" style="background:#7A6B4F"></span><span class="legend-label" data-i18n-block="pt">Aeroporto</span><span class="legend-label" data-i18n-block="en">Airport</span><span class="legend-label" data-i18n-block="fr">Aéroport</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section section--stone" id="reviews">
+  <div class="section-inner ps-scope" data-lang="pt">
+    <div data-i18n-block="pt"><h2 class="head" style="text-align:center;">O que dizem os hóspedes</h2>
+      <div class="review-slideshow" id="review-slideshow-pt">
+        <div class="review-slide">"Local muito tranquilo e bem equipado — estava tudo perfeito." <span class="review-slide-name">Guadalupe 🇪🇸 · Booking.com</span></div>
+        <div class="review-slide">"Anfitriões simpáticos, varanda muito acolhedora — recomendo!" <span class="review-slide-name">Maria 🇵🇹 · Booking.com</span></div>
+        <div class="review-slide">"Apartamento impecável, tranquilo e relaxante." <span class="review-slide-name">Carlotta 🇩🇪 · Airbnb</span></div>
+        <div class="review-slide">"Casa muito organizada, ideal para uns dias de praia." <span class="review-slide-name">Elizabeth 🇵🇹 · Booking.com</span></div>
+        <div class="review-slide">"Espaçoso, muito limpo, estacionamento fácil." <span class="review-slide-name">Juan 🇪🇸 · Booking.com</span></div>
+        <div class="review-slide">"Experiência cinco estrelas — voltaremos, sem dúvida." <span class="review-slide-name">Lénia 🇵🇹 · Airbnb</span></div>
+      </div>
+      <div class="review-dots" data-for="review-slideshow-pt"></div>
+    </div>
+    <div data-i18n-block="en"><h2 class="head" style="text-align:center;">What guests are saying</h2>
+      <div class="review-slideshow" id="review-slideshow-en">
+        <div class="review-slide">"A very quiet, well-equipped place — everything was perfect." <span class="review-slide-name">Guadalupe 🇪🇸 · Booking.com</span></div>
+        <div class="review-slide">"Kind hosts, a very cosy balcony — highly recommend!" <span class="review-slide-name">Maria 🇵🇹 · Booking.com</span></div>
+        <div class="review-slide">"Spotless, quiet, and relaxing." <span class="review-slide-name">Carlotta 🇩🇪 · Airbnb</span></div>
+        <div class="review-slide">"Very organized house, ideal for a beach getaway." <span class="review-slide-name">Elizabeth 🇵🇹 · Booking.com</span></div>
+        <div class="review-slide">"Spacious, very clean, easy parking." <span class="review-slide-name">Juan 🇪🇸 · Booking.com</span></div>
+        <div class="review-slide">"Five-star experience — we'd definitely return." <span class="review-slide-name">Lénia 🇵🇹 · Airbnb</span></div>
+      </div>
+      <div class="review-dots" data-for="review-slideshow-en"></div>
+    </div>
+    <div data-i18n-block="fr"><h2 class="head" style="text-align:center;">Ce que disent nos hôtes</h2>
+      <div class="review-slideshow" id="review-slideshow-fr">
+        <div class="review-slide">« Endroit très calme et bien équipé — tout était parfait. » <span class="review-slide-name">Guadalupe 🇪🇸 · Booking.com</span></div>
+        <div class="review-slide">« Hôtes aimables, balcon très cosy — je recommande ! » <span class="review-slide-name">Maria 🇵🇹 · Booking.com</span></div>
+        <div class="review-slide">« Impeccable, calme et reposant. » <span class="review-slide-name">Carlotta 🇩🇪 · Airbnb</span></div>
+        <div class="review-slide">« Logement très bien organisé, idéal pour la plage. » <span class="review-slide-name">Elizabeth 🇵🇹 · Booking.com</span></div>
+        <div class="review-slide">« Spacieux, très propre, stationnement facile. » <span class="review-slide-name">Juan 🇪🇸 · Booking.com</span></div>
+        <div class="review-slide">« Expérience cinq étoiles — nous reviendrons sans hésiter. » <span class="review-slide-name">Lénia 🇵🇹 · Airbnb</span></div>
+      </div>
+      <div class="review-dots" data-for="review-slideshow-fr"></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="instagram">
+  <div class="section-inner ps-scope" data-lang="pt">
+    <div data-i18n-block="pt"><div class="ig-head"><h2 class="head">Siga @permanentsummer.co</h2><a class="hero-btn" style="color:var(--ink);border-color:var(--ink);" href="https://instagram.com/permanentsummer.co" target="_blank" rel="noopener">Ver perfil</a></div></div>
+    <div data-i18n-block="en"><div class="ig-head"><h2 class="head">Follow @permanentsummer.co</h2><a class="hero-btn" style="color:var(--ink);border-color:var(--ink);" href="https://instagram.com/permanentsummer.co" target="_blank" rel="noopener">View profile</a></div></div>
+    <div data-i18n-block="fr"><div class="ig-head"><h2 class="head">Suivez @permanentsummer.co</h2><a class="hero-btn" style="color:var(--ink);border-color:var(--ink);" href="https://instagram.com/permanentsummer.co" target="_blank" rel="noopener">Voir le profil</a></div></div>
+    <div class="ig-grid">
+      <a class="ig-tile" href="https://instagram.com/permanentsummer.co" target="_blank" rel="noopener"><img src="assets/images/region/cataplana.jpg" alt="" loading="lazy"><div class="ig-tile-overlay">↗</div></a>
+      <a class="ig-tile" href="https://instagram.com/permanentsummer.co" target="_blank" rel="noopener"><img src="assets/images/region/wetland-bird.jpg" alt="" loading="lazy"><div class="ig-tile-overlay">↗</div></a>
+      <a class="ig-tile" href="https://instagram.com/permanentsummer.co" target="_blank" rel="noopener"><img src="assets/images/region/cacela-velha.jpg" alt="" loading="lazy"><div class="ig-tile-overlay">↗</div></a>
+      <a class="ig-tile" href="https://instagram.com/permanentsummer.co" target="_blank" rel="noopener"><img src="assets/images/region/vases.jpg" alt="" loading="lazy"><div class="ig-tile-overlay">↗</div></a>
+    </div>
+  </div>
+</section>
+
+<section class="section section--ink" id="contact">
+  <div class="section-inner contact-grid ps-scope" data-lang="pt">
+    <div>
+      <div data-i18n-block="pt"><h2 class="head">Fale connosco</h2>
+        <div class="addr">
+          <strong>Ocean Side — 162327/AL</strong>
+          <div>Praceta José Saramago 305 - A, 3.º Esq.<br>8950-437 Altura, Portugal</div>
+          <strong>Beachside — 170254/AL</strong>
+          <div>Rua da Alagoa 107, Edifício Al-Paranaguá<br>3.º Andar D, 8950-437 Altura, Portugal</div>
+        </div>
+      </div>
+      <div data-i18n-block="en"><h2 class="head">Get in touch</h2>
+        <div class="addr">
+          <strong>Ocean Side — 162327/AL</strong>
+          <div>Praceta José Saramago 305 - A, 3rd Left<br>8950-437 Altura, Portugal</div>
+          <strong>Beachside — 170254/AL</strong>
+          <div>Rua da Alagoa 107, Edifício Al-Paranaguá<br>3rd Floor D, 8950-437 Altura, Portugal</div>
+        </div>
+      </div>
+      <div data-i18n-block="fr"><h2 class="head">Contactez-nous</h2>
+        <div class="addr">
+          <strong>Ocean Side — 162327/AL</strong>
+          <div>Praceta José Saramago 305 - A, 3e gauche<br>8950-437 Altura, Portugal</div>
+          <strong>Beachside — 170254/AL</strong>
+          <div>Rua da Alagoa 107, Edifício Al-Paranaguá<br>3e étage D, 8950-437 Altura, Portugal</div>
+        </div>
+      </div>
+    </div>
+    <div class="contact-links">
+      <a class="contact-link" href="https://youtu.be/CwSCYQrg_f8" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M21.8 8s-.2-1.4-.8-2c-.8-.8-1.6-.8-2-.9C16.8 5 12 5 12 5s-4.8 0-7 .1c-.4.1-1.2.1-2 .9-.6.6-.8 2-.8 2S2 9.6 2 11.2v1.5c0 1.6.2 3.2.2 3.2s.2 1.4.8 2c.8.8 1.8.8 2.3.8C6.8 19 12 19 12 19s4.8 0 7-.1c.4-.1 1.2-.1 2-.9.6-.6.8-2 .8-2s.2-1.6.2-3.2v-1.5C22 9.6 21.8 8 21.8 8zM10 15V9l5.5 3-5.5 3z"/></svg>YouTube</a>
+      <a class="contact-link" href="mailto:christopher@permanentsummer.co"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 7L2 7"/></svg>christopher@permanentsummer.co</a>
+      <a class="contact-link" href="https://instagram.com/permanentsummer.co" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="12" cy="12" r="3.5"/><circle cx="17.2" cy="6.8" r="1"/></svg>@permanentsummer.co</a>
+      <a class="contact-link" href="https://wa.me/351924477353" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12c0 1.85.5 3.58 1.37 5.07L2 22l5.09-1.33A9.94 9.94 0 0012 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm5.01 14.16c-.21.58-1.22 1.12-1.67 1.19-.45.07-.99.1-1.59-.1-.37-.12-.84-.28-1.44-.55-2.52-1.09-4.17-3.62-4.3-3.79-.13-.17-1.05-1.39-1.05-2.65s.67-1.88.9-2.14c.24-.26.52-.32.69-.32h.5c.16 0 .38-.06.59.45.21.52.73 1.77.79 1.9.06.13.1.28.02.45-.08.17-.12.27-.24.42-.12.14-.25.32-.36.43-.12.12-.24.25-.1.49.14.24.62 1.02 1.33 1.65.91.81 1.68 1.06 1.92 1.17.24.12.38.1.52-.06.14-.16.59-.69.75-.93.16-.24.32-.2.54-.12.22.08 1.4.66 1.64.78.24.12.4.17.46.27.06.1.06.58-.15 1.16z"/></svg>WhatsApp</a>
+      <div class="contact-listings">
+        <span class="contact-listings-label" data-i18n-block="pt">Reserve também em:</span>
+        <span class="contact-listings-label" data-i18n-block="en">Also listed on:</span>
+        <span class="contact-listings-label" data-i18n-block="fr">Aussi disponible sur :</span>
+        <div class="listing-group">
+          <span class="listing-group-name">Ocean Side</span>
+          <a class="platform-badge booking" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="15" rx="2"/><path d="M3 10h18M8 3v4"/></svg>Booking.com</a>
+          <a class="platform-badge airbnb" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3 3 10v11h6v-6h6v6h6V10z"/></svg>Airbnb</a>
+        </div>
+        <div class="listing-group">
+          <span class="listing-group-name">Beachside</span>
+          <a class="platform-badge booking" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="15" rx="2"/><path d="M3 10h18M8 3v4"/></svg>Booking.com</a>
+          <a class="platform-badge airbnb" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3 3 10v11h6v-6h6v6h6V10z"/></svg>Airbnb</a>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -451,11 +944,11 @@ footer { background: #0D1615; color: rgba(235,238,230,.55); padding: 64px var(--
     </div>
     <div class="footer-col">
       <h4>Navigation</h4>
-      <a href="index.html#region">The Region</a><a href="index.html#apartments">Apartments</a><a href="index.html#reviews">Reviews</a>
+      <a href="#region">The Region</a><a href="#apartments">Apartments</a><a href="#reviews">Reviews</a>
     </div>
     <div class="footer-col">
       <h4>Apartments</h4>
-      <a href="index.html#oceanside">Ocean Side</a><a href="index.html#beachside">Beachside</a><a href="book.html">Availability</a>
+      <a href="#oceanside">Ocean Side</a><a href="#beachside">Beachside</a><a href="book.html">Availability</a>
     </div>
     <div class="footer-col">
       <h4>Get in touch</h4>
@@ -469,6 +962,8 @@ footer { background: #0D1615; color: rgba(235,238,230,.55); padding: 64px var(--
   </div>
 </footer>
 
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+
 <script>
 (function () {
   const h = document.getElementById('ps-header');
@@ -481,9 +976,257 @@ footer { background: #0D1615; color: rgba(235,238,230,.55); padding: 64px var(--
   const open = document.getElementById('mobile-open');
   const close = document.getElementById('mobile-close');
   const panel = document.getElementById('mobile-panel');
-  open && open.addEventListener('click', () => panel.classList.add('open'));
-  close && close.addEventListener('click', () => panel.classList.remove('open'));
-  panel && panel.querySelectorAll('a').forEach(a => a.addEventListener('click', () => panel.classList.remove('open')));
+  const backdrop = document.getElementById('mobile-backdrop');
+  const openPanel = () => { panel.classList.add('open'); backdrop && backdrop.classList.add('open'); };
+  const closePanel = () => { panel.classList.remove('open'); backdrop && backdrop.classList.remove('open'); };
+  open && open.addEventListener('click', openPanel);
+  close && close.addEventListener('click', closePanel);
+  backdrop && backdrop.addEventListener('click', closePanel);
+  panel && panel.querySelectorAll('nav a').forEach(a => a.addEventListener('click', closePanel));
+})();
+
+/* ─── DATE-RANGE PICKER (two-month calendar) ─────────────────────── */
+(function () {
+  const MONTHS = {
+    pt: ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'],
+    en: ['January','February','March','April','May','June','July','August','September','October','November','December'],
+    fr: ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre']
+  };
+  const DAYS = {
+    pt: ['Seg','Ter','Qua','Qui','Sex','Sáb','Dom'],
+    en: ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],
+    fr: ['Lun','Mar','Mer','Jeu','Ven','Sam','Dim']
+  };
+  const CLEAR_LABEL = { pt: 'Selecionar datas', en: 'Select dates', fr: 'Sélectionner les dates' };
+
+  function fmt(d) { return String(d.getDate()).padStart(2,'0') + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + d.getFullYear(); }
+  function iso(d) { return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0'); }
+  function sameDay(a,b) { return a && b && a.getFullYear()===b.getFullYear() && a.getMonth()===b.getMonth() && a.getDate()===b.getDate(); }
+  function startOfToday() { const d = new Date(); d.setHours(0,0,0,0); return d; }
+
+  document.querySelectorAll('.date-field').forEach(field => {
+    const form = field.closest('form');
+    const lang = form.id.split('-').pop(); // search-bar-pt -> pt
+    const trigger = field.querySelector('.date-trigger');
+    const panel = field.querySelector('.date-panel');
+    const checkinInput = field.querySelector('input[name="checkin"]');
+    const checkoutInput = field.querySelector('input[name="checkout"]');
+    const monthsWrap = panel.querySelector('.date-panel-months');
+    const clearBtn = panel.querySelector('.date-clear');
+    const state = { baseOffset: 0, checkIn: null, checkOut: null };
+
+    function render() {
+      monthsWrap.innerHTML = '';
+      const today = startOfToday();
+      for (let i = 0; i < 2; i++) {
+        const view = new Date(today.getFullYear(), today.getMonth() + state.baseOffset + i, 1);
+        const y = view.getFullYear(), mo = view.getMonth();
+        const daysInMonth = new Date(y, mo + 1, 0).getDate();
+        const firstWeekday = (new Date(y, mo, 1).getDay() + 6) % 7;
+
+        const monthEl = document.createElement('div');
+        monthEl.className = 'date-month';
+
+        const head = document.createElement('div');
+        head.className = 'date-month-head';
+        const prevBtn = document.createElement('button');
+        prevBtn.type = 'button'; prevBtn.className = 'date-nav'; prevBtn.innerHTML = '&#8249;';
+        prevBtn.style.visibility = i === 0 ? 'visible' : 'hidden';
+        prevBtn.disabled = state.baseOffset <= 0;
+        prevBtn.addEventListener('click', () => { if (state.baseOffset > 0) { state.baseOffset--; render(); } });
+        const label = document.createElement('span');
+        label.textContent = MONTHS[lang][mo] + ' ' + y;
+        const nextBtn = document.createElement('button');
+        nextBtn.type = 'button'; nextBtn.className = 'date-nav'; nextBtn.innerHTML = '&#8250;';
+        nextBtn.style.visibility = i === 1 ? 'visible' : 'hidden';
+        nextBtn.addEventListener('click', () => { state.baseOffset++; render(); });
+        head.appendChild(prevBtn); head.appendChild(label); head.appendChild(nextBtn);
+        monthEl.appendChild(head);
+
+        const weekRow = document.createElement('div');
+        weekRow.className = 'date-weekrow';
+        DAYS[lang].forEach(d => { const s = document.createElement('span'); s.textContent = d; weekRow.appendChild(s); });
+        monthEl.appendChild(weekRow);
+
+        const daysRow = document.createElement('div');
+        daysRow.className = 'date-daysrow';
+        for (let b = 0; b < firstWeekday; b++) { const s = document.createElement('span'); s.className = 'date-day blank'; daysRow.appendChild(s); }
+        for (let d = 1; d <= daysInMonth; d++) {
+          const cellDate = new Date(y, mo, d);
+          const cell = document.createElement('span');
+          cell.className = 'date-day';
+          cell.textContent = d;
+          if (cellDate < today) {
+            cell.classList.add('past');
+          } else {
+            if (state.checkIn && sameDay(cellDate, state.checkIn)) cell.classList.add('selected');
+            if (state.checkOut && sameDay(cellDate, state.checkOut)) cell.classList.add('selected');
+            if (state.checkIn && state.checkOut && cellDate > state.checkIn && cellDate < state.checkOut) cell.classList.add('in-range');
+            cell.addEventListener('click', () => {
+              if (!state.checkIn || (state.checkIn && state.checkOut) || cellDate <= state.checkIn) {
+                state.checkIn = cellDate; state.checkOut = null;
+              } else {
+                state.checkOut = cellDate;
+              }
+              render();
+              if (state.checkIn && state.checkOut) {
+                trigger.textContent = fmt(state.checkIn) + ' → ' + fmt(state.checkOut);
+                if (checkinInput) checkinInput.value = iso(state.checkIn);
+                if (checkoutInput) checkoutInput.value = iso(state.checkOut);
+              }
+            });
+          }
+          daysRow.appendChild(cell);
+        }
+        monthEl.appendChild(daysRow);
+        monthsWrap.appendChild(monthEl);
+      }
+    }
+
+    trigger.addEventListener('click', e => {
+      e.stopPropagation();
+      document.querySelectorAll('.date-panel.open').forEach(p => { if (p !== panel) p.classList.remove('open'); });
+      panel.classList.toggle('open');
+    });
+    clearBtn.addEventListener('click', () => {
+      state.checkIn = null; state.checkOut = null;
+      trigger.textContent = CLEAR_LABEL[lang] || CLEAR_LABEL.en;
+      if (checkinInput) checkinInput.value = '';
+      if (checkoutInput) checkoutInput.value = '';
+      render();
+    });
+    document.addEventListener('mousedown', e => { if (!field.contains(e.target)) panel.classList.remove('open'); });
+
+    render();
+  });
+})();
+
+function initCarousel(trackId, dotsId, autoMs) {
+  const track = document.getElementById(trackId);
+  const dotsWrap = document.getElementById(dotsId);
+  if (!track) return;
+  const slides = track.querySelectorAll('.carousel-slide');
+  const total = slides.length;
+  if (!total) return;
+  let current = 0, timer = null;
+  const carousel = track.closest('.carousel');
+  if (dotsWrap) {
+    for (let i = 0; i < total; i++) {
+      const d = document.createElement('button');
+      d.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+      d.setAttribute('aria-label', 'Slide ' + (i + 1));
+      d.addEventListener('click', () => goTo(i));
+      dotsWrap.appendChild(d);
+    }
+  }
+  function goTo(n) {
+    current = ((n % total) + total) % total;
+    track.style.transform = 'translateX(-' + (current * 100) + '%)';
+    if (dotsWrap) dotsWrap.querySelectorAll('.carousel-dot').forEach((d, i) => d.classList.toggle('active', i === current));
+    resetAuto();
+  }
+  function resetAuto() {
+    clearInterval(timer);
+    if (autoMs) timer = setInterval(() => goTo(current + 1), autoMs);
+  }
+  if (carousel) {
+    carousel.querySelectorAll('.carousel-btn').forEach(btn => {
+      btn.addEventListener('click', e => { e.stopPropagation(); goTo(current + (btn.classList.contains('next') ? 1 : -1)); });
+    });
+    let sx = 0;
+    carousel.addEventListener('touchstart', e => { sx = e.touches[0].clientX; }, { passive: true });
+    carousel.addEventListener('touchend', e => { const dx = e.changedTouches[0].clientX - sx; if (Math.abs(dx) > 40) goTo(current + (dx < 0 ? 1 : -1)); });
+  }
+  resetAuto();
+}
+initCarousel('beach-track', 'beach-dots', 4500);
+initCarousel('ocean-track', 'ocean-dots', 4500);
+
+/* ─── REVIEW SLIDESHOW (one line at a time) ───────────────────────── */
+function initReviewSlideshow(id) {
+  const wrap = document.getElementById(id);
+  if (!wrap) return;
+  const slides = wrap.querySelectorAll('.review-slide');
+  const dotsWrap = document.querySelector(`.review-dots[data-for="${id}"]`);
+  let current = 0, timer = null;
+  slides[0] && slides[0].classList.add('active');
+  if (dotsWrap) {
+    slides.forEach((_, i) => {
+      const d = document.createElement('button');
+      d.className = 'review-dot' + (i === 0 ? ' active' : '');
+      d.setAttribute('aria-label', 'Review ' + (i + 1));
+      d.addEventListener('click', () => goTo(i));
+      dotsWrap.appendChild(d);
+    });
+  }
+  function goTo(n) {
+    slides[current].classList.remove('active');
+    current = ((n % slides.length) + slides.length) % slides.length;
+    slides[current].classList.add('active');
+    if (dotsWrap) dotsWrap.querySelectorAll('.review-dot').forEach((d, i) => d.classList.toggle('active', i === current));
+    resetAuto();
+  }
+  function resetAuto() {
+    clearInterval(timer);
+    timer = setInterval(() => goTo(current + 1), 5000);
+  }
+  resetAuto();
+}
+initReviewSlideshow('review-slideshow-pt');
+initReviewSlideshow('review-slideshow-en');
+initReviewSlideshow('review-slideshow-fr');
+
+(function () {
+  const map = L.map('so-map', { zoomControl: true }).setView([37.14, -8.15], 10);
+  map.attributionControl.setPrefix(false);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+  }).addTo(map);
+
+  const pin = c => L.icon({
+    iconUrl: 'data:image/svg+xml;utf8,' + encodeURIComponent(`<svg width="24" height="33" viewBox="0 0 24 33" xmlns="http://www.w3.org/2000/svg"><path d="M12 0C5.9 0 1 4.9 1 11c0 8.2 9.7 19.2 10.2 19.8.4.5 1.2.5 1.6 0C13.3 30.2 23 19.2 23 11c0-6.1-4.9-11-11-11z" fill="${c}"/><circle cx="12" cy="11" r="4.3" fill="#fff"/></svg>`),
+    iconSize: [24, 33], iconAnchor: [12, 33], popupAnchor: [0, -30]
+  });
+
+  const COLORS = { apt: '#B9B36A', beach: '#2C5164', trail: '#5B7A6E', town: '#A6512E', airport: '#7A6B4F' };
+
+  const points = [
+    // Apartments
+    { ll: [37.174878, -7.504644], name: 'Ocean Side', cat: 'apt' },
+    { ll: [37.173125, -7.498954], name: 'Beachside', cat: 'apt' },
+
+    // Eastern Algarve (Sotavento)
+    { ll: [37.1743, -7.5030], name: 'Praia da Alagoa', cat: 'beach' },
+    { ll: [37.1660, -7.5450], name: 'Cacela Velha', cat: 'town' },
+    { ll: [37.2200, -7.4430], name: 'Castro Marim Castle', cat: 'town' },
+    { ll: [37.1257, -7.6494], name: 'Tavira', cat: 'town' },
+    { ll: [37.1936, -7.4177], name: 'Vila Real de Santo António', cat: 'town' },
+    { ll: [37.0144, -7.9659], name: 'Faro Airport', cat: 'airport' },
+
+    // Central Algarve
+    { ll: [37.0194, -7.9304], name: 'Ria Formosa, Faro', cat: 'trail' },
+    { ll: [37.0891, -8.2482], name: 'Albufeira', cat: 'town' },
+    { ll: [37.0894, -8.4126], name: 'Praia da Marinha', cat: 'beach' },
+    { ll: [37.0889, -8.4269], name: 'Benagil Cave', cat: 'beach' },
+    { ll: [37.1908, -8.4384], name: 'Silves Castle', cat: 'town' },
+    { ll: [37.2167, -8.1500], name: 'Alte', cat: 'town' },
+    { ll: [37.3208, -8.5875], name: 'Fóia, Monchique', cat: 'trail' },
+
+    // Western Algarve (Barlavento)
+    { ll: [37.1020, -8.6746], name: 'Lagos', cat: 'town' },
+    { ll: [37.0847, -8.6693], name: 'Ponta da Piedade', cat: 'beach' },
+    { ll: [37.0056, -8.9394], name: 'Sagres Fortress', cat: 'town' },
+    { ll: [37.0206, -8.9767], name: 'Cabo de São Vicente', cat: 'trail' }
+  ];
+
+  points.forEach(p => {
+    const big = p.cat === 'apt';
+    const m = L.marker(p.ll, { icon: pin(COLORS[p.cat]), zIndexOffset: big ? 1000 : 0 })
+      .bindPopup(`<div class="popup-title">${p.name}</div>`, { closeButton: false });
+    m.on('mouseover', () => m.openPopup());
+    map.addLayer(m);
+  });
 })();
 
 (function () {
@@ -495,25 +1238,6 @@ footer { background: #0D1615; color: rgba(235,238,230,.55); padding: 64px var(--
   }
   apply(localStorage.getItem(LS) || 'pt');
   document.addEventListener('click', e => { const b = e.target.closest('.ps-lang-btn'); if (b) apply(b.dataset.setlang || 'pt'); });
-})();
-
-/* ─── FORWARD SEARCH PARAMS INTO THE SUMMERFLOW IFRAME ────────────────
-   If the homepage search bar was used, the dates/guests/apartment chosen
-   there arrive here as query params on book.html itself. We forward them
-   onto the SummerFlow iframe URL so the guest doesn't have to re-enter
-   dates. NOTE: "checkin"/"checkout"/"guests" are best-guess param names —
-   confirm with the SummerFlow app what it actually expects, and adjust
-   here if the names differ. */
-(function () {
-  const iframe = document.getElementById('booking-iframe');
-  if (!iframe) return;
-  const incoming = new URLSearchParams(window.location.search);
-  const base = new URL(iframe.src);
-  ['checkin', 'checkout', 'guests', 'apt'].forEach(key => {
-    const val = incoming.get(key);
-    if (val) base.searchParams.set(key, val);
-  });
-  iframe.src = base.toString();
 })();
 </script>
 </body>
