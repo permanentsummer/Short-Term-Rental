@@ -196,8 +196,9 @@ p.lede { font-size: 1.02rem; line-height: 1.75; color: var(--ink-soft); max-widt
 .results-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 40px; align-items: start; }
 .results-list { display: flex; flex-direction: column; gap: 26px; }
 .results-card { display: grid; grid-template-columns: 200px 1fr; gap: 20px; border: 1px solid var(--line); }
-.results-photo { aspect-ratio: 4/3; overflow: hidden; }
-.results-photo img { width: 100%; height: 100%; object-fit: cover; }
+.results-photo { aspect-ratio: 4/5; overflow: hidden; position: relative; background: var(--line); }
+.results-photo img { width: 100%; height: 100%; object-fit: contain; position: relative; }
+.results-photo::before { content: ""; position: absolute; inset: -24px; background: var(--bg) center / cover no-repeat; filter: blur(26px); transform: scale(1.1); }
 .results-body { padding: 18px 18px 18px 0; }
 .results-name { font: 600 1.15rem var(--disp); }
 .results-loc { color: var(--ink-soft); font-size: .84rem; margin-top: 2px; }
@@ -504,6 +505,7 @@ footer { background: #0D1615; color: rgba(235,238,230,.55); padding: 64px var(--
 </script>
 
 <script>
+document.querySelectorAll(".results-photo").forEach(function(el){var i=el.querySelector("img");if(i)el.style.setProperty("--bg","url(\""+i.getAttribute("src")+"\")");});
 (function () {
   const h = document.getElementById('ps-header');
   const onScroll = () => h.classList.toggle('scrolled', window.scrollY > 40);
