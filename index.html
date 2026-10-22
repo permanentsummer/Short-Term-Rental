@@ -192,8 +192,8 @@ p.lede { font-size: 1.02rem; line-height: 1.75; color: var(--ink-soft); max-widt
 .dest-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
 .dest-track { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 44px; }
 .dest-card { display: block; }
-.dest-photo { aspect-ratio: 4/5; overflow: hidden; position: relative; background: var(--line); }
-.dest-photo img { width: 100%; height: 100%; object-fit: contain; position: relative; transition: transform .6s; }
+.dest-photo { aspect-ratio: 1/1; overflow: hidden; position: relative; background: var(--line); }
+.dest-photo img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s; }
 .dest-card:hover .dest-photo img { transform: scale(1.05); }
 .dest-placeholder { width: 100%; height: 100%; background: var(--line); display: flex; align-items: center; justify-content: center; color: var(--ink-soft); font-size: .82rem; }
 .dest-name { margin-top: 18px; font: 600 1.25rem var(--disp); }
@@ -228,11 +228,10 @@ p.lede { font-size: 1.02rem; line-height: 1.75; color: var(--ink-soft); max-widt
 .apt-detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
 .apt-detail.reverse .apt-detail-grid { direction: rtl; }
 .apt-detail.reverse .apt-detail-grid > * { direction: ltr; }
-.carousel { position: relative; aspect-ratio: 4/5; overflow: hidden; background: var(--line); }
+.carousel { position: relative; aspect-ratio: 1/1; overflow: hidden; background: var(--line); }
 .carousel-track { display: flex; height: 100%; width: 100%; transition: transform .5s cubic-bezier(.4,0,.2,1); }
 .carousel-slide { min-width: 100%; height: 100%; position: relative; overflow: hidden; background: var(--line); }
-.carousel-slide img { width: 100%; height: 100%; object-fit: contain; position: relative; }
-.carousel-slide::before, .dest-photo::before, .results-photo::before { content: ""; position: absolute; inset: -24px; background: var(--bg) center / cover no-repeat; filter: blur(26px); transform: scale(1.1); }
+.carousel-slide img { width: 100%; height: 100%; object-fit: cover; }
 .carousel-btn { position: absolute; top: 50%; transform: translateY(-50%); z-index: 10; background: rgba(20,33,31,.55); color: #fff; border: 0; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 20px; transition: background .2s; }
 .carousel-btn:hover { background: var(--azulejo); }
 .carousel-btn.prev { left: 0; } .carousel-btn.next { right: 0; }
@@ -294,12 +293,12 @@ p.lede { font-size: 1.02rem; line-height: 1.75; color: var(--ink-soft); max-widt
 .listing-group-name { font: 600 .85rem var(--disp); font-style: italic; color: var(--khaki); min-width: 78px; }
 .listing-link {
   position: relative; z-index: 2; cursor: pointer; text-decoration: none; -webkit-tap-highlight-color: transparent;
-  display: inline-flex; align-items: center; justify-content: center; width: 52px; height: 52px; border-radius: 50%;
-  background: #fff; border: 1px solid rgba(235,238,230,.5); transition: transform .25s, box-shadow .25s;
+  display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px;
+  transition: transform .25s, opacity .25s; opacity: .95;
 }
-.listing-link:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,.28); }
-.ll-logo { width: 28px; height: 28px; display: block; pointer-events: none; }
-.ll-bk { border-radius: 7px; background: #fff; }
+.listing-link:hover { transform: translateY(-2px) scale(1.06); opacity: 1; }
+.ll-logo { width: 38px; height: 38px; display: block; pointer-events: none; }
+.ll-bk { border-radius: 9px; background: #fff; }
 .listing-link * { pointer-events: none; }
 .listing-group { position: relative; z-index: 2; }
 .listing-group { gap: 14px; }
@@ -623,7 +622,7 @@ footer { background: #0D1615; color: rgba(235,238,230,.55); padding: 64px var(--
     </div>
     <div class="dest-track">
       <a class="dest-card" href="#oceanside">
-        <div class="dest-photo"><img src="assets/images/oceanside/bedroom-1.jpg" alt="Ocean Side" loading="lazy"></div>
+        <div class="dest-photo"><img style="object-position:50% 75%" src="assets/images/oceanside/bedroom-1.jpg" alt="Ocean Side" loading="lazy"></div>
         <div class="dest-name">Ocean Side</div>
         <div class="dest-loc">Altura, Algarve</div>
         <div class="dest-specs" data-i18n-block="pt">4 hóspedes · 1 quarto · varanda vista mar</div>
@@ -634,7 +633,7 @@ footer { background: #0D1615; color: rgba(235,238,230,.55); padding: 64px var(--
         <div class="dest-cta" data-i18n-block="fr">Voir les détails</div>
       </a>
       <a class="dest-card" href="#beachside">
-        <div class="dest-photo"><img src="assets/images/beachside/IMG_9387_2.jpg" alt="Beachside" loading="lazy"></div>
+        <div class="dest-photo"><img style="object-position:50% 75%" src="assets/images/beachside/IMG_9387_2.jpg" alt="Beachside" loading="lazy"></div>
         <div class="dest-name">Beachside</div>
         <div class="dest-loc">Altura, Algarve</div>
         <div class="dest-specs" data-i18n-block="pt">4 hóspedes · 1 quarto · varanda vista mar</div>
@@ -652,26 +651,26 @@ footer { background: #0D1615; color: rgba(235,238,230,.55); padding: 64px var(--
   <div class="section-inner apt-detail-grid ps-scope" data-lang="pt">
     <div class="carousel" id="carousel-ocean">
       <div class="carousel-track" id="ocean-track">
-        <div class="carousel-slide"><img src="assets/images/oceanside/bedroom-1.jpg" alt="Ocean Side bedroom" loading="lazy"></div>
-        <div class="carousel-slide"><img src="assets/images/oceanside/bedroom-2.jpg" alt="Ocean Side bed detail" loading="lazy"></div>
-        <div class="carousel-slide"><img src="assets/images/oceanside/bedroom-balcony.jpg" alt="Ocean Side bedroom with balcony access" loading="lazy"></div>
-        <div class="carousel-slide"><img src="assets/images/oceanside/living-room-1.jpg" alt="Ocean Side living room" loading="lazy"></div>
-        <div class="carousel-slide"><img src="assets/images/oceanside/living-room-2.jpg" alt="Ocean Side living room corner" loading="lazy"></div>
-        <div class="carousel-slide"><img src="assets/images/oceanside/dining.jpg" alt="Ocean Side dining table" loading="lazy"></div>
-        <div class="carousel-slide"><img src="assets/images/oceanside/balcony-view.jpg" alt="Ocean Side balcony with sea glimpse" loading="lazy"></div>
-        <div class="carousel-slide"><img src="assets/images/oceanside/balcony-nook.jpg" alt="Ocean Side balcony seating nook" loading="lazy"></div>
-        <div class="carousel-slide"><img src="assets/images/oceanside/balcony-bbq.jpg" alt="Ocean Side balcony grill" loading="lazy"></div>
-        <div class="carousel-slide"><img src="assets/images/oceanside/kitchen.jpg" alt="Ocean Side kitchen" loading="lazy"></div>
-        <div class="carousel-slide"><img src="assets/images/oceanside/bathroom-1.jpg" alt="Ocean Side bathroom" loading="lazy"></div>
-        <div class="carousel-slide"><img src="assets/images/oceanside/bathroom-2.jpg" alt="Ocean Side bathroom sink" loading="lazy"></div>
-        <div class="carousel-slide"><img src="assets/images/oceanside/bathroom-detail.jpg" alt="Ocean Side bathroom detail" loading="lazy"></div>
-        <div class="carousel-slide"><img src="assets/images/oceanside/desk-nook.jpg" alt="Ocean Side desk nook and closet" loading="lazy"></div>
-        <div class="carousel-slide"><img src="assets/images/oceanside/desk-detail.jpg" alt="Ocean Side desk detail" loading="lazy"></div>
-        <div class="carousel-slide"><img src="assets/images/oceanside/towels.jpg" alt="Ocean Side towels" loading="lazy"></div>
-        <div class="carousel-slide"><img src="assets/images/oceanside/coffee-tray.jpg" alt="Ocean Side coffee and tea tray" loading="lazy"></div>
-        <div class="carousel-slide"><img src="assets/images/oceanside/decor-1.jpg" alt="Ocean Side decor detail" loading="lazy"></div>
-        <div class="carousel-slide"><img src="assets/images/oceanside/decor-2.jpg" alt="Ocean Side decor detail" loading="lazy"></div>
-        <div class="carousel-slide"><img src="assets/images/oceanside/archway.jpg" alt="Ocean Side entryway" loading="lazy"></div>
+        <div class="carousel-slide"><img style="object-position:50% 75%" src="assets/images/oceanside/bedroom-1.jpg" alt="Ocean Side bedroom" loading="lazy"></div>
+        <div class="carousel-slide"><img style="object-position:50% 60%" src="assets/images/oceanside/bedroom-2.jpg" alt="Ocean Side bed detail" loading="lazy"></div>
+        <div class="carousel-slide"><img style="object-position:50% 70%" src="assets/images/oceanside/bedroom-balcony.jpg" alt="Ocean Side bedroom with balcony access" loading="lazy"></div>
+        <div class="carousel-slide"><img style="object-position:50% 100%" src="assets/images/oceanside/living-room-1.jpg" alt="Ocean Side living room" loading="lazy"></div>
+        <div class="carousel-slide"><img style="object-position:50% 65%" src="assets/images/oceanside/living-room-2.jpg" alt="Ocean Side living room corner" loading="lazy"></div>
+        <div class="carousel-slide"><img style="object-position:50% 60%" src="assets/images/oceanside/dining.jpg" alt="Ocean Side dining table" loading="lazy"></div>
+        <div class="carousel-slide"><img style="object-position:50% 60%" src="assets/images/oceanside/balcony-view.jpg" alt="Ocean Side balcony with sea glimpse" loading="lazy"></div>
+        <div class="carousel-slide"><img style="object-position:50% 45%" src="assets/images/oceanside/balcony-nook.jpg" alt="Ocean Side balcony seating nook" loading="lazy"></div>
+        <div class="carousel-slide"><img style="object-position:50% 65%" src="assets/images/oceanside/balcony-bbq.jpg" alt="Ocean Side balcony grill" loading="lazy"></div>
+        <div class="carousel-slide"><img style="object-position:50% 85%" src="assets/images/oceanside/kitchen.jpg" alt="Ocean Side kitchen" loading="lazy"></div>
+        <div class="carousel-slide"><img style="object-position:50% 40%" src="assets/images/oceanside/bathroom-1.jpg" alt="Ocean Side bathroom" loading="lazy"></div>
+        <div class="carousel-slide"><img style="object-position:50% 40%" src="assets/images/oceanside/bathroom-2.jpg" alt="Ocean Side bathroom sink" loading="lazy"></div>
+        <div class="carousel-slide"><img style="object-position:50% 40%" src="assets/images/oceanside/bathroom-detail.jpg" alt="Ocean Side bathroom detail" loading="lazy"></div>
+        <div class="carousel-slide"><img style="object-position:50% 45%" src="assets/images/oceanside/desk-nook.jpg" alt="Ocean Side desk nook and closet" loading="lazy"></div>
+        <div class="carousel-slide"><img style="object-position:50% 50%" src="assets/images/oceanside/desk-detail.jpg" alt="Ocean Side desk detail" loading="lazy"></div>
+        <div class="carousel-slide"><img style="object-position:50% 100%" src="assets/images/oceanside/towels.jpg" alt="Ocean Side towels" loading="lazy"></div>
+        <div class="carousel-slide"><img style="object-position:50% 85%" src="assets/images/oceanside/coffee-tray.jpg" alt="Ocean Side coffee and tea tray" loading="lazy"></div>
+        <div class="carousel-slide"><img style="object-position:50% 55%" src="assets/images/oceanside/decor-1.jpg" alt="Ocean Side decor detail" loading="lazy"></div>
+        <div class="carousel-slide"><img style="object-position:50% 70%" src="assets/images/oceanside/decor-2.jpg" alt="Ocean Side decor detail" loading="lazy"></div>
+        <div class="carousel-slide"><img style="object-position:50% 50%" src="assets/images/oceanside/archway.jpg" alt="Ocean Side entryway" loading="lazy"></div>
       </div>
       <button class="carousel-btn prev" aria-label="Previous">&#8249;</button>
       <button class="carousel-btn next" aria-label="Next">&#8250;</button>
@@ -719,15 +718,15 @@ footer { background: #0D1615; color: rgba(235,238,230,.55); padding: 64px var(--
   <div class="section-inner apt-detail-grid ps-scope" data-lang="pt">
     <div class="carousel" id="carousel-beach">
       <div class="carousel-track" id="beach-track">
-        <div class="carousel-slide"><img src="assets/images/beachside/IMG_9387_2.jpg" alt="Beachside bedroom" loading="lazy"></div>
-        <div class="carousel-slide"><img src="assets/images/beachside/IMG_9398.jpg" alt="Beachside bedroom detail" loading="lazy"></div>
-        <div class="carousel-slide"><img src="assets/images/beachside/IMG_9397.jpg" alt="Beachside bedroom" loading="lazy"></div>
-        <div class="carousel-slide"><img src="assets/images/beachside/livingroom.jpg" alt="Beachside living room" loading="lazy"></div>
-        <div class="carousel-slide"><img src="assets/images/beachside/bedroom2.jpg" alt="Beachside second bedroom" loading="lazy"></div>
-        <div class="carousel-slide"><img src="assets/images/beachside/IMG_3707_2.jpg" alt="Beachside kitchen and dining" loading="lazy"></div>
-        <div class="carousel-slide"><img src="assets/images/beachside/IMG_0704.jpg" alt="Beachside bathroom" loading="lazy"></div>
-        <div class="carousel-slide"><img src="assets/images/beachside/IMG_0713.jpg" alt="Beachside balcony" loading="lazy"></div>
-        <div class="carousel-slide"><img src="assets/images/beachside/IMG_0716.jpg" alt="Beachside sea view from balcony" loading="lazy"></div>
+        <div class="carousel-slide"><img style="object-position:50% 75%" src="assets/images/beachside/IMG_9387_2.jpg" alt="Beachside bedroom" loading="lazy"></div>
+        <div class="carousel-slide"><img style="object-position:50% 50%" src="assets/images/beachside/IMG_9398.jpg" alt="Beachside bedroom detail" loading="lazy"></div>
+        <div class="carousel-slide"><img style="object-position:50% 75%" src="assets/images/beachside/IMG_9397.jpg" alt="Beachside bedroom" loading="lazy"></div>
+        <div class="carousel-slide"><img style="object-position:50% 80%" src="assets/images/beachside/livingroom.jpg" alt="Beachside living room" loading="lazy"></div>
+        <div class="carousel-slide"><img style="object-position:50% 85%" src="assets/images/beachside/bedroom2.jpg" alt="Beachside second bedroom" loading="lazy"></div>
+        <div class="carousel-slide"><img style="object-position:50% 80%" src="assets/images/beachside/IMG_3707_2.jpg" alt="Beachside kitchen and dining" loading="lazy"></div>
+        <div class="carousel-slide"><img style="object-position:50% 75%" src="assets/images/beachside/IMG_0704.jpg" alt="Beachside bathroom" loading="lazy"></div>
+        <div class="carousel-slide"><img style="object-position:50% 70%" src="assets/images/beachside/IMG_0713.jpg" alt="Beachside balcony" loading="lazy"></div>
+        <div class="carousel-slide"><img style="object-position:50% 55%" src="assets/images/beachside/IMG_0716.jpg" alt="Beachside sea view from balcony" loading="lazy"></div>
       </div>
       <button class="carousel-btn prev" aria-label="Previous">&#8249;</button>
       <button class="carousel-btn next" aria-label="Next">&#8250;</button>
@@ -1108,7 +1107,6 @@ footer { background: #0D1615; color: rgba(235,238,230,.55); padding: 64px var(--
 })();
 
 
-document.querySelectorAll('.carousel-slide, .dest-photo, .results-photo').forEach(function(el){var i=el.querySelector('img');if(i)el.style.setProperty('--bg','url("'+i.getAttribute('src')+'")');});
 
 function initCarousel(trackId, dotsId, autoMs) {
   const track = document.getElementById(trackId);
