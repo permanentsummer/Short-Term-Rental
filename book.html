@@ -498,9 +498,7 @@ footer { background: #0D1615; color: rgba(235,238,230,.55); padding: 64px var(--
 <script>
 (function () {
   const h = document.getElementById('ps-header');
-  const onScroll = () => h.classList.toggle('scrolled', window.scrollY > 40);
-  document.addEventListener('scroll', onScroll, { passive: true });
-  onScroll();
+  h.classList.add('scrolled'); // header stays solid and visible on the booking page
 })();
 
 (function () {
