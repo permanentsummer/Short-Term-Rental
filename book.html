@@ -443,9 +443,8 @@ footer { background: #0D1615; color: rgba(235,238,230,.55); padding: 64px var(--
       <iframe
         class="booking-iframe"
         id="booking-iframe"
-        src="https://summerflow.permanentsummer.co/book.html?ws=7c5d4583-de11-43f1-bb71-658aaf591f4e"
-        title="Permanent Summer — Book Direct"
-        loading="lazy">
+        data-src="https://summerflow.permanentsummer.co/book.html?ws=7c5d4583-de11-43f1-bb71-658aaf591f4e"
+        title="Permanent Summer — Book Direct">
       </iframe>
     </div>
   </div>
@@ -536,12 +535,12 @@ footer { background: #0D1615; color: rgba(235,238,230,.55); padding: 64px var(--
   const iframe = document.getElementById('booking-iframe');
   if (!iframe) return;
   const incoming = new URLSearchParams(window.location.search);
-  const base = new URL(iframe.src);
+  const base = new URL(iframe.dataset.src);
   ['checkin', 'checkout', 'guests', 'apt'].forEach(key => {
     const val = incoming.get(key);
     if (val) base.searchParams.set(key, val);
   });
-  iframe.src = base.toString();
+  iframe.src = base.toString(); // set exactly once, so the dates are in the very first request
 })();
 </script>
 </body>
