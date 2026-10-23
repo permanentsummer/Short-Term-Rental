@@ -80,9 +80,9 @@ img { display: block; max-width: 100%; }
 }
 #ps-header.scrolled .nav-toggle { color: var(--ink); }
 
-.hero { position: relative; height: 96svh; min-height: 620px; overflow: hidden; }
+.hero { position: relative; z-index: 6; height: 96svh; min-height: 620px; }
 .hero-bg {
-  position: absolute; inset: 0;
+  position: absolute; inset: 0; overflow: hidden;
   background: linear-gradient(0deg, rgba(20,33,31,.55) 0%, rgba(20,33,31,.1) 45%, rgba(20,33,31,.42) 100%),
               url('assets/images/region/cacela-velha.jpg') center 30%/cover no-repeat;
 }
@@ -1005,6 +1005,7 @@ footer { background: #0D1615; color: rgba(235,238,230,.55); padding: 64px var(--
   const CLEAR_LABEL = { pt: 'Escolher datas', en: 'Select dates', fr: 'Choisir les dates' };
 
   function fmt(d) { return String(d.getDate()).padStart(2,'0') + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + d.getFullYear(); }
+  function fmtShort(d, lang) { return d.toLocaleDateString({pt:'pt-PT',fr:'fr-FR',en:'en-GB'}[lang] || 'en-GB', { day: 'numeric', month: 'short' }).replace('.', ''); }
   function iso(d) { return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0'); }
   function sameDay(a,b) { return a && b && a.getFullYear()===b.getFullYear() && a.getMonth()===b.getMonth() && a.getDate()===b.getDate(); }
   function startOfToday() { const d = new Date(); d.setHours(0,0,0,0); return d; }
@@ -1075,7 +1076,7 @@ footer { background: #0D1615; color: rgba(235,238,230,.55); padding: 64px var(--
               }
               render();
               if (state.checkIn && state.checkOut) {
-                trigger.textContent = fmt(state.checkIn) + ' → ' + fmt(state.checkOut);
+                trigger.textContent = fmtShort(state.checkIn, lang) + ' → ' + fmtShort(state.checkOut, lang);
                 if (checkinInput) checkinInput.value = iso(state.checkIn);
                 if (checkoutInput) checkoutInput.value = iso(state.checkOut);
               }
@@ -1092,6 +1093,7 @@ footer { background: #0D1615; color: rgba(235,238,230,.55); padding: 64px var(--
       e.stopPropagation();
       document.querySelectorAll('.date-panel.open').forEach(p => { if (p !== panel) p.classList.remove('open'); });
       panel.classList.toggle('open');
+      if (panel.classList.contains('open')) setTimeout(() => panel.scrollIntoView({ block: 'nearest', behavior: 'smooth' }), 50);
     });
     clearBtn.addEventListener('click', () => {
       state.checkIn = null; state.checkOut = null;
