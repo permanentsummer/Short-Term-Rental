@@ -40,7 +40,7 @@
   html{scroll-behavior:smooth}
   body{margin:0;background:var(--bg);color:var(--tx);font-family:var(--sans);font-weight:300;-webkit-font-smoothing:antialiased;line-height:1.5}
   a{color:inherit}
-  img{max-width:100%;display:block}
+  img{max-width:100%;height:auto;display:block}
   .wrap{max-width:1240px;margin:0 auto;padding:0 40px}
   .eyebrow{margin:0;font-size:12px;font-weight:400;letter-spacing:.24em;text-transform:uppercase;color:var(--mu)}
   h1,h2,h3{font-family:var(--serif);font-weight:400;margin:0}
@@ -208,6 +208,17 @@
     .gal img:first-child{grid-column:span 2;grid-row:auto}
     .result{padding:24px}
   }
+  .mbar{display:none}
+  @media (max-width:720px){
+    .logo .n{font-size:17px;white-space:nowrap}
+    .menu .btn{white-space:nowrap}
+    .mbar{position:fixed;left:0;right:0;bottom:0;z-index:30;background:var(--on);color:var(--tx);border-top:1px solid var(--ln);padding:12px 20px;display:flex;justify-content:space-between;align-items:center;gap:12px;transform:translateY(110%);transition:transform .25s}
+    .mbar.on{transform:none}
+    .mbar b{font-family:var(--serif);font-weight:400;font-size:22px;white-space:nowrap}
+    .mbar span{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--mu)}
+    .mbar a{font-size:14px;color:var(--ac);font-weight:500;text-decoration:none;white-space:nowrap}
+  }
+  .price .nw{white-space:nowrap}
 </style>
 </head>
 <body>
@@ -467,6 +478,8 @@
   </section>
 </main>
 
+<div class="mbar" id="mbar" aria-hidden="true"><div><span data-i18n="r_lbl">Indicative budget</span><br><b id="mprice"></b></div><a href="#sendEst" data-i18n="m_see">Details ↓</a></div>
+
 <footer>
   <div class="wrap">
     <span><a href="/">Permanent Summer</a> · Spaces · Permanent Summer Lda · NIF 516416804 · Altura, Portugal</span>
@@ -503,7 +516,8 @@ function calc(){
     if (flapEl.checked){ total += P.flap * qty; lines.push(t('l_flap')); }
   }
   var lo = total, hi = total * 1.05;
-  document.getElementById('price').textContent = fmtN(lo) + ' – ' + fmtN(hi);
+  document.getElementById('price').innerHTML = '<span class="nw">' + fmtN(lo) + '</span> – <span class="nw">' + fmtN(hi) + '</span>';
+  document.getElementById('mprice').textContent = fmtN(lo) + ' – ' + fmtN(hi);
   document.getElementById('incl').innerHTML = lines.map(function(l){ return '<li>' + l + '</li>'; }).join('');
   document.getElementById('lead').textContent = c === 'none' ? t('l_lead') : t('l_lead_cover');
   return { m:m, c:c, inst:inst, flap:flapEl.checked, lo:lo, hi:hi, dest:document.getElementById('dest').value };
@@ -526,6 +540,13 @@ document.getElementById('qform').addEventListener('submit', function(e){
   location.href = 'mailto:spaces@permanentsummer.co?subject=' + encodeURIComponent('Quote request — ' + (f.company.value || f.name.value)) + '&body=' + encodeURIComponent(body);
 });
 
+// mobile price bar: visible while the estimator form is on screen, hidden once the full result is visible
+if ('IntersectionObserver' in window){
+  var inForm=false, inRes=false, bar=document.getElementById('mbar');
+  var upd=function(){ bar.classList.toggle('on', inForm && !inRes); };
+  new IntersectionObserver(function(e){ inForm=e[0].isIntersecting; upd(); }).observe(document.getElementById('est'));
+  new IntersectionObserver(function(e){ inRes=e[0].isIntersecting; upd(); },{threshold:.4}).observe(document.querySelector('.result'));
+}
 /* ---------- Translations ---------- */
 T.en = {
   l_court:'court, 8 LED floodlights, 2 entrances, textured turf with silica',
@@ -536,6 +557,7 @@ T.en = {
   l_lead_cover:'Production: about 5 weeks for courts, 2–4 months for covers. Covers require foundations and a site-specific wind calculation.'
 };
 T.fr = {
+  m_see:'Détails ↓',
   nav_products:'Produits', nav_estimator:'Estimateur padel', nav_projects:'Projets', nav_quote:'Demander un devis',
   hero_eyebrow:'Fabriqué en Europe · Certifié · Livré dans le monde entier',
   hero_title:'Des espaces extérieurs <em>faits pour durer.</em>',
@@ -591,6 +613,7 @@ T.fr = {
   f_msg:'Détails du projet (surface, quantités, calendrier)', f_send:'Envoyer ma demande', f_note:'Ouvre votre messagerie avec votre demande prête à envoyer à spaces@permanentsummer.co.'
 };
 T.pt = {
+  m_see:'Detalhes ↓',
   nav_products:'Produtos', nav_estimator:'Estimador de padel', nav_projects:'Projetos', nav_quote:'Pedir orçamento',
   hero_eyebrow:'Fabricado na Europa · Certificado · Entregue em todo o mundo',
   hero_title:'Espaços exteriores <em>feitos para durar.</em>',
