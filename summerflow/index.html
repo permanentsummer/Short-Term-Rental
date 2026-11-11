@@ -1,0 +1,1065 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SummerFlow — One place to run your rental</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════════
+   DESIGN TOKENS — SummerFlow palette
+═══════════════════════════════════════════════ */
+:root {
+  --navy: #1b2a41;
+  --navy-deep: #111e2e;
+  --navy-mid: #243552;
+  --terra: #b8663f;
+  --terra-dark: #9e5533;
+  --terra-light: #f5e6dc;
+  --sand: #f8f1ea;
+  --white: #FAFAFA;
+  --text: #1b2a41;
+  --text-muted: #556C8A;
+  --text-light: #8A9DB5;
+  --border: #E2EAF3;
+  --card: #FFFFFF;
+  --bg: #f8f1ea;
+  --radius: 16px;
+  --radius-sm: 10px;
+  --radius-lg: 24px;
+  --shadow-sm: 0 2px 8px rgba(27,42,65,.07);
+  --shadow: 0 8px 32px rgba(27,42,65,.10);
+  --shadow-lg: 0 24px 64px rgba(27,42,65,.14);
+  --transition: .35s cubic-bezier(.25,.46,.45,.94);
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Plus Jakarta Sans',sans-serif;color:var(--text);background:#fff;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+
+.container{max-width:1120px;margin:0 auto;padding:0 24px}
+.container-sm{max-width:760px;margin:0 auto;padding:0 24px}
+
+.tag{display:inline-flex;align-items:center;gap:6px;background:var(--terra-light);color:var(--navy);font-size:12px;font-weight:700;padding:5px 12px;border-radius:999px;letter-spacing:.4px;text-transform:uppercase}
+.tag-dot{width:6px;height:6px;background:var(--terra);border-radius:50%;display:inline-block}
+.tag--white{background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.18)}
+.tag--white .tag-dot{background:var(--terra)}
+
+h1,h2,h3{line-height:1.15;letter-spacing:-.4px}
+.section-title{font-size:clamp(32px,5vw,52px);font-weight:900;color:var(--navy)}
+.section-sub{font-size:18px;color:var(--text-muted);line-height:1.65;font-weight:500;margin-top:16px;font-family:'Inter',sans-serif}
+.section-head{text-align:center;margin-bottom:64px}
+
+.btn{display:inline-flex;align-items:center;gap:8px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:15px;padding:13px 24px;border-radius:12px;cursor:pointer;border:none;text-decoration:none;transition:all var(--transition)}
+.btn-primary{background:var(--terra);color:#fff}
+.btn-primary:hover{background:var(--terra-dark);transform:translateY(-1px);box-shadow:0 8px 24px rgba(184,102,63,.35)}
+.btn-outline{background:transparent;color:var(--navy);border:2px solid var(--border)}
+.btn-outline:hover{border-color:var(--navy);background:var(--bg)}
+.btn-ghost{background:rgba(255,255,255,.12);color:#fff;border:1.5px solid rgba(255,255,255,.25)}
+.btn-ghost:hover{background:rgba(255,255,255,.22)}
+.btn-white{background:#fff;color:var(--navy)}
+.btn-white:hover{background:var(--terra-light);transform:translateY(-1px)}
+.btn-lg{padding:16px 32px;font-size:16px;border-radius:14px}
+
+.reveal{opacity:0;transform:translateY(32px);transition:opacity .7s cubic-bezier(.25,.46,.45,.94),transform .7s cubic-bezier(.25,.46,.45,.94)}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.reveal-left{opacity:0;transform:translateX(-40px);transition:opacity .7s cubic-bezier(.25,.46,.45,.94),transform .7s cubic-bezier(.25,.46,.45,.94)}
+.reveal-left.visible{opacity:1;transform:translateX(0)}
+.reveal-right{opacity:0;transform:translateX(40px);transition:opacity .7s cubic-bezier(.25,.46,.45,.94),transform .7s cubic-bezier(.25,.46,.45,.94)}
+.reveal-right.visible{opacity:1;transform:translateX(0)}
+.delay-1{transition-delay:.1s}
+.delay-2{transition-delay:.2s}
+.delay-3{transition-delay:.3s}
+.delay-4{transition-delay:.4s}
+.delay-5{transition-delay:.5s}
+
+/* ═══ NAVBAR ═══ */
+.navbar{position:fixed;top:0;left:0;right:0;z-index:999;padding:16px 0;transition:all .35s}
+.navbar.scrolled{background:rgba(27,42,65,.97);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);padding:12px 0;box-shadow:0 2px 40px rgba(0,0,0,.25)}
+.nav-inner{display:flex;align-items:center;gap:32px;max-width:1120px;margin:0 auto;padding:0 24px}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0}
+.nav-logo-ico{width:36px;height:36px;background:var(--terra);border-radius:10px;display:flex;align-items:center;justify-content:center}
+.nav-logo-ico svg{width:20px;height:20px}
+.nav-logo-name{font-size:17px;font-weight:800;color:#fff;letter-spacing:-.3px}
+.nav-links{display:flex;align-items:center;gap:4px;flex:1}
+.nav-link{color:rgba(255,255,255,.7);font-size:14px;font-weight:600;padding:8px 14px;border-radius:8px;text-decoration:none;transition:all .2s}
+.nav-link:hover{color:#fff;background:rgba(255,255,255,.1)}
+.nav-ctas{display:flex;align-items:center;gap:10px;margin-left:auto;flex-shrink:0}
+.nav-login{color:rgba(255,255,255,.75);font-size:14px;font-weight:600;padding:8px 16px;border-radius:8px;text-decoration:none;transition:all .2s}
+.nav-login:hover{color:#fff}
+.nav-start{background:var(--terra);color:#fff;font-size:14px;font-weight:700;padding:9px 20px;border-radius:10px;text-decoration:none;transition:all .2s;white-space:nowrap}
+.nav-start:hover{background:var(--terra-dark);transform:translateY(-1px)}
+.nav-toggle{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:8px;background:transparent;border:none}
+.nav-toggle span{width:22px;height:2px;background:#fff;border-radius:2px;display:block;transition:all .25s}
+
+/* ═══ HERO ═══ */
+.hero{min-height:100vh;background:linear-gradient(145deg, var(--navy-deep) 0%, var(--navy) 50%, #243552 100%);display:flex;align-items:center;position:relative;overflow:hidden;padding:120px 0 80px}
+.hero-bg-shape{position:absolute;border-radius:50%;filter:blur(80px);pointer-events:none}
+.hero-bg-shape.s1{width:600px;height:600px;background:rgba(184,102,63,.12);top:-100px;right:-100px;animation:float1 8s ease-in-out infinite}
+.hero-bg-shape.s2{width:400px;height:400px;background:rgba(248,241,234,.05);bottom:-80px;left:-80px;animation:float2 10s ease-in-out infinite}
+.hero-bg-shape.s3{width:300px;height:300px;background:rgba(184,102,63,.08);top:50%;left:40%;animation:float3 7s ease-in-out infinite}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);background-size:60px 60px;pointer-events:none}
+@keyframes float1{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-30px) rotate(5deg)}}
+@keyframes float2{0%,100%{transform:translateY(0)}50%{transform:translateY(-20px)}}
+@keyframes float3{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(20px) scale(1.05)}}
+.hero-inner{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;position:relative;z-index:2}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:8px;background:rgba(184,102,63,.18);border:1px solid rgba(184,102,63,.3);color:#f0b896;font-size:12px;font-weight:700;padding:6px 14px;border-radius:999px;letter-spacing:.6px;text-transform:uppercase;margin-bottom:24px}
+.hero-title{font-size:clamp(40px,5.5vw,64px);font-weight:900;color:#fff;line-height:1.08;letter-spacing:-.8px}
+.hero-title span{color:#f0b896}
+.hero-sub{font-size:17px;color:rgba(255,255,255,.65);line-height:1.7;margin-top:20px;font-family:'Inter',sans-serif;font-weight:400;max-width:480px}
+.hero-ctas{display:flex;align-items:center;gap:12px;margin-top:36px;flex-wrap:wrap}
+.hero-stats{display:flex;gap:32px;margin-top:48px;padding-top:32px;border-top:1px solid rgba(255,255,255,.1)}
+.hero-stat-num{font-size:28px;font-weight:900;color:#fff;letter-spacing:-1px}
+.hero-stat-label{font-size:12px;color:rgba(255,255,255,.5);font-weight:500;margin-top:2px;font-family:'Inter',sans-serif}
+.hero-visual{position:relative}
+.hero-dashboard{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:20px;overflow:hidden;backdrop-filter:blur(12px);animation:heroFloat 6s ease-in-out infinite;box-shadow:0 40px 80px rgba(0,0,0,.3)}
+.hero-dash-top{background:rgba(255,255,255,.08);padding:12px 16px;display:flex;align-items:center;gap:8px;border-bottom:1px solid rgba(255,255,255,.08)}
+.dash-dot{width:10px;height:10px;border-radius:50%}
+.dash-dot.red{background:#FF5F57}
+.dash-dot.yellow{background:#FFBD2E}
+.dash-dot.green{background:#28C840}
+.hero-dash-title{color:rgba(255,255,255,.5);font-size:11px;font-weight:600;margin-left:6px;letter-spacing:.3px}
+.hero-dash-body{padding:20px}
+.dash-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px}
+.dash-greeting{font-size:11px;color:rgba(255,255,255,.4);font-weight:600;letter-spacing:.3px}
+.dash-title{font-size:18px;font-weight:800;color:#fff;margin-top:2px}
+.dash-date-badge{background:rgba(184,102,63,.2);color:#f0b896;font-size:10px;font-weight:700;padding:4px 10px;border-radius:6px;letter-spacing:.3px}
+.dash-stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px}
+.dash-stat-card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:10px 12px}
+.dsc-label{font-size:10px;color:rgba(255,255,255,.4);font-weight:600;text-transform:uppercase;letter-spacing:.4px}
+.dsc-val{font-size:22px;font-weight:900;color:#fff;margin:2px 0}
+.dsc-trend{font-size:10px;font-weight:600;color:#34D399}
+.dash-bookings{margin-bottom:12px}
+.db-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.db-title{font-size:11px;font-weight:700;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:.5px}
+.db-see{font-size:10px;color:#f0b896;font-weight:600;cursor:pointer}
+.booking-row{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.06)}
+.booking-row:last-child{border-bottom:none}
+.br-avatar{width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;flex-shrink:0}
+.br-info{flex:1;min-width:0}
+.br-name{font-size:11px;font-weight:700;color:rgba(255,255,255,.85);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.br-dates{font-size:10px;color:rgba(255,255,255,.35);font-weight:500}
+.br-status{font-size:10px;font-weight:700;padding:3px 8px;border-radius:5px}
+.br-status.confirmed{background:rgba(52,211,153,.15);color:#34D399}
+.br-status.pending{background:rgba(184,102,63,.2);color:#f0b896}
+.br-status.checkout{background:rgba(148,163,184,.12);color:#94A3B8}
+.hero-float-card{position:absolute;background:rgba(255,255,255,.95);border-radius:14px;padding:12px 16px;box-shadow:0 20px 40px rgba(0,0,0,.25);border:1px solid rgba(255,255,255,.8);backdrop-filter:blur(12px);min-width:160px}
+.hero-float-card.hfc-tasks{bottom:-20px;left:-40px;animation:floatCard1 5s ease-in-out infinite}
+.hero-float-card.hfc-notify{top:20px;right:-30px;animation:floatCard2 6s ease-in-out infinite}
+.hfc-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;margin-bottom:8px}
+.hfc-label{font-size:10px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.4px}
+.hfc-val{font-size:18px;font-weight:900;color:var(--navy)}
+.hfc-sub{font-size:10px;color:var(--text-muted);margin-top:2px}
+.hfc-dot{width:8px;height:8px;background:#10B981;border-radius:50%;display:inline-block;margin-right:5px;animation:pulse 2s infinite}
+@keyframes heroFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+@keyframes floatCard1{0%,100%{transform:translate(0,0)}50%{transform:translate(4px,-8px)}}
+@keyframes floatCard2{0%,100%{transform:translate(0,0)}50%{transform:translate(-4px,8px)}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+
+/* ═══ TRUST BAR ═══ */
+.trust-bar{padding:48px 0;border-bottom:1px solid var(--border);background:#fff}
+.trust-label{text-align:center;font-size:12px;font-weight:700;color:var(--text-light);text-transform:uppercase;letter-spacing:.8px;margin-bottom:32px}
+.trust-logos{display:flex;align-items:center;justify-content:center;gap:48px;flex-wrap:wrap}
+.trust-logo-item{display:flex;align-items:center;gap:8px;opacity:.5;transition:opacity .2s;cursor:default}
+.trust-logo-item:hover{opacity:.8}
+.trust-logo-ico{width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:14px}
+.trust-logo-name{font-size:14px;font-weight:700;color:var(--navy);letter-spacing:-.2px}
+.reviews-row{display:flex;gap:16px;overflow-x:auto;padding:32px 0 8px;scrollbar-width:none}
+.reviews-row::-webkit-scrollbar{display:none}
+.review-card{flex:0 0 280px;background:#fff;border:1.5px solid var(--border);border-radius:16px;padding:20px;transition:transform .25s,box-shadow .25s}
+.review-card:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
+.review-stars{display:flex;gap:2px;margin-bottom:10px}
+.review-stars span{color:#FBBF24;font-size:14px}
+.review-text{font-size:13px;color:var(--text-muted);line-height:1.6;font-family:'Inter',sans-serif;font-weight:400}
+.review-author{display:flex;align-items:center;gap:10px;margin-top:14px}
+.review-avatar{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:#fff;flex-shrink:0}
+.review-name{font-size:12px;font-weight:700;color:var(--navy)}
+.review-role{font-size:11px;color:var(--text-light);font-family:'Inter',sans-serif}
+
+/* ═══ PROBLEM ═══ */
+.problem{padding:100px 0;background:var(--bg)}
+.problem-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:56px}
+.problem-card{background:#fff;border:1.5px solid var(--border);border-radius:var(--radius);padding:28px;transition:all .3s;position:relative;overflow:hidden}
+.problem-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(184,102,63,.04),transparent 60%);opacity:0;transition:opacity .3s}
+.problem-card:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
+.problem-card:hover::before{opacity:1}
+.pc-icon{width:44px;height:44px;background:rgba(184,102,63,.1);border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:16px}
+.pc-icon svg{width:22px;height:22px;stroke:var(--terra);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.pc-title{font-size:15px;font-weight:800;color:var(--navy);margin-bottom:8px}
+.pc-desc{font-size:13px;color:var(--text-muted);line-height:1.6;font-family:'Inter',sans-serif}
+
+/* ═══ HOW IT WORKS ═══ */
+.how{padding:100px 0;background:#fff}
+.steps-row{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;margin-top:56px;position:relative}
+.steps-row::before{content:'';position:absolute;top:36px;left:calc(16.66% + 20px);right:calc(16.66% + 20px);height:2px;background:linear-gradient(90deg,var(--terra),var(--navy));opacity:.2;pointer-events:none}
+.step-card{background:var(--bg);border-radius:var(--radius);padding:32px;text-align:center;transition:all .3s;border:1.5px solid transparent}
+.step-card:hover{background:#fff;border-color:var(--border);box-shadow:var(--shadow);transform:translateY(-4px)}
+.step-num{width:56px;height:56px;background:var(--terra);color:#fff;border-radius:50%;font-size:20px;font-weight:900;display:flex;align-items:center;justify-content:center;margin:0 auto 20px}
+.step-title{font-size:16px;font-weight:800;color:var(--navy);margin-bottom:10px}
+.step-desc{font-size:13px;color:var(--text-muted);line-height:1.6;font-family:'Inter',sans-serif}
+
+/* ═══ FEATURES GRID ═══ */
+.features{padding:100px 0;background:var(--bg)}
+.feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:56px}
+.feat-card{background:#fff;border:1.5px solid var(--border);border-radius:var(--radius-lg);padding:32px;transition:all .3s;position:relative;overflow:hidden}
+.feat-card::after{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--terra),var(--navy));opacity:0;transition:opacity .3s}
+.feat-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg);border-color:transparent}
+.feat-card:hover::after{opacity:1}
+.fc-icon{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;margin-bottom:20px;font-size:24px}
+.fc-title{font-size:17px;font-weight:800;color:var(--navy);margin-bottom:8px}
+.fc-desc{font-size:13px;color:var(--text-muted);line-height:1.65;font-family:'Inter',sans-serif}
+
+/* ═══ SOLUTION (2-col) ═══ */
+.solution{padding:100px 0;background:#fff;overflow:hidden}
+.solution-inner{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+.solution-screen{background:var(--navy);border-radius:20px;overflow:hidden;box-shadow:var(--shadow-lg);border:1px solid rgba(255,255,255,.1)}
+.ss-topbar{background:rgba(255,255,255,.05);padding:10px 16px;display:flex;align-items:center;gap:6px;border-bottom:1px solid rgba(255,255,255,.06)}
+.ss-body{padding:20px}
+.mini-sidebar{display:flex;gap:12px}
+.mini-nav{width:44px;flex-shrink:0;display:flex;flex-direction:column;gap:4px}
+.mini-nav-item{width:36px;height:36px;border-radius:9px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center}
+.mini-nav-item.on{background:var(--terra)}
+.mini-nav-item svg{width:16px;height:16px;stroke:rgba(255,255,255,.5);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.mini-nav-item.on svg{stroke:#fff}
+.mini-main{flex:1;min-width:0}
+.mini-greeting{font-size:10px;color:rgba(255,255,255,.4);font-weight:600;letter-spacing:.3px;text-transform:uppercase;margin-bottom:2px}
+.mini-title{font-size:15px;font-weight:800;color:#fff;margin-bottom:12px}
+.mini-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:12px}
+.mini-stat{background:rgba(255,255,255,.06);border-radius:8px;padding:8px 10px;border:1px solid rgba(255,255,255,.08)}
+.mini-stat .n{font-size:16px;font-weight:900;color:#fff;line-height:1}
+.mini-stat .l{font-size:9px;color:rgba(255,255,255,.35);font-weight:600;text-transform:uppercase;margin-top:2px}
+.mini-bk-title{font-size:9px;color:rgba(255,255,255,.35);font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
+.mini-bk{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05)}
+.mini-bk:last-child{border-bottom:none}
+.mini-bk-av{width:22px;height:22px;border-radius:5px;font-size:9px;font-weight:800;display:flex;align-items:center;justify-content:center;color:#fff;flex-shrink:0}
+.mini-bk-name{font-size:10px;font-weight:700;color:rgba(255,255,255,.8);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mini-bk-badge{font-size:9px;font-weight:700;padding:2px 6px;border-radius:4px}
+.sol-badge{position:absolute;background:#fff;border-radius:12px;padding:10px 14px;box-shadow:var(--shadow);border:1.5px solid var(--border);display:flex;align-items:center;gap:8px}
+.sol-badge.sb1{bottom:-16px;left:-24px;animation:floatCard1 5s ease-in-out infinite}
+.sol-badge.sb2{top:20px;right:-24px;animation:floatCard2 6s ease-in-out infinite}
+.sbl-icon{width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.sbl-text .t{font-size:11px;font-weight:800;color:var(--navy)}
+.sbl-text .s{font-size:10px;color:var(--text-muted)}
+.solution-content{}
+.sol-features{display:flex;flex-direction:column;gap:20px;margin-top:32px}
+.sol-feature{display:flex;align-items:flex-start;gap:14px;padding:16px 20px;border:1.5px solid var(--border);border-radius:14px;background:#fff;transition:all .25s;cursor:default}
+.sol-feature:hover{border-color:var(--terra);box-shadow:0 0 0 4px rgba(184,102,63,.1);transform:translateX(4px)}
+.sf-icon{width:40px;height:40px;border-radius:10px;background:var(--terra-light);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.sf-icon svg{width:20px;height:20px;stroke:var(--terra);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.sf-text .t{font-size:14px;font-weight:800;color:var(--navy)}
+.sf-text .s{font-size:12px;color:var(--text-muted);line-height:1.55;font-family:'Inter',sans-serif;margin-top:3px}
+
+/* ═══ PRICING ═══ */
+.pricing{padding:100px 0;background:var(--navy);position:relative;overflow:hidden}
+.pricing .hero-bg-shape.s1{opacity:.3}
+.pricing .hero-bg-shape.s2{opacity:.2}
+.pricing-inner{position:relative;z-index:2}
+.pricing-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:900px;margin:56px auto 0}
+.pricing-card{background:rgba(255,255,255,.05);border:1.5px solid rgba(255,255,255,.1);border-radius:24px;padding:40px;backdrop-filter:blur(10px);position:relative;overflow:hidden;transition:all .35s;display:flex;flex-direction:column}
+.pricing-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(184,102,63,.06),transparent 50%);pointer-events:none}
+.pricing-card:hover{transform:translateY(-4px);box-shadow:0 40px 80px rgba(0,0,0,.3);border-color:rgba(184,102,63,.3)}
+.pricing-card.featured{border-color:rgba(184,102,63,.5);background:rgba(184,102,63,.08)}
+.pricing-card.featured::before{background:linear-gradient(135deg,rgba(184,102,63,.12),transparent 50%)}
+.pricing-badge{position:absolute;top:20px;right:20px;background:var(--terra);color:#fff;font-size:10px;font-weight:800;padding:4px 10px;border-radius:999px;letter-spacing:.4px;text-transform:uppercase}
+.pricing-top{margin-bottom:28px}
+.pricing-label{font-size:11px;font-weight:700;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.7px;margin-bottom:8px}
+.pricing-name{font-size:26px;font-weight:900;color:#fff;letter-spacing:-.4px;margin-bottom:16px}
+.pricing-price-row{display:flex;align-items:baseline;gap:4px}
+.pricing-num{font-size:48px;font-weight:900;color:#fff;line-height:1;letter-spacing:-2px}
+.pricing-num sup{font-size:20px;vertical-align:super;font-weight:700}
+.pricing-period{font-size:14px;color:rgba(255,255,255,.4);font-weight:500}
+.pricing-sub{font-size:12px;color:#f0b896;font-weight:600;margin-top:6px}
+.pricing-divider{height:1px;background:rgba(255,255,255,.08);margin:24px 0}
+.pricing-features{display:flex;flex-direction:column;gap:12px;margin-bottom:32px;flex:1}
+.pf-item{display:flex;align-items:flex-start;gap:10px;font-size:13px;font-weight:600;color:rgba(255,255,255,.75)}
+.pf-item.muted{color:rgba(255,255,255,.3)}
+.pf-check{width:18px;height:18px;background:rgba(184,102,63,.2);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:9px;margin-top:1px}
+.pf-check.green{background:rgba(52,211,153,.2);color:#34D399}
+.pf-x{width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:10px;color:rgba(255,255,255,.2);background:rgba(255,255,255,.05);margin-top:1px}
+.pricing-cta{margin-top:auto}
+.pricing-no-cc{font-size:11px;color:rgba(255,255,255,.3);font-weight:500;font-family:'Inter',sans-serif;margin-top:10px;text-align:center}
+.pricing-toggle{display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:0}
+.pt-label{font-size:14px;font-weight:600;color:rgba(255,255,255,.5)}
+.pt-label.active{color:#fff}
+.pt-switch{width:44px;height:24px;background:rgba(255,255,255,.15);border-radius:999px;cursor:pointer;position:relative;transition:background .25s;border:none}
+.pt-switch.on{background:var(--terra)}
+.pt-knob{width:18px;height:18px;background:#fff;border-radius:50%;position:absolute;top:3px;left:3px;transition:left .25s}
+.pt-switch.on .pt-knob{left:23px}
+.pt-save{background:rgba(52,211,153,.15);color:#34D399;font-size:11px;font-weight:700;padding:3px 8px;border-radius:999px}
+@media(max-width:700px){.pricing-grid{grid-template-columns:1fr}}
+
+/* ═══ FAQ ═══ */
+.faq{padding:100px 0;background:var(--bg)}
+.faq-cols{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:56px}
+.faq-item{background:#fff;border:1.5px solid var(--border);border-radius:var(--radius);overflow:hidden;transition:border-color .2s}
+.faq-item.open{border-color:var(--terra)}
+.faq-q{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:20px 24px;cursor:pointer;font-size:15px;font-weight:700;color:var(--navy);user-select:none}
+.faq-icon{width:24px;height:24px;border-radius:50%;background:var(--terra-light);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .25s}
+.faq-item.open .faq-icon{background:var(--terra);transform:rotate(45deg)}
+.faq-icon svg{width:12px;height:12px;stroke:var(--terra);stroke-width:2.5;stroke-linecap:round}
+.faq-item.open .faq-icon svg{stroke:#fff}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .35s cubic-bezier(.25,.46,.45,.94)}
+.faq-item.open .faq-a{max-height:300px}
+.faq-a-inner{padding:0 24px 20px;font-size:14px;color:var(--text-muted);line-height:1.7;font-family:'Inter',sans-serif}
+
+/* ═══ BOOK A CALL ═══ */
+.book-call{padding:80px 0 60px;background:#fff;}
+.calendly-wrap{max-width:740px;margin:0 auto;}
+
+/* ═══ FINAL CTA ═══ */
+.final-cta{padding:100px 0;background:linear-gradient(135deg,#fff 0%,var(--terra-light) 100%);text-align:center;position:relative;overflow:hidden}
+.final-cta::before{content:'';position:absolute;width:600px;height:600px;background:rgba(184,102,63,.12);border-radius:50%;top:-200px;right:-100px;filter:blur(60px);pointer-events:none}
+.cta-inner{position:relative;z-index:2}
+.cta-title{font-size:clamp(36px,5vw,56px);font-weight:900;color:var(--navy);line-height:1.1;letter-spacing:-.6px;max-width:700px;margin:0 auto 20px}
+.cta-sub{font-size:17px;color:var(--text-muted);font-family:'Inter',sans-serif;max-width:480px;margin:0 auto 40px;line-height:1.65}
+.cta-btns{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap}
+.cta-trust{display:flex;align-items:center;justify-content:center;gap:20px;margin-top:32px;flex-wrap:wrap}
+.cta-trust-item{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text-muted);font-weight:600}
+.cti-dot{width:6px;height:6px;background:var(--terra);border-radius:50%}
+
+/* ═══ FOOTER ═══ */
+footer{background:var(--navy-deep);padding:64px 0 32px}
+.footer-inner{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:48px}
+.footer-brand .fl-logo{display:flex;align-items:center;gap:10px;margin-bottom:16px}
+.fl-logo-ico{width:36px;height:36px;background:var(--terra);border-radius:10px;display:flex;align-items:center;justify-content:center}
+.fl-logo-name{font-size:16px;font-weight:800;color:#fff}
+.footer-brand p{font-size:13px;color:rgba(255,255,255,.35);line-height:1.65;font-family:'Inter',sans-serif;max-width:260px}
+.footer-col h4{font-size:11px;font-weight:700;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:.7px;margin-bottom:16px}
+.footer-col a{display:block;font-size:13px;color:rgba(255,255,255,.5);text-decoration:none;font-family:'Inter',sans-serif;margin-bottom:10px;transition:color .2s}
+.footer-col a:hover{color:rgba(255,255,255,.85)}
+.footer-bottom{display:flex;align-items:center;justify-content:space-between;padding-top:32px;border-top:1px solid rgba(255,255,255,.06);flex-wrap:wrap;gap:12px}
+.footer-bottom p{font-size:12px;color:rgba(255,255,255,.2);font-family:'Inter',sans-serif}
+
+/* ═══ RESPONSIVE ═══ */
+@media(max-width:900px){
+  .hero-inner{grid-template-columns:1fr;gap:48px}
+  .hero-visual{display:none}
+  .solution-inner{grid-template-columns:1fr;gap:48px}
+  .problem-grid,.feat-grid{grid-template-columns:1fr 1fr;gap:16px}
+  .steps-row{grid-template-columns:1fr;gap:16px}
+  .steps-row::before{display:none}
+  .pricing-features{grid-template-columns:1fr}
+  .footer-inner{grid-template-columns:1fr 1fr;gap:32px}
+  .pricing-top{flex-direction:column;gap:16px}
+  .pricing-card{padding:32px 24px}
+  .faq-cols{grid-template-columns:1fr}
+}
+@media(max-width:640px){
+  .nav-links{display:none}
+  .nav-toggle{display:flex}
+  .hero{padding:100px 0 60px}
+  .hero-title{font-size:36px}
+  .hero-stats{gap:20px}
+  .problem-grid,.feat-grid{grid-template-columns:1fr}
+  .trust-logos{gap:24px}
+  .footer-inner{grid-template-columns:1fr}
+  .footer-bottom{flex-direction:column;align-items:flex-start}
+  .section-head{margin-bottom:40px}
+  .hero-ctas{flex-direction:column;width:100%}
+  .hero-ctas .btn{width:100%;justify-content:center}
+}
+
+/* Mobile nav */
+.mobile-nav{position:fixed;top:0;left:0;right:0;bottom:0;background:var(--navy);z-index:1000;display:flex;flex-direction:column;padding:24px;transform:translateX(-100%);transition:transform .35s cubic-bezier(.25,.46,.45,.94)}
+.mobile-nav.open{transform:translateX(0)}
+.mobile-nav-close{align-self:flex-end;background:transparent;border:none;color:#fff;font-size:28px;cursor:pointer;padding:8px;line-height:1}
+.mobile-nav-links{display:flex;flex-direction:column;gap:4px;margin-top:32px;flex:1}
+.mobile-nav-link{color:rgba(255,255,255,.7);font-size:20px;font-weight:700;padding:14px 0;border-bottom:1px solid rgba(255,255,255,.06);text-decoration:none;transition:color .2s}
+.mobile-nav-link:hover{color:#fff}
+.mobile-nav-ctas{display:flex;flex-direction:column;gap:10px;margin-top:32px}
+
+/* Lang switcher */
+.lang-switcher{display:flex;gap:4px;margin-left:8px}
+.lang-btn{background:rgba(255,255,255,.1);border:none;color:rgba(255,255,255,.6);font-size:11px;font-weight:700;padding:5px 9px;border-radius:6px;cursor:pointer;transition:all .2s;font-family:'Plus Jakarta Sans',sans-serif}
+.lang-btn.active{background:var(--terra);color:#fff}
+.lang-btn:hover:not(.active){background:rgba(255,255,255,.18);color:#fff}
+
+/* Phone header fix: Log in / Get Started live in the ☰ menu on small screens */
+@media(max-width:640px){.nav-login,.nav-start{display:none}}
+</style>
+</head>
+<body>
+
+<!-- ═══ NAVBAR ═══ -->
+<nav class="navbar" id="navbar">
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">
+      <div class="nav-logo-ico">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
+        </svg>
+      </div>
+      <span class="nav-logo-name">SummerFlow</span>
+    </a>
+    <div class="nav-links">
+      <a href="#how" class="nav-link" data-en="How it works" data-fr="Comment ça marche" data-pt="Como funciona">How it works</a>
+      <a href="#features" class="nav-link" data-en="Features" data-fr="Fonctionnalités" data-pt="Funcionalidades">Features</a>
+      <a href="#pricing" class="nav-link" data-en="Pricing" data-fr="Tarifs" data-pt="Preços">Pricing</a>
+      <a href="#faq" class="nav-link" data-en="FAQ" data-fr="FAQ" data-pt="FAQ">FAQ</a>
+    </div>
+    <div class="nav-ctas">
+      <div class="lang-switcher">
+        <button class="lang-btn active" onclick="setLang('en')">EN</button>
+        <button class="lang-btn" onclick="setLang('fr')">FR</button>
+        <button class="lang-btn" onclick="setLang('pt')">PT</button>
+      </div>
+      <a href="https://summerflow.permanentsummer.co" class="nav-login" data-en="Log in" data-fr="Connexion" data-pt="Entrar">Log in</a>
+      <a href="https://summerflow.permanentsummer.co" class="nav-start" data-en="Get Started →" data-fr="Commencer →" data-pt="Começar →">Get Started →</a>
+    </div>
+    <button class="nav-toggle" onclick="toggleMobileNav()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<div class="mobile-nav" id="mobileNav">
+  <button class="mobile-nav-close" onclick="toggleMobileNav()">✕</button>
+  <div class="mobile-nav-links">
+    <a href="#how" class="mobile-nav-link" onclick="toggleMobileNav()" data-en="How it works" data-fr="Comment ça marche" data-pt="Como funciona">How it works</a>
+    <a href="#features" class="mobile-nav-link" onclick="toggleMobileNav()" data-en="Features" data-fr="Fonctionnalités" data-pt="Funcionalidades">Features</a>
+    <a href="#pricing" class="mobile-nav-link" onclick="toggleMobileNav()" data-en="Pricing" data-fr="Tarifs" data-pt="Preços">Pricing</a>
+    <a href="#faq" class="mobile-nav-link" onclick="toggleMobileNav()" data-en="FAQ" data-fr="FAQ" data-pt="FAQ">FAQ</a>
+  </div>
+  <div class="mobile-nav-ctas">
+    <a href="https://summerflow.permanentsummer.co" class="btn btn-ghost btn-lg" style="justify-content:center" data-en="Log in" data-fr="Connexion" data-pt="Entrar">Log in</a>
+    <a href="https://summerflow.permanentsummer.co" class="btn btn-primary btn-lg" style="justify-content:center" data-en="Get Started — Free →" data-fr="Commencer — Gratuit →" data-pt="Começar — Grátis →">Get Started — Free →</a>
+  </div>
+</div>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero" id="home">
+  <div class="hero-grid"></div>
+  <div class="hero-bg-shape s1"></div>
+  <div class="hero-bg-shape s2"></div>
+  <div class="hero-bg-shape s3"></div>
+  <div class="container">
+    <div class="hero-inner">
+      <div class="hero-content">
+        <div class="hero-eyebrow">
+          <span class="tag-dot"></span>
+          <span data-en="Short-term rental management" data-fr="Gestion de location courte durée" data-pt="Gestão de alojamento local">Short-term rental management</span>
+        </div>
+        <h1 class="hero-title">
+          <span data-en="One place to<br>run your<br><em style='color:#f0b896;font-style:normal'>rental.</em>" data-fr="Tout pour gérer<br>votre<br><em style='color:#f0b896;font-style:normal'>location.</em>" data-pt="Tudo para gerir<br>o seu<br><em style='color:#f0b896;font-style:normal'>alojamento.</em>">One place to<br>run your<br><em style="color:#f0b896;font-style:normal">rental.</em></span>
+        </h1>
+        <p class="hero-sub" data-en="Reservations, direct bookings, cleaning and your real numbers — all in one app built for rental owners." data-fr="Réservations, réservations directes, ménage et vos vrais chiffres — tout dans une app faite pour les propriétaires." data-pt="Reservas, reservas diretas, limpeza e os seus números reais — tudo numa app feita para proprietários.">Reservations, direct bookings, cleaning and your real numbers — all in one app built for rental owners.</p>
+        <div class="hero-ctas">
+          <a href="https://summerflow.permanentsummer.co" class="btn btn-primary btn-lg" data-en="Try for free →" data-fr="Essayer gratuitement →" data-pt="Experimentar grátis →">Try for free →</a>
+          <a href="#pricing" class="btn btn-ghost btn-lg" data-en="See pricing" data-fr="Voir les tarifs" data-pt="Ver preços">See pricing</a>
+        </div>
+        <div class="hero-stats">
+          <div>
+            <div class="hero-stat-num">2</div>
+            <div class="hero-stat-label" data-en="Free properties" data-fr="Propriétés gratuites" data-pt="Propriedades grátis">Free properties</div>
+          </div>
+          <div>
+            <div class="hero-stat-num">€7</div>
+            <div class="hero-stat-label" data-en="Pro / month" data-fr="Pro / mois" data-pt="Pro / mês">Pro / month</div>
+          </div>
+          <div>
+            <div class="hero-stat-num">∞</div>
+            <div class="hero-stat-label" data-en="Bookings included" data-fr="Réservations incluses" data-pt="Reservas incluídas">Bookings included</div>
+          </div>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="hero-dashboard">
+          <div class="hero-dash-top">
+            <div class="dash-dot red"></div>
+            <div class="dash-dot yellow"></div>
+            <div class="dash-dot green"></div>
+            <span class="hero-dash-title">SummerFlow — Dashboard</span>
+          </div>
+          <div class="hero-dash-body">
+            <div class="dash-header">
+              <div>
+                <div class="dash-greeting">GOOD MORNING, CHRIS</div>
+                <div class="dash-title">My Rentals</div>
+              </div>
+              <div class="dash-date-badge">26 OCT 2026</div>
+            </div>
+            <div class="dash-stats-row">
+              <div class="dash-stat-card">
+                <div class="dsc-label">Active</div>
+                <div class="dsc-val">5</div>
+                <div class="dsc-trend">↑ Bookings</div>
+              </div>
+              <div class="dash-stat-card">
+                <div class="dsc-label">Revenue</div>
+                <div class="dsc-val">€3.8k</div>
+                <div class="dsc-trend">↑ This month</div>
+              </div>
+              <div class="dash-stat-card">
+                <div class="dsc-label">Cleanings</div>
+                <div class="dsc-val">2</div>
+                <div class="dsc-trend" style="color:#FBBF24">⚡ Today</div>
+              </div>
+            </div>
+            <div class="dash-bookings">
+              <div class="db-header">
+                <div class="db-title">Upcoming Arrivals</div>
+                <div class="db-see">See all</div>
+              </div>
+              <div class="booking-row">
+                <div class="br-avatar" style="background:#3B82F6">SD</div>
+                <div class="br-info">
+                  <div class="br-name">Sara Díaz — Unit 1</div>
+                  <div class="br-dates">26 Oct → 30 Oct · Airbnb</div>
+                </div>
+                <div class="br-status confirmed">Confirmed</div>
+              </div>
+              <div class="booking-row">
+                <div class="br-avatar" style="background:#b8663f">TM</div>
+                <div class="br-info">
+                  <div class="br-name">Tom Miller — Unit 2</div>
+                  <div class="br-dates">28 Oct → 3 Nov · Direct</div>
+                </div>
+                <div class="br-status pending">Check-in</div>
+              </div>
+              <div class="booking-row">
+                <div class="br-avatar" style="background:#10B981">FL</div>
+                <div class="br-info">
+                  <div class="br-name">Fiona Lee — Unit 1</div>
+                  <div class="br-dates">31 Oct → 5 Nov · Booking.com</div>
+                </div>
+                <div class="br-status checkout">Upcoming</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Floating cards -->
+        <div class="hero-float-card hfc-tasks">
+          <div class="hfc-icon" style="background:#f5e6dc">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#b8663f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+          </div>
+          <div>
+            <div class="hfc-label" data-en="Cleanings today" data-fr="Ménages aujourd'hui" data-pt="Limpezas hoje">Cleanings today</div>
+            <div class="hfc-val">2</div>
+            <div class="hfc-sub"><span class="hfc-dot"></span><span data-en="1 completed" data-fr="1 terminé" data-pt="1 concluída">1 completed</span></div>
+          </div>
+        </div>
+        <div class="hero-float-card hfc-notify">
+          <div class="hfc-icon" style="background:#F0FDF4">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <div>
+            <div class="hfc-label" data-en="Direct booking" data-fr="Réservation directe" data-pt="Reserva direta">Direct booking</div>
+            <div class="hfc-val" data-en="Paid" data-fr="Payé" data-pt="Pago">Paid</div>
+            <div class="hfc-sub" data-en="Unit 2 · 6 nights" data-fr="Unité 2 · 6 nuits" data-pt="Unidade 2 · 6 noites">Unit 2 · 6 nights</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ TRUST BAR ═══ -->
+<section class="trust-bar">
+  <div class="container">
+    <div class="trust-label" data-en="Works with your existing channels" data-fr="Compatible avec vos canaux existants" data-pt="Compatível com os seus canais existentes">Works with your existing channels</div>
+    <div class="trust-logos">
+      <div class="trust-logo-item">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/6/69/Airbnb_Logo_Bélo.svg" alt="Airbnb" style="height:28px;width:auto;filter:grayscale(1)">
+      </div>
+      <div class="trust-logo-item">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/b/be/Booking.com_logo.svg" alt="Booking.com" style="height:22px;width:auto;filter:grayscale(1)">
+      </div>
+      <div class="trust-logo-item">
+        <span style="font-size:14px;font-weight:800;color:var(--navy);letter-spacing:-.3px">Direct Bookings</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ PROBLEM ═══ -->
+<section class="problem" id="problem">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="tag"><span class="tag-dot"></span><span data-en="The challenge" data-fr="Le défi" data-pt="O desafio">The challenge</span></div>
+      <h2 class="section-title" style="margin-top:16px" data-en="Running a rental is messy." data-fr="Gérer une location, c'est compliqué." data-pt="Gerir um alojamento é complicado.">Running a rental is messy.</h2>
+      <p class="section-sub" data-en="Too many apps, missed messages, and no clear picture of your numbers." data-fr="Trop d'apps, des messages manqués, et aucune vision claire de vos chiffres." data-pt="Demasiadas apps, mensagens perdidas e nenhuma visão clara dos seus números.">Too many apps, missed messages, and no clear picture of your numbers.</p>
+    </div>
+    <div class="problem-grid">
+      <div class="problem-card reveal delay-1">
+        <div class="pc-icon">
+          <svg viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>
+        </div>
+        <div class="pc-title" data-en="Bookings scattered everywhere" data-fr="Réservations éparpillées partout" data-pt="Reservas espalhadas por todo o lado">Bookings scattered everywhere</div>
+        <div class="pc-desc" data-en="Airbnb, Booking.com, WhatsApp, email — no single view of what's coming." data-fr="Airbnb, Booking.com, WhatsApp, email — aucune vue centralisée de vos réservations." data-pt="Airbnb, Booking.com, WhatsApp, email — nenhuma visão centralizada do que aí vem.">Airbnb, Booking.com, WhatsApp, email — no single view of what's coming.</div>
+      </div>
+      <div class="problem-card reveal delay-2">
+        <div class="pc-icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+        </div>
+        <div class="pc-title" data-en="Cleaning coordination chaos" data-fr="Coordination du ménage chaotique" data-pt="Coordenação de limpeza caótica">Cleaning coordination chaos</div>
+        <div class="pc-desc" data-en="Calling cleaners after every checkout, hoping nothing falls through the cracks." data-fr="Appeler les femmes de ménage après chaque départ, en espérant que rien ne passe entre les mailles." data-pt="Ligar às limpezas após cada checkout, esperando que nada falhe.">Calling cleaners after every checkout, hoping nothing falls through the cracks.</div>
+      </div>
+      <div class="problem-card reveal delay-3">
+        <div class="pc-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        </div>
+        <div class="pc-title" data-en="No real financial picture" data-fr="Pas de vision financière réelle" data-pt="Sem visão financeira real">No real financial picture</div>
+        <div class="pc-desc" data-en="You earn, you spend, but you can't tell if each property actually makes money." data-fr="Vous gagnez, vous dépensez, mais impossible de savoir si chaque propriété est rentable." data-pt="Recebe, gasta, mas não consegue saber se cada propriedade dá lucro.">You earn, you spend, but you can't tell if each property actually makes money.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ HOW IT WORKS ═══ -->
+<section class="how" id="how">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="tag"><span class="tag-dot"></span><span data-en="Simple by design" data-fr="Simple par conception" data-pt="Simples por design">Simple by design</span></div>
+      <h2 class="section-title" style="margin-top:16px" data-en="Up and running in minutes." data-fr="Opérationnel en quelques minutes." data-pt="Pronto a usar em minutos.">Up and running in minutes.</h2>
+    </div>
+    <div class="steps-row">
+      <div class="step-card reveal delay-1">
+        <div class="step-num">1</div>
+        <div class="step-title" data-en="Add your properties" data-fr="Ajoutez vos propriétés" data-pt="Adicione as suas propriedades">Add your properties</div>
+        <div class="step-desc" data-en="Create your rentals, set your rates and add your team in a few taps." data-fr="Créez vos locations, définissez vos tarifs et ajoutez votre équipe en quelques clics." data-pt="Crie os seus alojamentos, defina os seus preços e adicione a sua equipa em poucos toques.">Create your rentals, set your rates and add your team in a few taps.</div>
+      </div>
+      <div class="step-card reveal delay-2">
+        <div class="step-num">2</div>
+        <div class="step-title" data-en="Log your bookings" data-fr="Enregistrez vos réservations" data-pt="Registe as suas reservas">Log your bookings</div>
+        <div class="step-desc" data-en="Add reservations from any channel — Airbnb, Booking.com or direct — and cleanings are scheduled automatically." data-fr="Ajoutez des réservations depuis n'importe quel canal — Airbnb, Booking.com ou direct — et les ménages sont planifiés automatiquement." data-pt="Adicione reservas de qualquer canal — Airbnb, Booking.com ou direto — e as limpezas são agendadas automaticamente.">Add reservations from any channel — Airbnb, Booking.com or direct — and cleanings are scheduled automatically.</div>
+      </div>
+      <div class="step-card reveal delay-3">
+        <div class="step-num">3</div>
+        <div class="step-title" data-en="See your real numbers" data-fr="Voyez vos vrais chiffres" data-pt="Veja os seus números reais">See your real numbers</div>
+        <div class="step-desc" data-en="Revenue, cleaning costs, direct booking payments — all tracked and visible per property." data-fr="Revenus, coûts de ménage, paiements directs — tout suivi et visible par propriété." data-pt="Receitas, custos de limpeza, pagamentos diretos — tudo registado e visível por propriedade.">Revenue, cleaning costs, direct booking payments — all tracked and visible per property.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SOLUTION / RESERVATIONS ═══ -->
+<section class="solution" id="solution">
+  <div class="container">
+    <div class="solution-inner">
+      <div class="solution-visual reveal-left" style="position:relative">
+        <div class="solution-screen">
+          <div class="ss-topbar">
+            <div class="dash-dot red"></div>
+            <div class="dash-dot yellow"></div>
+            <div class="dash-dot green"></div>
+            <span style="font-size:11px;color:rgba(255,255,255,.4);margin-left:6px;font-weight:600">Reservations</span>
+          </div>
+          <div class="ss-body">
+            <div class="mini-sidebar">
+              <div class="mini-nav">
+                <div class="mini-nav-item on">
+                  <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                </div>
+                <div class="mini-nav-item">
+                  <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+                </div>
+                <div class="mini-nav-item">
+                  <svg viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                </div>
+                <div class="mini-nav-item">
+                  <svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+                </div>
+              </div>
+              <div class="mini-main">
+                <div class="mini-greeting">Reservations</div>
+                <div class="mini-title">October 2026</div>
+                <div class="mini-cards">
+                  <div class="mini-stat"><div class="n">8</div><div class="l">Active</div></div>
+                  <div class="mini-stat"><div class="n" style="color:#34D399">6</div><div class="l">Confirmed</div></div>
+                  <div class="mini-stat"><div class="n" style="color:#f0b896">2</div><div class="l">Pending</div></div>
+                </div>
+                <div class="mini-bk-title">Upcoming</div>
+                <div class="mini-bk">
+                  <div class="mini-bk-av" style="background:#3B82F6">SD</div>
+                  <div class="mini-bk-name">Sara Díaz — Unit 1</div>
+                  <div class="mini-bk-badge" style="background:rgba(52,211,153,.15);color:#34D399">Airbnb</div>
+                </div>
+                <div class="mini-bk">
+                  <div class="mini-bk-av" style="background:#b8663f">TM</div>
+                  <div class="mini-bk-name">Tom Miller — Unit 2</div>
+                  <div class="mini-bk-badge" style="background:rgba(184,102,63,.2);color:#f0b896">Direct</div>
+                </div>
+                <div class="mini-bk">
+                  <div class="mini-bk-av" style="background:#8B5CF6">FL</div>
+                  <div class="mini-bk-name">Fiona Lee — Unit 1</div>
+                  <div class="mini-bk-badge" style="background:rgba(0,53,128,.15);color:#6B9FF0">Booking</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="sol-badge sb1">
+          <div class="sbl-icon" style="background:#f5e6dc">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#b8663f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          </div>
+          <div class="sbl-text"><div class="t" data-en="All channels" data-fr="Tous les canaux" data-pt="Todos os canais">All channels</div><div class="s">Airbnb · Booking · Direct</div></div>
+        </div>
+        <div class="sol-badge sb2">
+          <div class="sbl-icon" style="background:#F0FDF4">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <div class="sbl-text"><div class="t" data-en="Auto cleaning" data-fr="Ménage auto" data-pt="Limpeza auto">Auto cleaning</div><div class="s" data-en="Scheduled on checkout" data-fr="Planifié au départ" data-pt="Agendado no checkout">Scheduled on checkout</div></div>
+        </div>
+      </div>
+      <div class="solution-content reveal-right">
+        <div class="tag"><span class="tag-dot"></span><span data-en="Reservations" data-fr="Réservations" data-pt="Reservas">Reservations</span></div>
+        <h2 class="section-title" style="margin-top:16px;font-size:clamp(28px,4vw,40px)" data-en="Every booking in one calendar." data-fr="Toutes les réservations dans un seul calendrier." data-pt="Todas as reservas num único calendário.">Every booking in one calendar.</h2>
+        <div class="sol-features">
+          <div class="sol-feature">
+            <div class="sf-icon"><svg viewBox="0 0 24 24" width="20" height="20"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+            <div class="sf-text"><div class="t" data-en="Airbnb, Booking.com, Direct" data-fr="Airbnb, Booking.com, Direct" data-pt="Airbnb, Booking.com, Direto">Airbnb, Booking.com, Direct</div><div class="s" data-en="Log reservations from any source in one shared calendar." data-fr="Enregistrez des réservations de toute source dans un calendrier partagé." data-pt="Registe reservas de qualquer fonte num calendário partilhado.">Log reservations from any source in one shared calendar.</div></div>
+          </div>
+          <div class="sol-feature">
+            <div class="sf-icon"><svg viewBox="0 0 24 24" width="20" height="20"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 11.1 19.79 19.79 0 0 1 1.5 2.48 2 2 0 0 1 3.48.5h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 7.91a16 16 0 0 0 6.5 6.5l.91-.91a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+            <div class="sf-text"><div class="t" data-en="Guest details at a glance" data-fr="Détails des voyageurs d'un coup d'œil" data-pt="Detalhes do hóspede de relance">Guest details at a glance</div><div class="s" data-en="Dates, number of guests, channel and payment status per booking." data-fr="Dates, nombre de voyageurs, canal et statut de paiement par réservation." data-pt="Datas, número de hóspedes, canal e estado de pagamento por reserva.">Dates, number of guests, channel and payment status per booking.</div></div>
+          </div>
+          <div class="sol-feature">
+            <div class="sf-icon"><svg viewBox="0 0 24 24" width="20" height="20"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div>
+            <div class="sf-text"><div class="t" data-en="Cleaning auto-scheduled" data-fr="Ménage planifié automatiquement" data-pt="Limpeza agendada automaticamente">Cleaning auto-scheduled</div><div class="s" data-en="A checkout triggers a cleaning task. Your team sees it immediately." data-fr="Un départ déclenche une tâche de ménage. Votre équipe la voit immédiatement." data-pt="Um checkout aciona uma tarefa de limpeza. A sua equipa vê-a imediatamente.">A checkout triggers a cleaning task. Your team sees it immediately.</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FEATURES GRID ═══ -->
+<section class="features" id="features">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="tag"><span class="tag-dot"></span><span data-en="Everything included" data-fr="Tout inclus" data-pt="Tudo incluído">Everything included</span></div>
+      <h2 class="section-title" style="margin-top:16px" data-en="All you need, nothing you don't." data-fr="Tout ce dont vous avez besoin, rien de plus." data-pt="Tudo o que precisa, nada do que não precisa.">All you need, nothing you don't.</h2>
+    </div>
+    <div class="feat-grid">
+      <div class="feat-card reveal delay-1">
+        <div class="fc-icon" style="background:#f5e6dc">📅</div>
+        <div class="fc-title" data-en="Reservation Calendar" data-fr="Calendrier de réservations" data-pt="Calendário de reservas">Reservation Calendar</div>
+        <div class="fc-desc" data-en="All bookings across all properties. Check-ins, check-outs, occupancy — in one view." data-fr="Toutes les réservations sur toutes les propriétés en une seule vue." data-pt="Todas as reservas em todas as propriedades. Num único ecrã.">All bookings across all properties. Check-ins, check-outs, occupancy — in one view.</div>
+      </div>
+      <div class="feat-card reveal delay-2">
+        <div class="fc-icon" style="background:#e8f5e9">🧹</div>
+        <div class="fc-title" data-en="Cleaning Management" data-fr="Gestion du ménage" data-pt="Gestão de limpeza">Cleaning Management</div>
+        <div class="fc-desc" data-en="Schedule cleanings, assign your team, track completion — and log the cost per stay." data-fr="Planifiez les ménages, assignez votre équipe, suivez l'avancement et enregistrez le coût." data-pt="Agende limpezas, atribua a sua equipa, acompanhe e registe o custo por estadia.">Schedule cleanings, assign your team, track completion — and log the cost per stay.</div>
+      </div>
+      <div class="feat-card reveal delay-3">
+        <div class="fc-icon" style="background:#e8f0fd">💳</div>
+        <div class="fc-title" data-en="Direct Bookings" data-fr="Réservations directes" data-pt="Reservas diretas">Direct Bookings</div>
+        <div class="fc-desc" data-en="Take bookings outside Airbnb. Track payment status — did I pay the cleaner? Did the guest pay?" data-fr="Prenez des réservations hors Airbnb. Suivez le statut de paiement facilement." data-pt="Aceite reservas fora do Airbnb. Acompanhe o estado dos pagamentos facilmente.">Take bookings outside Airbnb. Track payment status — did I pay the cleaner? Did the guest pay?</div>
+      </div>
+      <div class="feat-card reveal delay-1">
+        <div class="fc-icon" style="background:#fff3e0">📊</div>
+        <div class="fc-title" data-en="Financial Overview" data-fr="Vue financière" data-pt="Visão financeira">Financial Overview</div>
+        <div class="fc-desc" data-en="Revenue, cleaning costs, net per property. Finally know which rental actually makes money." data-fr="Revenus, coûts de ménage, net par propriété. Sachez enfin quelle location est rentable." data-pt="Receitas, custos de limpeza, lucro por propriedade. Saiba finalmente qual alojamento é rentável.">Revenue, cleaning costs, net per property. Finally know which rental actually makes money.</div>
+      </div>
+      <div class="feat-card reveal delay-2">
+        <div class="fc-icon" style="background:#fce4ec">🏠</div>
+        <div class="fc-title" data-en="Multi-Property" data-fr="Multi-propriété" data-pt="Multi-propriedade">Multi-Property</div>
+        <div class="fc-desc" data-en="Manage unlimited properties from one account. Each with its own calendar, team and numbers." data-fr="Gérez un nombre illimité de propriétés depuis un seul compte." data-pt="Gira propriedades ilimitadas a partir de uma única conta.">Manage unlimited properties from one account. Each with its own calendar, team and numbers.</div>
+      </div>
+      <div class="feat-card reveal delay-3">
+        <div class="fc-icon" style="background:#e0f2f1">📱</div>
+        <div class="fc-title" data-en="Mobile First" data-fr="Mobile d'abord" data-pt="Mobile first">Mobile First</div>
+        <div class="fc-desc" data-en="Works on any phone, no app to install. Check a booking, assign a cleaning — anywhere." data-fr="Fonctionne sur n'importe quel téléphone, sans installation. Vérifiez une réservation n'importe où." data-pt="Funciona em qualquer telemóvel, sem instalar nada. Verifique uma reserva onde estiver.">Works on any phone, no app to install. Check a booking, assign a cleaning — anywhere.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ PRICING ═══ -->
+<section class="pricing" id="pricing">
+  <div class="hero-bg-shape s1"></div>
+  <div class="hero-bg-shape s2"></div>
+  <div class="container pricing-inner">
+    <div class="section-head reveal">
+      <div class="tag tag--white"><span class="tag-dot"></span><span data-en="Pricing" data-fr="Tarifs" data-pt="Preços">Pricing</span></div>
+      <h2 class="section-title" style="margin-top:16px;color:#fff" data-en="Free to start. Simple to grow." data-fr="Gratuit pour démarrer. Simple pour évoluer." data-pt="Grátis para começar. Simples para crescer.">Free to start. Simple to grow.</h2>
+      <p class="section-sub" style="color:rgba(255,255,255,.55)" data-en="Start with 2 properties at no cost. Upgrade to Pro when you're ready for more." data-fr="Démarrez avec 2 propriétés sans frais. Passez à Pro quand vous en avez besoin." data-pt="Comece com 2 propriedades sem custo. Actualize para Pro quando precisar.">Start with 2 properties at no cost. Upgrade to Pro when you're ready for more.</p>
+      <!-- billing toggle -->
+      <div class="pricing-toggle" style="margin-top:24px">
+        <span class="pt-label active" id="pt-monthly" data-en="Monthly" data-fr="Mensuel" data-pt="Mensal">Monthly</span>
+        <button class="pt-switch" id="pt-switch" onclick="toggleBilling()"><div class="pt-knob"></div></button>
+        <span class="pt-label" id="pt-yearly" data-en="Yearly" data-fr="Annuel" data-pt="Anual">Yearly</span>
+        <span class="pt-save" data-en="Save 30%" data-fr="−30%" data-pt="Poupe 30%">Save 30%</span>
+      </div>
+    </div>
+    <div class="pricing-grid">
+      <!-- FREE -->
+      <div class="pricing-card reveal delay-1">
+        <div class="pricing-top">
+          <div class="pricing-label" data-en="Free plan" data-fr="Plan gratuit" data-pt="Plano gratuito">Free plan</div>
+          <div class="pricing-name">Starter</div>
+          <div class="pricing-price-row">
+            <div class="pricing-num"><sup>€</sup>0</div>
+          </div>
+          <div class="pricing-sub" data-en="Up to 2 properties, no card needed" data-fr="Jusqu'à 2 propriétés, sans carte" data-pt="Até 2 propriedades, sem cartão">Up to 2 properties, no card needed</div>
+        </div>
+        <div class="pricing-divider"></div>
+        <div class="pricing-features">
+          <div class="pf-item"><div class="pf-check">✓</div><span data-en="Up to 2 properties" data-fr="Jusqu'à 2 propriétés" data-pt="Até 2 propriedades">Up to 2 properties</span></div>
+          <div class="pf-item"><div class="pf-check">✓</div><span data-en="Unlimited bookings" data-fr="Réservations illimitées" data-pt="Reservas ilimitadas">Unlimited bookings</span></div>
+          <div class="pf-item"><div class="pf-check">✓</div><span data-en="Cleaning management" data-fr="Gestion du ménage" data-pt="Gestão de limpeza">Cleaning management</span></div>
+          <div class="pf-item"><div class="pf-check">✓</div><span data-en="Direct booking tracking" data-fr="Suivi des réservations directes" data-pt="Rastreamento de reservas diretas">Direct booking tracking</span></div>
+          <div class="pf-item"><div class="pf-check">✓</div><span data-en="Financial overview" data-fr="Vue financière" data-pt="Visão financeira">Financial overview</span></div>
+          <div class="pf-item"><div class="pf-check">✓</div><span data-en="1 cleaner account" data-fr="1 compte agent de ménage" data-pt="1 conta de limpador">1 cleaner account</span></div>
+          <div class="pf-item pf-item--muted"><div class="pf-x">✕</div><span style="color:rgba(255,255,255,.3)" data-en="In-person onboarding" data-fr="Onboarding en personne" data-pt="Onboarding presencial">In-person onboarding</span></div>
+          <div class="pf-item pf-item--muted"><div class="pf-x">✕</div><span style="color:rgba(255,255,255,.3)" data-en="Priority support" data-fr="Support prioritaire" data-pt="Suporte prioritário">Priority support</span></div>
+        </div>
+        <div class="pricing-cta">
+          <a href="https://summerflow.permanentsummer.co" class="btn btn-ghost btn-lg" style="width:100%;justify-content:center" data-en="Start Free →" data-fr="Commencer gratuitement →" data-pt="Começar gratuitamente →">Start Free →</a>
+          <div class="pricing-no-cc" data-en="No credit card required." data-fr="Sans carte bancaire requise." data-pt="Sem cartão de crédito necessário.">No credit card required.</div>
+        </div>
+      </div>
+      <!-- PRO -->
+      <div class="pricing-card featured reveal delay-2">
+        <div class="pricing-badge" data-en="Most popular" data-fr="Le plus populaire" data-pt="Mais popular">Most popular</div>
+        <div class="pricing-top">
+          <div class="pricing-label" data-en="For growing hosts" data-fr="Pour les hôtes en croissance" data-pt="Para anfitriões em crescimento">For growing hosts</div>
+          <div class="pricing-name">Pro</div>
+          <div class="pricing-price-row">
+            <div class="pricing-num" id="pro-price"><sup>€</sup>7</div>
+            <div class="pricing-period" id="pro-period" data-en="/ month" data-fr="/ mois" data-pt="/ mês">/ month</div>
+          </div>
+          <div class="pricing-sub" id="pro-sub" data-en="Billed monthly" data-fr="Facturé mensuellement" data-pt="Faturado mensalmente">Billed monthly</div>
+        </div>
+        <div class="pricing-divider"></div>
+        <div class="pricing-features">
+          <div class="pf-item"><div class="pf-check green">✓</div><span data-en="Unlimited properties" data-fr="Propriétés illimitées" data-pt="Propriedades ilimitadas">Unlimited properties</span></div>
+          <div class="pf-item"><div class="pf-check green">✓</div><span data-en="Unlimited bookings" data-fr="Réservations illimitées" data-pt="Reservas ilimitadas">Unlimited bookings</span></div>
+          <div class="pf-item"><div class="pf-check green">✓</div><span data-en="Unlimited cleaner accounts" data-fr="Comptes agents de ménage illimités" data-pt="Contas de limpador ilimitadas">Unlimited cleaner accounts</span></div>
+          <div class="pf-item"><div class="pf-check green">✓</div><span data-en="Full financial dashboard" data-fr="Tableau financier complet" data-pt="Painel financeiro completo">Full financial dashboard</span></div>
+          <div class="pf-item"><div class="pf-check green">✓</div><span data-en="Export to PDF / CSV" data-fr="Export PDF / CSV" data-pt="Exportar para PDF / CSV">Export to PDF / CSV</span></div>
+          <div class="pf-item"><div class="pf-check green">✓</div><span data-en="In-person onboarding session" data-fr="Session d'onboarding en personne" data-pt="Sessão de onboarding presencial">In-person onboarding session</span></div>
+          <div class="pf-item"><div class="pf-check green">✓</div><span data-en="Priority support (WhatsApp)" data-fr="Support prioritaire (WhatsApp)" data-pt="Suporte prioritário (WhatsApp)">Priority support (WhatsApp)</span></div>
+          <div class="pf-item"><div class="pf-check green">✓</div><span data-en="Early access to new features" data-fr="Accès anticipé aux nouvelles fonctions" data-pt="Acesso antecipado a novas funcionalidades">Early access to new features</span></div>
+        </div>
+        <div class="pricing-cta">
+          <a href="https://summerflow.permanentsummer.co" class="btn btn-primary btn-lg" style="width:100%;justify-content:center" data-en="Start Pro →" data-fr="Commencer Pro →" data-pt="Começar Pro →">Start Pro →</a>
+          <div class="pricing-no-cc" data-en="Cancel anytime. No hidden fees." data-fr="Annulez à tout moment. Aucun frais caché." data-pt="Cancele quando quiser. Sem taxas ocultas.">Cancel anytime. No hidden fees.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ BOOK A CALL ═══ -->
+<section class="book-call" id="book">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="tag"><span class="tag-dot"></span><span data-en="Talk to a human" data-fr="Parler à un humain" data-pt="Falar com alguém">Talk to a human</span></div>
+      <h2 class="section-title" style="margin-top:16px" data-en="Book a free 30-min call." data-fr="Réservez un appel gratuit de 30 min." data-pt="Agende uma chamada gratuita de 30 min.">Book a free 30-min call.</h2>
+      <p class="section-sub" data-en="Questions about SummerFlow? Want a walkthrough or help getting set up? Pick a time that works." data-fr="Des questions sur SummerFlow ? Vous voulez une démo ou de l'aide pour démarrer ? Choisissez un créneau." data-pt="Dúvidas sobre o SummerFlow? Quer uma demonstração ou ajuda para começar? Escolha um horário.">Questions about SummerFlow? Want a walkthrough or help getting set up? Pick a time that works.</p>
+    </div>
+    <div class="calendly-wrap reveal">
+      <!-- Calendly inline widget begin -->
+      <div class="calendly-inline-widget" data-url="https://calendly.com/permanentsummer/30min?primary_color=b8663f&text_color=1b2a41&background_color=ffffff&hide_event_type_details=1&hide_gdpr_banner=1" style="min-width:320px;height:700px;"></div>
+      <!-- Calendly inline widget end -->
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FAQ ═══ -->
+<section class="faq" id="faq">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="tag"><span class="tag-dot"></span><span data-en="Questions" data-fr="Questions" data-pt="Perguntas">Questions</span></div>
+      <h2 class="section-title" style="margin-top:16px" data-en="Frequently asked." data-fr="Questions fréquentes." data-pt="Perguntas frequentes.">Frequently asked.</h2>
+    </div>
+    <div class="faq-cols">
+      <!-- Column 1 -->
+      <div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            <span data-en="Is there a free plan?" data-fr="Y a-t-il un plan gratuit ?" data-pt="Existe um plano gratuito?">Is there a free plan?</span>
+            <div class="faq-icon"><svg viewBox="0 0 24 24" fill="none"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+          </div>
+          <div class="faq-a"><div class="faq-a-inner" data-en="Yes — the Starter plan is free for up to 2 properties, no credit card required. For more properties or premium features, Pro is €7/month." data-fr="Oui — le plan Starter est gratuit pour jusqu'à 2 propriétés, sans carte bancaire. Pour plus de propriétés ou des fonctions avancées, Pro est à 7€/mois." data-pt="Sim — o plano Starter é gratuito para até 2 propriedades, sem cartão. Para mais propriedades ou funcionalidades premium, o Pro é €7/mês.">Yes — the Starter plan is free for up to 2 properties, no credit card required. For more properties or premium features, Pro is €7/month.</div></div>
+        </div>
+        <div class="faq-item" style="margin-top:12px">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            <span data-en="Do I need to install an app?" data-fr="Dois-je installer une application ?" data-pt="Preciso de instalar uma aplicação?">Do I need to install an app?</span>
+            <div class="faq-icon"><svg viewBox="0 0 24 24" fill="none"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+          </div>
+          <div class="faq-a"><div class="faq-a-inner" data-en="No. SummerFlow runs in your browser on any device — phone, tablet, or desktop." data-fr="Non. SummerFlow fonctionne dans votre navigateur sur n'importe quel appareil." data-pt="Não. O SummerFlow funciona no seu navegador em qualquer dispositivo.">No. SummerFlow runs in your browser on any device — phone, tablet, or desktop.</div></div>
+        </div>
+        <div class="faq-item" style="margin-top:12px">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            <span data-en="Can I manage several properties?" data-fr="Puis-je gérer plusieurs propriétés ?" data-pt="Posso gerir várias propriedades?">Can I manage several properties?</span>
+            <div class="faq-icon"><svg viewBox="0 0 24 24" fill="none"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+          </div>
+          <div class="faq-a"><div class="faq-a-inner" data-en="Yes — unlimited properties on one account, each with its own calendar and financials." data-fr="Oui — propriétés illimitées dans un seul compte, chacune avec son propre calendrier et ses finances." data-pt="Sim — propriedades ilimitadas numa única conta, cada uma com o seu próprio calendário e finanças.">Yes — unlimited properties on one account, each with its own calendar and financials.</div></div>
+        </div>
+      </div>
+      <!-- Column 2 -->
+      <div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            <span data-en="Does it connect to Airbnb automatically?" data-fr="Se connecte-t-il automatiquement à Airbnb ?" data-pt="Liga automaticamente ao Airbnb?">Does it connect to Airbnb automatically?</span>
+            <div class="faq-icon"><svg viewBox="0 0 24 24" fill="none"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+          </div>
+          <div class="faq-a"><div class="faq-a-inner" data-en="Currently you log reservations manually from any channel. Direct API sync is on the roadmap." data-fr="Actuellement vous saisissez les réservations manuellement depuis n'importe quel canal. La synchronisation API directe est sur la feuille de route." data-pt="Atualmente regista as reservas manualmente a partir de qualquer canal. A sincronização direta por API está no roadmap.">Currently you log reservations manually from any channel. Direct API sync is on the roadmap.</div></div>
+        </div>
+        <div class="faq-item" style="margin-top:12px">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            <span data-en="What does 'paid / unpaid' mean for direct bookings?" data-fr="Que signifie 'payé / non payé' pour les réservations directes ?" data-pt="O que significa 'pago / não pago' para reservas diretas?">What does 'paid / unpaid' mean for direct bookings?</span>
+            <div class="faq-icon"><svg viewBox="0 0 24 24" fill="none"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+          </div>
+          <div class="faq-a"><div class="faq-a-inner" data-en="It tracks whether the guest has paid you, and whether you have paid your cleaner for that stay — two separate statuses." data-fr="Cela indique si le voyageur vous a payé, et si vous avez payé votre agent de ménage pour ce séjour — deux statuts séparés." data-pt="Indica se o hóspede lhe pagou, e se pagou ao seu limpador para essa estadia — dois estados separados.">It tracks whether the guest has paid you, and whether you have paid your cleaner for that stay — two separate statuses.</div></div>
+        </div>
+        <div class="faq-item" style="margin-top:12px">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            <span data-en="Can my cleaning team use it too?" data-fr="Mon équipe de ménage peut-elle aussi l'utiliser ?" data-pt="A minha equipa de limpeza também pode usar?">Can my cleaning team use it too?</span>
+            <div class="faq-icon"><svg viewBox="0 0 24 24" fill="none"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+          </div>
+          <div class="faq-a"><div class="faq-a-inner" data-en="Yes — you can add team members who see their assigned cleanings and mark them done from their phone." data-fr="Oui — vous pouvez ajouter des membres d'équipe qui voient leurs ménages assignés et les marquent comme terminés depuis leur téléphone." data-pt="Sim — pode adicionar membros da equipa que veem as suas limpezas atribuídas e as marcam como concluídas a partir do telemóvel.">Yes — you can add team members who see their assigned cleanings and mark them done from their phone.</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FINAL CTA ═══ -->
+<section class="final-cta">
+  <div class="container cta-inner">
+    <div class="tag" style="margin:0 auto 24px"><span class="tag-dot"></span><span data-en="Get started today" data-fr="Commencez aujourd'hui" data-pt="Comece hoje">Get started today</span></div>
+    <h2 class="cta-title" data-en="One place to run your rental." data-fr="Tout pour gérer votre location." data-pt="Tudo para gerir o seu alojamento.">One place to run your rental.</h2>
+    <p class="cta-sub" data-en="Start with 2 properties for free. Upgrade to Pro for €7/month when you need more." data-fr="Commencez avec 2 propriétés gratuitement. Passez à Pro pour 7€/mois quand vous en avez besoin." data-pt="Comece com 2 propriedades gratuitamente. Actualize para Pro por €7/mês quando precisar.">Start with 2 properties for free. Upgrade to Pro for €7/month when you need more.</p>
+    <div class="cta-btns">
+      <a href="https://summerflow.permanentsummer.co" class="btn btn-primary btn-lg" data-en="Try for free →" data-fr="Essayer gratuitement →" data-pt="Experimentar grátis →">Try for free →</a>
+      <a href="#pricing" class="btn btn-outline btn-lg" data-en="See pricing" data-fr="Voir les tarifs" data-pt="Ver preços">See pricing</a>
+    </div>
+    <div class="cta-trust">
+      <div class="cta-trust-item"><div class="cti-dot"></div><span data-en="Free starter plan" data-fr="Plan de démarrage gratuit" data-pt="Plano inicial gratuito">Free starter plan</span></div>
+      <div class="cta-trust-item"><div class="cti-dot"></div><span data-en="No credit card to start" data-fr="Sans carte pour commencer" data-pt="Sem cartão para começar">No credit card to start</span></div>
+      <div class="cta-trust-item"><div class="cti-dot"></div><span data-en="Pro from €7/month" data-fr="Pro à partir de 7€/mois" data-pt="Pro a partir de €7/mês">Pro from €7/month</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="fl-logo">
+          <div class="fl-logo-ico">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          </div>
+          <span class="fl-logo-name">SummerFlow</span>
+        </div>
+        <p data-en="One place to run your rental. Reservations, direct bookings, cleaning and your real numbers." data-fr="Tout pour gérer votre location. Réservations, réservations directes, ménage et vos vrais chiffres." data-pt="Tudo para gerir o seu alojamento. Reservas, reservas diretas, limpeza e os seus números reais.">One place to run your rental. Reservations, direct bookings, cleaning and your real numbers.</p>
+      </div>
+      <div class="footer-col">
+        <h4 data-en="Product" data-fr="Produit" data-pt="Produto">Product</h4>
+        <a href="#features" data-en="Features" data-fr="Fonctionnalités" data-pt="Funcionalidades">Features</a>
+        <a href="#pricing" data-en="Pricing" data-fr="Tarifs" data-pt="Preços">Pricing</a>
+        <a href="#faq">FAQ</a>
+      </div>
+      <div class="footer-col">
+        <h4 data-en="Use cases" data-fr="Cas d'usage" data-pt="Casos de uso">Use cases</h4>
+        <a href="#" data-en="Airbnb hosts" data-fr="Hôtes Airbnb" data-pt="Anfitriões Airbnb">Airbnb hosts</a>
+        <a href="#" data-en="Property managers" data-fr="Gestionnaires" data-pt="Gestores de imóveis">Property managers</a>
+        <a href="#" data-en="Holiday villas" data-fr="Villas de vacances" data-pt="Vilas de férias">Holiday villas</a>
+      </div>
+      <div class="footer-col">
+        <h4 data-en="Links" data-fr="Liens" data-pt="Links">Links</h4>
+        <a href="https://summerflow.permanentsummer.co" data-en="Open app" data-fr="Ouvrir l'app" data-pt="Abrir app">Open app</a>
+        <a href="https://permanentsummer.co" data-en="Permanent Summer" data-fr="Permanent Summer" data-pt="Permanent Summer">Permanent Summer</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Permanent Summer. <span data-en="All rights reserved." data-fr="Tous droits réservés." data-pt="Todos os direitos reservados.">All rights reserved.</span></p>
+      <p style="color:rgba(255,255,255,.2);font-size:12px;font-family:'Inter',sans-serif">summerflows.permanentsummer.co</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ─── SCROLL ANIMATIONS ───
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('visible'); obs.unobserve(e.target); } });
+}, { threshold: 0.12 });
+document.querySelectorAll('.reveal,.reveal-left,.reveal-right').forEach(el => obs.observe(el));
+
+// ─── NAVBAR SCROLL ───
+window.addEventListener('scroll', () => {
+  document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 40);
+});
+
+// ─── MOBILE NAV ───
+function toggleMobileNav() {
+  document.getElementById('mobileNav').classList.toggle('open');
+}
+
+// ─── FAQ ───
+function toggleFaq(q) {
+  const item = q.parentElement;
+  const wasOpen = item.classList.contains('open');
+  item.classList.toggle('open', !wasOpen);
+}
+
+// ─── BILLING TOGGLE ───
+let isYearly = false;
+function toggleBilling() {
+  isYearly = !isYearly;
+  const sw = document.getElementById('pt-switch');
+  sw.classList.toggle('on', isYearly);
+  document.getElementById('pt-monthly').classList.toggle('active', !isYearly);
+  document.getElementById('pt-yearly').classList.toggle('active', isYearly);
+  const priceEl = document.getElementById('pro-price');
+  const periodEl = document.getElementById('pro-period');
+  const subEl = document.getElementById('pro-sub');
+  const lang = (function(){ try{ return localStorage.getItem('sf_lang')||'en'; }catch(e){ return 'en'; } })();
+  if (isYearly) {
+    priceEl.innerHTML = '<sup>€</sup>5';
+    periodEl.setAttribute('data-en','/ month'); periodEl.setAttribute('data-fr','/ mois'); periodEl.setAttribute('data-pt','/ mês');
+    subEl.setAttribute('data-en','Billed €59/year · Save 30%'); subEl.setAttribute('data-fr','Facturé 59€/an · Économisez 30%'); subEl.setAttribute('data-pt','Faturado €59/ano · Poupe 30%');
+  } else {
+    priceEl.innerHTML = '<sup>€</sup>7';
+    periodEl.setAttribute('data-en','/ month'); periodEl.setAttribute('data-fr','/ mois'); periodEl.setAttribute('data-pt','/ mês');
+    subEl.setAttribute('data-en','Billed monthly'); subEl.setAttribute('data-fr','Facturé mensuellement'); subEl.setAttribute('data-pt','Faturado mensalmente');
+  }
+  // re-apply lang to updated elements
+  [periodEl, subEl].forEach(el => { const v = el.getAttribute('data-'+lang); if(v) el.innerHTML = v; });
+}
+
+// ─── LANGUAGE ───
+const LANGS = {
+  en: {}, fr: {}, pt: {}
+};
+
+function setLang(lang) {
+  try { localStorage.setItem('sf_lang', lang); } catch(e){}
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.textContent === lang.toUpperCase()));
+  document.querySelectorAll('[data-' + lang + ']').forEach(el => {
+    el.innerHTML = el.getAttribute('data-' + lang);
+  });
+}
+
+(function() {
+  let saved = 'en';
+  try { saved = localStorage.getItem('sf_lang') || 'en'; } catch(e){}
+  if (!['en','fr','pt'].includes(saved)) saved = 'en';
+  setLang(saved);
+})();
+</script>
+
+<!-- Calendly inline widget script -->
+<script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
+
+<!-- Calendly badge widget -->
+<link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
+<script type="text/javascript">
+window.onload = function() {
+  Calendly.initBadgeWidget({
+    url: 'https://calendly.com/permanentsummer/30min',
+    text: 'Book a call',
+    color: '#b8663f',
+    textColor: '#ffffff',
+    branding: false
+  });
+}
+</script>
+</body>
+</html>
