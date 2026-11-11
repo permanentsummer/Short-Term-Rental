@@ -95,7 +95,7 @@
   .venture:last-child{border-bottom:0}
   .venture.flip{flex-direction:row-reverse}
   .venture .media{flex:1 1 460px;min-width:0;position:relative}
-  .venture .media img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:2px}
+  .venture .media img{width:100%;height:auto;aspect-ratio:4/3;object-fit:cover;border-radius:2px}
   .venture .tag{position:absolute;top:16px;left:16px;background:var(--bg);color:var(--tx);padding:7px 12px;font-size:11px;letter-spacing:.18em;font-weight:400}
   .venture .text{flex:1 1 420px;min-width:0;display:flex;flex-direction:column;gap:20px}
   .venture .num{font-family:var(--serif);font-size:22px;color:var(--ac)}
@@ -132,16 +132,58 @@
   .legal{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px;padding-top:24px;border-top:1px solid var(--ln);font-size:13px;color:var(--mu)}
 
   @media (max-width:720px){
-    .wrap{padding:0 22px}
-    .menu{gap:18px}
-    .menu .hide-sm{display:none}
-    .hero{padding-top:56px}
-    .router .q,.router a{flex:1 1 100%;border-right:0;border-bottom:1px solid var(--ln)}
+    .wrap{padding:0 20px}
+    /* header: one row */
+    .nav{flex-wrap:nowrap;padding-top:14px;padding-bottom:14px}
+    .logo .name{font-size:21px}
+    .logo .sub{font-size:9px}
+    .menu{gap:0}
+    .menu a:not(.btn-ghost){display:none}
+    .menu .btn-ghost{padding:10px 14px;font-size:14px}
+    /* hero */
+    .hero{padding-top:40px;padding-bottom:28px;gap:18px}
+    .hero-main{gap:16px}
+    h1{font-size:40px;line-height:1.04}
+    .hero p.lead{font-size:16px;line-height:1.55}
+    .eyebrow{font-size:11px;letter-spacing:.18em}
+    /* router: compact 2-column tiles */
+    .router{display:grid;grid-template-columns:1fr 1fr;box-shadow:none}
+    .router .q{grid-column:1 / -1;padding:14px 16px;font-size:18px;border-right:0;border-bottom:1px solid var(--ln)}
+    .router .q br{display:none}
+    .router a{padding:14px 16px;gap:4px;border-right:0;border-bottom:1px solid var(--ln)}
+    .router a:nth-of-type(2n+1){border-left:1px solid var(--ln)}
+    .router a.hot{grid-column:1 / -1}
     .router a:last-child{border-bottom:0}
-    .venture,.venture.flip{flex-direction:column;gap:28px;padding:40px 0}
-    .venture .media,.venture .text{flex:1 1 auto;width:100%}
-    .ventures{padding-top:72px}
-    .about .wrap,.contact{padding-top:72px;padding-bottom:72px}
+    .router a .k{font-size:10px;letter-spacing:.16em}
+    .router a .v{font-size:15px}
+    /* ventures: compact cards, photo first */
+    .ventures{padding-top:56px;padding-bottom:16px}
+    .ventures-head{padding-bottom:20px;gap:10px}
+    .ventures-head p{font-size:15px}
+    .venture,.venture.flip{flex-direction:column;gap:18px;padding:32px 0}
+    .venture .media,.venture .text{flex:none;width:100%}
+    .venture .media{order:-1}
+    .venture .media img{aspect-ratio:3/2}
+    .venture .text{gap:12px}
+    .venture .num{font-size:16px}
+    h3{font-size:30px}
+    .tagline{font-size:17px}
+    .venture p.desc{font-size:16px;line-height:1.55}
+    .chips{display:none}
+    .actions{gap:18px;margin-top:4px}
+    .btn{padding:13px 20px;font-size:15px}
+    /* about, contact, footer */
+    .about{margin-top:32px}
+    .about .wrap{padding-top:56px;padding-bottom:56px;gap:20px}
+    .about h2{font-size:34px}
+    .about p{font-size:16px}
+    .contact{padding-top:64px;padding-bottom:64px;gap:18px}
+    .contact h2{font-size:36px}
+    .contact p{font-size:16px}
+    footer .wrap{padding-top:36px;padding-bottom:28px;gap:28px}
+    .cols{gap:32px}
+    .col:first-child{display:none}
+    .legal{flex-direction:column;gap:6px}
   }
 </style>
 </head>
@@ -173,7 +215,7 @@
 
   <section class="wrap" aria-label="Find the right venture">
     <div class="router">
-      <div class="q">What brings<br>you here?</div>
+      <div class="q">What brings <br>you here?</div>
       <a class="hot" href="/stay/"><span class="k">I WANT</span><span class="v">A holiday in the Algarve →</span></a>
       <a href="#summerflow"><span class="k">I HOST</span><span class="v">Short-term rentals →</span></a>
       <a href="#voyages"><span class="k">I'M PLANNING</span><span class="v">A trip or a holiday →</span></a>
