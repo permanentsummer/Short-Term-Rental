@@ -214,3 +214,4 @@ a.card:hover{transform:translateY(-3px);color:var(--tx)}
 }
 .center .pill{align-self:center}
 .step h2:focus{outline:none}
+@media (max-width:1100px){.gf .side .steps,.gf .side .ct{display:none}.gf .main{min-height:0}}
