@@ -75,3 +75,13 @@ if(gf){
  show();
 }
 })();
+/* client project dialogs */
+(function(){
+ document.querySelectorAll('[data-proj]').forEach(function(a){
+  a.addEventListener('click',function(e){var d=document.getElementById('pd-'+a.dataset.proj); if(d&&d.showModal){e.preventDefault(); d.showModal();}});
+ });
+ document.querySelectorAll('dialog.pd').forEach(function(d){
+  d.querySelector('.pd-x').addEventListener('click',function(){d.close()});
+  d.addEventListener('click',function(e){if(e.target===d)d.close()});
+ });
+})();
